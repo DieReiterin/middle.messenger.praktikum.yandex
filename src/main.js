@@ -1,25 +1,31 @@
+import Handlebars from "handlebars";
+import * as Components from "./components";
+import * as Pages from "./pages";
 import './style.scss'
-// import javascriptLogo from './javascript.svg'
-// import viteLogo from '../public/vite.svg'
-// import { setupCounter } from './counter.js'
-console.log('JS IMPORTED');
-// document.querySelector('#app').innerHTML = `
-//   <div>
-//     <a href="https://vitejs.dev" target="_blank">
-//       <img src="${viteLogo}" class="logo" alt="Vite logo" />
-//     </a>
-//     <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-//       <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-//     </a>
-//     <h1>Hello Vite!</h1>
-//     <div class="card">
-//       <button id="counter" type="button"></button>
-//       <button class="card__add" type="button">card__add</button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click on the Vite logo to learn more
-//     </p>
-//   </div>
-// `
 
-// setupCounter(document.querySelector('#counter'))
+const pages = {
+    'chat': [ Pages.ChatPage ],
+    'login': [ Pages.LoginPage ],
+}
+
+Object.entries(Components).forEach(([ name, component ]) => {
+    Handlebars.registerPartial(name, component);
+});
+
+function navigate(page) {
+    const [ source, args ] = pages[page];
+    const handlebarsFunc = Handlebars.compile(source);
+    document.body.innerHTML = handlebarsFunc(args);
+}
+
+document.addEventListener('DOMContentLoaded', () => navigate('chat'));
+
+document.addEventListener('click', e => {
+    const page = e.target.getAttribute('page');
+    if (page) {
+        navigate(page);
+        
+        e.preventDefault();
+        e.stopImmediatePropagation;
+    }
+});

@@ -1,0 +1,44 @@
+{{#> Dialog }}
+    <form class="login-page">
+        <div class="login-page__header">
+            <h1 class="login-page__title">Вход</h1>
+        </div>
+        <div class="login-page__main">
+            {{> InputField
+                className="login-page__input"
+                
+                label="Логин"
+                placeholder="Логин" 
+                error="Неверный логин"
+
+                name="login"
+                id="login"
+                value="someLogin"                
+            }}  
+            {{> InputField
+                className="login-page__input"
+                
+                label="Пароль"
+                placeholder="Пароль" 
+                error="Неверный пароль"
+
+                name="password"
+                id="password"
+                value="somePassword"                
+            }}
+        </div>
+        <div class="login-page__footer">
+            {{> Button 
+                className="login-page__submit-btn"
+                text="Войти" 
+                page="chat"
+            }}    
+            {{> Link 
+                className="login-page__link"
+                href="./index.html" 
+                text="Регистрация"
+            }}           
+        </div>
+    </form>
+
+{{/ Dialog }}

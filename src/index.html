@@ -3,63 +3,12 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/public/icons/vite.svg" />
-    <!-- <link rel="stylesheet" type="text/css" href="./public/css/style.css"> -->
+    <link rel="icon" type="image/png" href="./static/icons/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>INDEX</title>
+    <title>Turtel Chat</title>
 </head>
 
 <body class="page">
-
-    <!-- <div id="app"></div> -->
-
-    <div class="login-form">
-        <header class="login-form__header">
-            <h1 class="login-form__title">Вход</h1>
-        </header>
-        <main class="login-form__main">
-            {{> InputField 
-                className="login-form__input"
-                
-                label="Логин"
-                placeholder="Логин" 
-                error="Неверный логин"
-
-                name="login"
-                id="login"
-                value="someLogin"                
-            }}  
-            {{> InputField 
-                className="login-form__input"
-                
-                label="Пароль"
-                placeholder="Пароль" 
-                error="Неверный пароль"
-
-                name="password"
-                id="password"
-                value="somePassword"                
-            }}
-
-
-        </main>
-        <footer class="login-form__footer">
-            {{> Button 
-                className="login-form__submit-btn"
-                text="Войти" 
-                type="submit"
-            }}    
-            {{> Link 
-                className="login-form__link"
-                href="./index.html" 
-                text="Регистрация"
-            }}           
-        </footer>
-
-    </div>
-
-
-    <!-- <div id="app"></div> -->
     <script type="module" src="./main.js"></script>
 </body>
 
