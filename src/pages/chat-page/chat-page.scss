@@ -2,9 +2,9 @@
     display: flex;
 
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
     
-    &__sidebar {
+    &__chat-list {
         width: 310px;
         min-height: 100%;
     }
@@ -22,9 +22,5 @@
         line-height: 100%;
         text-align: center;
         color: #1e1e1e;
-    }
-
-    &__chat-list {
-        min-height: 100px;
     }
 }

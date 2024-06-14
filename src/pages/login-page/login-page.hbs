@@ -1,30 +1,31 @@
 {{#> Dialog }}
     <form class="login-page">
         <div class="login-page__header">
-            <h1 class="login-page__title">Вход</h1>
+            {{> PageTitle 
+                className="login-page__title"
+                text="Вход"
+            }} 
         </div>
         <div class="login-page__main">
             {{> InputField
                 className="login-page__input"
                 
                 label="Логин"
-                placeholder="Логин" 
-                error="Неверный логин"
+                placeholder="введите логин" 
+                error=""
 
                 name="login"
-                id="login"
-                value="someLogin"                
+                id="login"             
             }}  
             {{> InputField
                 className="login-page__input"
                 
                 label="Пароль"
-                placeholder="Пароль" 
+                placeholder="введите пароль" 
                 error="Неверный пароль"
 
                 name="password"
-                id="password"
-                value="somePassword"                
+                id="password"               
             }}
         </div>
         <div class="login-page__footer">
@@ -35,7 +36,7 @@
             }}    
             {{> Link 
                 className="login-page__link"
-                href="./index.html" 
+                page="signin" 
                 text="Регистрация"
             }}           
         </div>

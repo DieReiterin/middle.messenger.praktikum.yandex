@@ -1,11 +1,9 @@
 <div class="chat-page">
-    {{#> Sidebar className="chat-page__sidebar" }}
-        <div class="chat-list chat-page__chat-list">
-            {{#each (chat-page-list)}}
-                {{> ChatItem }}
-            {{/each}}
-        </div> 
-    {{/ Sidebar }}
+    {{#> ChatList className="chat-page__chat-list" }}
+        {{#each (chat-page-list)}}
+            {{> ChatItem }}
+        {{/each}}
+    {{/ ChatList }}
     <div class="chat-page__main">
         <p class="heading chat-page__heading">
             Выберите чат чтобы отправить сообщение

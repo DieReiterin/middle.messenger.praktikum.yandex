@@ -1,5 +1,6 @@
 import { resolve } from 'path';
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite' 
+import { fileURLToPath } from 'url';
 
 export default defineConfig({
   root: resolve(__dirname, 'src'),
@@ -10,40 +11,24 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  // resolve: {
-  //   alias: {
-  //     '@': fileURLToPath(new URL('./src', import.meta.url))
-  //   },
-  //   extensions: [
-  //     '.js',
-  //     '.json',
-  //     '.jsx',
-  //     '.mjs',
-  //   ],
-  // },
-  // css: {
-  //   preprocessorOptions: {
-  //     scss: {
-  //       // additionalData: `@import "@/path/to/your/variables";`
-  //     },
-  //   },
-  // },
-  // plugins: [handlebars({
-  //   reloadOnPartialChange: true,
-  //   partialDirectory: [
-  //     './src/components',
-  //     './src/components/button', 
-  //     './src/components/link', 
-  //     './src/components/input-field', 
-  //     './src/components/login-form', 
-  //   ],
-  //   helpers: {
-  //     capitalize: (value) => value.toUpperCase(),
-  //   },
-  //   // context: {
-  //   //   username: 'John Doe'
-  //   // }
-  // })],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    },
+    extensions: [
+      '.js',
+      '.json',
+      '.jsx',
+      '.mjs',
+    ],
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // additionalData: `@import "@/path/to/your/variables";`
+      },
+    },
+  },
 }) 
 
 
