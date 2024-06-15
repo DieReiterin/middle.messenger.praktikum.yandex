@@ -1,0 +1,27 @@
+.footer {        
+    position: absolute;
+    bottom: 0;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    width: 100%;
+    height: 100px;
+
+    background: linear-gradient(transparent, rgba(251, 228, 201, .6), rgba(251, 228, 201, .9), rgba(251, 228, 201, 1)); //#FBE4C9
+
+    &__content {
+        display: flex;
+        justify-content: center;
+
+        width: 100%;
+        height: 50%;
+        padding: 0 30px;
+    }
+
+    &__btn {
+        flex-basis: 120px;
+        margin-right: 60px;
+    }
+}

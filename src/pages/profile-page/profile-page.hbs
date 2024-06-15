@@ -1,0 +1,29 @@
+<div class="profile-page">
+    <div class="profile-page__left">
+        <nav class="profile-page__nav">
+            <img src="/static/icons/arrow.svg" class="profile-page__nav-btn" page="chat">
+        </nav>
+    </div>
+    <div class="profile-page__main">
+        <div class="settings">
+            <div class="settings__header">
+                <div class="settings__profile-pic"></div>
+                <span class="settings__title">
+                    Иван
+                </span>
+            </div>
+            <div class="settings__main">
+                <div class="input-field {{ className }}">
+                    <label class="input-field__label" for="{{ id }}">
+                        {{ label }}
+                    </label>
+                    <input name="{{ name }}" class="input-field__control" type="text" id="{{ id }}" placeholder="{{ placeholder }}" value="{{ value }}">
+                    <label class="input-field__error" for="{{ id }}">
+                        {{ error }}
+                    </label>
+                </div>
+            </div>
+            <div class="settings__footer">settings__footer</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="chat-page">
+    {{#> ChatList className="chat-page__chat-list" }}
+        {{#each (chat-page-list)}}
+            {{> ChatItem }}
+        {{/each}}
+    {{/ ChatList }}
+    <div class="chat-page__main">
+        <p class="heading chat-page__heading">
+            Выберите чат чтобы отправить сообщение
+        </p>
+    </div>
+</div>
