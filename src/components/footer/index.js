@@ -1,2 +1,2 @@
-import './footer.scss'
-export { default as Footer } from './footer.hbs?raw'
+import "./footer.scss";
+export { default as Footer } from "./footer.hbs?raw";

@@ -3,13 +3,12 @@
 
     width: 100%;
     min-height: 120vh;
-    
+
     &__left {
         width: 65px;
         min-height: 100%;
 
         background-color: #fbfbfb;
-
     }
 
     &__nav {
@@ -35,7 +34,7 @@
             }
         }
     }
-    
+
     &__main {
         display: flex;
         align-items: center;
