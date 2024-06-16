@@ -38,7 +38,7 @@ function navigate(page) {
 
 document.addEventListener('DOMContentLoaded', () => {
     setLayout('navigated');
-    navigate('profile');
+    navigate('login');
 });
 
 document.addEventListener('click', e => {
