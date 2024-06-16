@@ -1,10 +1,10 @@
 # Turtel Chat
 ## Мессенджер для 1 модуля Яндекс.Практикума
-### **Прототип в фигме:**
-Прототип в фигме 
-- [Turtel Chat](https://www.figma.com/proto/7mFfupXYkX3Iy9iZ4iNnm1/TURTEL-CHAT?node-id=0-1&t=rD8v5FVHA5vzu38k-1),
 
-![preview.png](https://github.com/DieReiterin/Swapi-Client/blob/main/public/assets/swapiClient.png)
+![preview.png](https://github.com/DieReiterin/middle.messenger.praktikum.yandex/blob/deploy/static/images/preview.png)
+
+### **Прототип в фигме:**
+- [Turtel Chat](https://www.figma.com/proto/7mFfupXYkX3Iy9iZ4iNnm1/TURTEL-CHAT?node-id=0-1&t=rD8v5FVHA5vzu38k-1),
 
 ### Демо-версия в Нетлифай
 - [Turtel Chat](https://www.figma.com/proto/7mFfupXYkX3Iy9iZ4iNnm1/TURTEL-CHAT?node-id=0-1&t=rD8v5FVHA5vzu38k-1),
