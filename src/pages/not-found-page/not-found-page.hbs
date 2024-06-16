@@ -1,5 +1,5 @@
 <div class="not-found-page">
-    <div class="server-alert" >
+    {{#> ServerAlert }}
         {{> PageTitle 
             className="server-alert__title"
             text="400"
@@ -13,5 +13,5 @@
             page="chat" 
             text="Назад к чатам"
         }} 
-    </div>
+    {{/ ServerAlert }}
 </div>
