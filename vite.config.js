@@ -5,7 +5,7 @@ import { fileURLToPath } from 'url';
 export default defineConfig({
   root: resolve(__dirname, './'),
   build: {
-    outDir: resolve(__dirname, 'build'),
+    outDir: resolve(__dirname, 'dist'),
     emptyOutDir: true
   },
   publicDir: resolve(__dirname, 'static'),
