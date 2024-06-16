@@ -21,7 +21,7 @@
         margin-bottom: 20px;
 
         border-radius: 50%;
-        background-color: #efefef;        
+        background-color: #efefef;
     }
 
     &__title {
@@ -37,18 +37,18 @@
     }
 
     &__footer {
-        min-height: 50px;        
+        min-height: 50px;
     }
 
-    &__row {        
+    &__row {
         height: 12px;
         padding: 7px 0;
         border-bottom: 1px solid #efefef;
-        
+
         font-weight: 500;
         font-size: 13px;
         line-height: 100%;
-        
+
         &_content-spaced {
             display: flex;
             justify-content: space-between;

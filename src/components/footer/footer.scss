@@ -1,11 +1,16 @@
-.footer {        
+.footer {
     display: flex;
     align-items: flex-end;
     justify-content: center;
 
     width: 100%;
 
-    background: linear-gradient(transparent, rgba(#fbe4c9, .6), rgba(#fbe4c9, .9), rgba(#fbe4c9, 1)); 
+    background: linear-gradient(
+        transparent,
+        rgba(#fbe4c9, 0.6),
+        rgba(#fbe4c9, 0.9),
+        rgba(#fbe4c9, 1)
+    );
 
     &__content {
         display: flex;

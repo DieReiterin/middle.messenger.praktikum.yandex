@@ -1,9 +1,16 @@
-<div class="input-field {{ className }}">
-    <label class="input-field__label" for="{{ id }}">
-        {{ label }}
+<div class="input-field {{className}}">
+    <label class="input-field__label" for="{{id}}">
+        {{label}}
     </label>
-    <input name="{{ name }}" class="input-field__control" type="text" id="{{ id }}" placeholder="{{ placeholder }}" value="{{ value }}">
-    <label class="input-field__error" for="{{ id }}">
-        {{ error }}
+    <input
+        name="{{name}}"
+        class="input-field__control"
+        type="text"
+        id="{{id}}"
+        placeholder="{{placeholder}}"
+        value="{{value}}"
+    />
+    <label class="input-field__error" for="{{id}}">
+        {{error}}
     </label>
 </div>
