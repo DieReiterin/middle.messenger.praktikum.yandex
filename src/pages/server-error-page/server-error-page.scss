@@ -1,3 +1,11 @@
+.server-error-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 100vh;
+}
+
 .server-alert {
     display: flex;
     flex-direction: column;

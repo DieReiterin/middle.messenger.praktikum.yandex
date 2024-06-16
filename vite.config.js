@@ -3,11 +3,12 @@ import { defineConfig } from 'vite'
 import { fileURLToPath } from 'url';
 
 export default defineConfig({
-  root: resolve(__dirname, 'src'),
+  root: resolve(__dirname, './'),
   build: {
     outDir: resolve(__dirname, 'build'),
-    // emptyOutDir: true
+    emptyOutDir: true
   },
+  publicDir: resolve(__dirname, 'static'),
   server: {
     port: 3000,
   },
