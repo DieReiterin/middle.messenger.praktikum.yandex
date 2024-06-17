@@ -1,11 +1,14 @@
-<div class="settings {{ className }}">
+<div class="settings {{ className }}" id="profile_settings">
     <div class="settings__header">
+    {{#if editable}}
         <div class="settings__profile">
             <img src="/images/default_profile.png" class="settings__profile-pic">
         </div>
+    {{else}}
         <span class="settings__title">
             Иван
         </span>
+    {{/if}}
     </div>
     <div class="settings__main">
         <div class="settings__row settings__row_content-spaced">
@@ -72,6 +75,7 @@
     <div class="settings__footer">
         <div class="settings__row settings__row_content-align-left">
             {{> Link 
+                action="toggleEditProfile"
                 className="settings__link"
                 text="Изменить данные"
             }} 
