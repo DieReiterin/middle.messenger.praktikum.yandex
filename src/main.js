@@ -15,6 +15,7 @@ const pages = {
     "not-found": [Pages.NotFoundPage],
     profile: [Pages.ProfilePage],
     "server-error": [Pages.ServerErrorPage],
+    settings: [Pages.SettingsPage],
     signin: [Pages.SigninPage],
 };
 
@@ -36,33 +37,16 @@ function navigate(page) {
     content.innerHTML = handlebarsFunc(args);
 }
 
-function toggleEditProfile() {
-    const settingsElement = document.getElementById("profile_settings");
-    settingsElement.toggleAttribute("editable");
-    // if (settingsElement.getAttribute("editable") === "true") {
-    //     settingsElement.setAttribute("editable", "");
-    // } else {
-    //     settingsElement.setAttribute("editable", "true");
-    // }
-}
-
 document.addEventListener("DOMContentLoaded", () => {
     setLayout("navigated");
-    navigate("profile");
+    navigate("settings");
 });
 
 document.addEventListener("click", (e) => {
     const page = e.target.getAttribute("page");
-    const action = e.target.getAttribute("action");
 
     if (page) {
         navigate(page);
-
-        e.preventDefault();
-        e.stopImmediatePropagation;
-    }
-    if (action === "toggleEditProfile") {
-        toggleEditProfile();
 
         e.preventDefault();
         e.stopImmediatePropagation;

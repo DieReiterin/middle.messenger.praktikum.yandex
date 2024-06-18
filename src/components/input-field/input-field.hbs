@@ -1,7 +1,9 @@
-<div class="input-field {{className}}">
-    <label class="input-field__label" for="{{id}}">
-        {{label}}
-    </label>
+<div class="input-field {{className}} {{#if typeProfile}}input-field_type-profile{{/if}}">
+    {{#if label}}
+        <label class="input-field__label" for="{{id}}">
+            {{label}}
+        </label>
+    {{/if}}
     <input
         name="{{name}}"
         class="input-field__control"

@@ -24,11 +24,44 @@
 
         border: none;
         border-bottom: 1px solid #000;
+
+        &:focus {
+            outline: 1px solid #999;
+        }
     }
     &__error {
         font-weight: 400;
         font-size: 8px;
         line-height: 100%;
         color: #ff2f2f;
+    }
+
+    &_type-profile {
+        position: relative;
+
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+
+        height: 12px;
+        margin: -5px 0;
+        padding: 5px 0;
+    }
+
+    &_type-profile & {
+        &__control {
+            margin: 0;
+            padding: 0;
+
+            text-align: right;
+            color: #999;
+            border: none;
+            background-color: transparent;
+        }
+        &__error {
+            position: absolute;
+            right: 0;
+            top: 15px;
+        }
     }
 }

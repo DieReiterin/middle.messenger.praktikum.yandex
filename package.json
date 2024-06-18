@@ -13,15 +13,12 @@
     },
     "devDependencies": {
         "handlebars": "^4.7.8",
-        "http-server": "^14.1.1",
         "sass": "^1.77.5",
         "sass-loader": "^14.2.1",
         "vite": "^5.2.13"
     },
     "dependencies": {
-        "dotenv": "^16.4.5",
         "express": "^4.19.2",
-        "fs": "^0.0.1-security",
         "path": "^0.12.7"
     }
 }

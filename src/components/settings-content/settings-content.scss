@@ -1,0 +1,42 @@
+.settings-content {
+    &__main {
+        min-height: 50px;
+        margin-bottom: 60px;
+    }
+
+    &__footer {
+        min-height: 50px;
+    }
+
+    &__row {
+        height: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid #efefef;
+
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 100%;
+
+        &_content-spaced {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        &_content-align-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+        &_content-align-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        &:last-child {
+            border: none;
+        }
+    }
+
+    &__btn {
+        width: 280px;
+    }
+}
