@@ -1,0 +1,16 @@
+<div class="settings-page">
+    <div class="settings-page__left">
+        <nav class="settings-page__nav">
+            <img src="/icons/arrow.svg" alt="Назад" class="settings-page__nav-btn" page="chat">
+        </nav>
+    </div>
+    <div class="settings-page__main">
+        {{#> Profile 
+            className="settings-page__profile"
+        }}
+            {{> SettingsContent 
+                className="settings-page__profile-content"
+            }} 
+        {{/ Profile }}
+    </div>
+</div>

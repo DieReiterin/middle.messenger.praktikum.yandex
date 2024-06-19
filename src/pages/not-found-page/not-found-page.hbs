@@ -1,0 +1,17 @@
+<div class="not-found-page">
+    {{#> ServerAlert }}
+        {{> PageTitle 
+            className="server-alert__title"
+            text="400"
+        }} 
+        {{> PageTitle 
+            className="server-alert__subtitle"
+            text="Не туда попали"
+        }} 
+        {{> Link 
+            className="server-alert__link"
+            page="chat" 
+            text="Назад к чатам"
+        }} 
+    {{/ ServerAlert }}
+</div>

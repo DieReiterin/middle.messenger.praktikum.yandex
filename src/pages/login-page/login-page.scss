@@ -1,0 +1,36 @@
+.login-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+
+    width: 340px;
+    height: 450px;
+    margin: 50px 0 0;
+    padding: 50px 30px 30px;
+
+    border-radius: 15px;
+    background-color: #fbfbfb;
+    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
+
+    &__main {
+        min-height: 100px;
+        margin-bottom: 50px;
+
+        font-weight: 600;
+    }
+
+    &__title {
+        margin-bottom: 40px;
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__submit-btn {
+        margin-bottom: 15px;
+    }
+}

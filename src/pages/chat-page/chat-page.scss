@@ -1,0 +1,26 @@
+.chat-page {
+    display: flex;
+
+    width: 100%;
+    min-height: 100vh;
+
+    &__chat-list {
+        width: 310px;
+        min-height: 100%;
+    }
+    &__main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        max-height: 100%;
+    }
+    &__heading {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 100%;
+        text-align: center;
+        color: #1e1e1e;
+    }
+}

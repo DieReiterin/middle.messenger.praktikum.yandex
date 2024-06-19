@@ -1,0 +1,20 @@
+@font-face {
+    font-family: "Manrope";
+    font-weight: 500;
+    font-style: normal;
+    src: url("../public/fonts/Manrope-Medium.ttf") format("ttf");
+}
+@font-face {
+    font-family: "Manrope";
+    font-weight: 600;
+    font-style: normal;
+    src: url("../public/fonts/Manrope-SemiBold.ttf") format("ttf");
+}
+
+.page {
+    font-family: "Manrope", sans-serif;
+    background-color: #e7daf8;
+
+    margin: 0;
+    min-height: 100vh;
+}
