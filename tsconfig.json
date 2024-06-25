@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "target": "es2016",
-    "declaration": false,
-    "module": "commonjs",
-    "sourceMap": true,
-    "noImplicitAny": false, // включим по итогу 1
-    "strictNullChecks": false, // включим по итогу 2
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "moduleResolution": "Node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noEmit": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
-  }
+    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "strictNullChecks": false,
+    "skipLibCheck": true
+  },
+  "include": ["src"]
 }
