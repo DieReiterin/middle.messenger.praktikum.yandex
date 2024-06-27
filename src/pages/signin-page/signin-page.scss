@@ -1,17 +1,19 @@
 .signin-page {
     box-sizing: border-box;
+
     width: 340px;
     min-height: 450px;
-    margin: 50px 0 auto;
+    margin: 0 auto 0;
     padding: 50px 30px 30px;
+    transform: translateY(135px);
 
     border-radius: 15px;
     background-color: #fbfbfb;
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
 
-    &__header {
-        margin-bottom: 40px;
-    }
+    // &__header {
+    //     margin-bottom: 40px;
+    // }
     &__main {
         min-height: 200px;
         margin-bottom: 50px;
