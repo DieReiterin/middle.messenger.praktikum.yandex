@@ -5,9 +5,6 @@ export default class PageTitle extends Block {
     constructor(props?) {
         super({
             ...props,
-            attr: {
-                class: `page-title`,
-            },
         });
     }
     render() {

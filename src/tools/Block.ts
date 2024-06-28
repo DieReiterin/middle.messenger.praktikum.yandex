@@ -1,12 +1,15 @@
 import EventBus from "./EventBus.ts";
 import Handlebars from "handlebars";
 
+// import LoginPage from "../pages/login-page/LoginPage.ts";
+
 export default class Block {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
         FLOW_CDU: "flow:component-did-update",
         FLOW_RENDER: "flow:render",
+        NAVIGATE: "navigate",
     };
 
     _element = null;
@@ -43,14 +46,30 @@ export default class Block {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+        // eventBus.on("navigate", this._navigate());
+        eventBus.on(Block.EVENTS.NAVIGATE, this._navigate.bind(this));
+        // eventBus.on("navigate", this._navigate.bind(this));
+    }
+
+    _navigate() {
+        console.log("_navigate");
+
+        // const content = document.getElementById("layout-content");
+        // content.innerHTML = "";
+
+        // const login = new LoginPage();
+        // content.append(login.getContent()!);
     }
 
     init() {
         this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
+        this.eventBus().emit(Block.EVENTS.FLOW_CDM);
     }
 
     _componentDidMount() {
+        // console.log("Mount");
         this.componentDidMount();
+
         Object.values(this.children).forEach((child) => {
             (child as Block).dispatchComponentDidMount();
         });
@@ -113,7 +132,7 @@ export default class Block {
     }
 
     _render() {
-        console.log("Render");
+        // console.log("Render");
         const propsAndStubs = { ...this.props };
         const _tmpId = Math.floor(100000 + Math.random() * 900000);
         Object.entries(this.children).forEach(([key, child]) => {

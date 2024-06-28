@@ -1,7 +1,7 @@
 import Block from "../../tools/Block.ts";
 import ChatItem from "../../components/chat-item/ChatItem.ts";
 import "./chat-list.scss";
-import favicon from "../../../static/icons/favicon.png";
+import favicon from "/icons/favicon.png";
 
 export default class ChatList extends Block {
     constructor(props?) {

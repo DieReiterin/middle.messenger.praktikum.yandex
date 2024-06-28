@@ -6,10 +6,19 @@ export default class Button extends Block {
         super({
             ...props,
             events: {
-                click: () => console.log("event"),
+                click: () => props.func(),
+                // click: () => props.onNavigate(),
             },
         });
     }
+    // componentDidMount() {
+    //     this.setProps({
+    //         click: () => {
+    //             this.eventBus().emit("navigate");
+    //         },
+    //     });
+    //     return true;
+    // }
     render() {
         return `<button class="button {{className}}" type="{{type}}" page="{{page}}">{{text}}</button>`;
     }
