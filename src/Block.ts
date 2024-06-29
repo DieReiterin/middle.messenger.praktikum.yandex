@@ -131,34 +131,92 @@ export default class Block {
         return this._element;
     }
 
+    // _render() {
+    //     // console.log("Render");
+    //     const propsAndStubs = { ...this.props };
+    //     const _tmpId = Math.floor(100000 + Math.random() * 900000);
+    //     // Генерация заглушек для детей
+    //     Object.entries(this.children).forEach(([key, child]) => {
+    //         propsAndStubs[key] = `<div data-id="${
+    //             (child as Block)._id
+    //         }"></div>`;
+    //     });
+    //     // Генерация заглушек для списков детей
+    //     Object.keys(this.lists).forEach((key) => {
+    //         propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
+    //     });
+
+    //     const fragment = this._createDocumentElement("template");
+    //     fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
+
+    //     Object.values(this.children).forEach((child) => {
+    //         const stub = fragment.content.querySelector(
+    //             `[data-id="${(child as Block)._id}"]`
+    //         );
+    //         if (stub) {
+    //             stub.replaceWith((child as Block).getContent());
+    //         } else {
+    //             console.error(`Stub not found for id: ${(child as Block)._id}`);
+    //         }
+    //     });
+
+    //     // Object.values(this.lists).forEach((child) => {
+    //     //     const listCont = this._createDocumentElement("template");
+    //     //     if (child instanceof Block) {
+    //     //         listCont.content.append(child.getContent());
+    //     //     } else {
+    //     //         listCont.content.append(`${child}`);
+    //     //     }
+    //     //     const stub = fragment.content.querySelector(
+    //     //         `[data-id="__l_${_tmpId}"]`
+    //     //     );
+    //     //     stub.replaceWith(listCont.content);
+    //     // });
+
+    //     Object.entries(this.lists).forEach(([key, list]) => {
+    //         type TList = any[];
+    //         const listStub = fragment.content.querySelector(
+    //             `[data-id="__l_${_tmpId}"]`
+    //         );
+    //         if (listStub) {
+    //             (list as TList).forEach((item) => {
+    //                 if (item instanceof Block) {
+    //                     listStub.appendChild((item as Block).getContent());
+    //                 } else {
+    //                     const textNode = document.createTextNode(item);
+    //                     listStub.appendChild(textNode);
+    //                 }
+    //             });
+    //         }
+    //     });
+
+    //     const newElement = fragment.content.firstElementChild;
+    //     if (this._element) {
+    //         this._element.replaceWith(newElement);
+    //     }
+    //     this._element = newElement;
+    //     this._addEvents();
+    //     this.addAttributes();
+    // }
     _render() {
-        // console.log("Render");
         const propsAndStubs = { ...this.props };
         const _tmpId = Math.floor(100000 + Math.random() * 900000);
+
         // Генерация заглушек для детей
         Object.entries(this.children).forEach(([key, child]) => {
             propsAndStubs[key] = `<div data-id="${
                 (child as Block)._id
             }"></div>`;
-            console.log(
-                `Generated stub for child with id: ${(child as Block)._id}`
-            );
-            console.log(
-                `STUB with id: ${(child as Block)._id} === ${JSON.stringify(
-                    child
-                )}`
-            );
         });
+
         // Генерация заглушек для списков детей
         Object.keys(this.lists).forEach((key) => {
             propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
-            console.log(`Generated stub for list with id: __l_${_tmpId}`);
         });
 
+        // Создание фрагмента и компиляция шаблона
         const fragment = this._createDocumentElement("template");
-        const compiledHTML = Handlebars.compile(this.render())(propsAndStubs);
-        console.log("Compiled HTML:", compiledHTML);
-        fragment.innerHTML = compiledHTML;
+        fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
         // Заменяем заглушки на реальные дочерние компоненты
         Object.values(this.children).forEach((child) => {
@@ -166,36 +224,19 @@ export default class Block {
                 `[data-id="${(child as Block)._id}"]`
             );
             if (stub) {
-                console.log(`Replacing stub with id: ${(child as Block)._id}`);
-
                 stub.replaceWith((child as Block).getContent());
-                console.log(`Replaced stub with id: ${(child as Block)._id}`);
             } else {
                 console.error(`Stub not found for id: ${(child as Block)._id}`);
             }
         });
 
-        // Object.values(this.lists).forEach((child) => {
-        //     const listCont = this._createDocumentElement("template");
-        //     if (child instanceof Block) {
-        //         listCont.content.append(child.getContent());
-        //     } else {
-        //         listCont.content.append(`${child}`);
-        //     }
-        //     const stub = fragment.content.querySelector(
-        //         `[data-id="__l_${_tmpId}"]`
-        //     );
-        //     stub.replaceWith(listCont.content);
-        // });
-
         // Заменяем заглушки для списков детей на реальные элементы
         Object.entries(this.lists).forEach(([key, list]) => {
-            type TList = any[];
             const listStub = fragment.content.querySelector(
                 `[data-id="__l_${_tmpId}"]`
             );
             if (listStub) {
-                (list as TList).forEach((item) => {
+                list.forEach((item) => {
                     if (item instanceof Block) {
                         listStub.appendChild((item as Block).getContent());
                     } else {
@@ -203,12 +244,12 @@ export default class Block {
                         listStub.appendChild(textNode);
                     }
                 });
-                console.log(`Replaced list stub with id: __l_${_tmpId}`);
             } else {
                 console.error(`List stub not found for id: __l_${_tmpId}`);
             }
         });
 
+        // Замена старого элемента новым
         const newElement = fragment.content.firstElementChild;
         if (this._element) {
             this._element.replaceWith(newElement);

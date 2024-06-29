@@ -1,15 +1,10 @@
+//@ts-nocheck
 import Block from "../../tools/Block.ts";
 import "./profile.scss";
 
 export default class Profile extends Block {
     constructor(props?) {
-        super({
-            ...props,
-            // events: {
-            //     click: () => props.func(),
-            // },
-            // children: props.children,
-        });
+        super(props);
     }
     override render() {
         // return `<div class="profile {{ className }}">
@@ -35,6 +30,7 @@ export default class Profile extends Block {
                             Иван
                         </span>
                     </div>
+                    profile-content/settings-content
                     {{{children}}}
                 </div>`;
     }

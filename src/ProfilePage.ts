@@ -1,3 +1,4 @@
+//@ts-nocheck
 import Block from "../../tools/Block.ts";
 import Profile from "../../components/profile/Profile.ts";
 import Button from "../../components/button/Button.ts";
@@ -8,18 +9,19 @@ export default class ProfilePage extends Block {
     constructor(props) {
         const profile = new Profile({
             className: "profile-page__profile",
-            // children: [new Button({ text: "Войти" })],
-            children: new Button({
-                text: "КНОПКА",
-                // events: {
-                //     click: () => {
-                //         profile.updateChild(
-                //             0,
-                //             new InputField({ placeholder: "ИНПУТ" })
-                //         );
-                //     },
-                // },
-            }),
+            children: [
+                new Button({
+                    text: "Войти",
+                    events: {
+                        click: () => {
+                            profile.updateChild(
+                                0,
+                                new InputField({ placeholder: "Введите имя" })
+                            );
+                        },
+                    },
+                }),
+            ],
         });
 
         super({
@@ -34,7 +36,6 @@ export default class ProfilePage extends Block {
         //     );
         // }, 3000);
     }
-
     override render() {
         return `<div class="profile-page">
                     <div class="profile-page__left">
