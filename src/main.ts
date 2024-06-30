@@ -1,18 +1,36 @@
 // import Handlebars from "handlebars";
 // import Block from "./tools/Block.ts";
 import "./style.scss";
-import navigate from "./tools/navigate.ts";
+// import LoginPage from "./pages/login-page/LoginPage.ts";
+// import SigninPage from "./pages/signin-page/SigninPage.ts";
+import ChatPage from "./pages/chat-page/ChatPage.ts";
+// import ProfilePage from "./pages/profile-page/ProfilePage.ts";
+// import NotFoundPage from "./pages/not-found-page/NotFoundPage.ts";
+// import ProfilePage from "./pages/profile-page/ProfilePage.ts";
+// import NotFoundPage from "./pages/not-found-page/NotFoundPage.ts";
+import LayoutNavigated from "./layouts/layout-navigated/LayoutNavigated.ts";
 
-navigate("layout", "navigated");
-navigate("page", "profile");
+// import "./components/server-alert/server-alert.scss";
+// import "./pages/not-found-page/not-found-page.scss";
 
-// document.querySelectorAll(`[page]`).forEach((el) => {
-//     const route = el.getAttribute("page");
-
-//     el.addEventListener("click", () => {
-//         navigate("page", route);
-//     });
-// });
+function setLayout(type) {
+    const container = document.getElementById("app")!;
+    container.append(type.getContent()!);
+}
+function navigate(page) {
+    const content = document.getElementById("layout-content");
+    content.innerHTML = "";
+    content.append(page.getContent()!);
+}
+const onLoadLayout = new LayoutNavigated();
+// const login = new LoginPage();
+// const signin = new SigninPage();
+// const notfound = new NotFoundPage();
+const chat = new ChatPage();
+// const profile = new ProfilePage();
+// const notFound = new NotFoundPage();
+setLayout(onLoadLayout);
+navigate(chat);
 
 // class Input extends Block {
 //     constructor(props) {

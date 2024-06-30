@@ -1,12 +1,15 @@
 import EventBus from "./EventBus.ts";
 import Handlebars from "handlebars";
 
+// import LoginPage from "../pages/login-page/LoginPage.ts";
+
 export default class Block {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
         FLOW_CDU: "flow:component-did-update",
         FLOW_RENDER: "flow:render",
+        NAVIGATE: "navigate",
     };
 
     _element = null;
@@ -43,6 +46,19 @@ export default class Block {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
+        // eventBus.on("navigate", this._navigate());
+        eventBus.on(Block.EVENTS.NAVIGATE, this._navigate.bind(this));
+        // eventBus.on("navigate", this._navigate.bind(this));
+    }
+
+    _navigate() {
+        console.log("_navigate");
+
+        // const content = document.getElementById("layout-content");
+        // content.innerHTML = "";
+
+        // const login = new LoginPage();
+        // content.append(login.getContent()!);
     }
 
     init() {
@@ -74,7 +90,7 @@ export default class Block {
     }
 
     componentDidUpdate(oldProps, newProps) {
-        return oldProps !== newProps;
+        return oldProps + newProps > 0 ? true : true;
     }
 
     _getChildrenPropsAndProps(propsAndChildren) {
@@ -105,26 +121,10 @@ export default class Block {
 
     setProps = (nextProps) => {
         if (!nextProps) {
-            //
             return;
         }
-        const { children, lists } = this._getChildrenPropsAndProps(nextProps);
 
-        Object.assign(this.props, nextProps); //
-
-        Object.entries(children).forEach(([key, child]) => {
-            if (this.children[key] && this.children[key] instanceof Block) {
-                this.children[key].setProps(child.props);
-            } else {
-                this.children[key] = child;
-            }
-        });
-
-        Object.entries(lists).forEach(([key, list]) => {
-            this.lists[key] = list;
-        });
-
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
+        Object.assign(this.props, nextProps);
     };
 
     get element() {
@@ -135,78 +135,37 @@ export default class Block {
         // console.log("Render");
         const propsAndStubs = { ...this.props };
         const _tmpId = Math.floor(100000 + Math.random() * 900000);
-        // Генерация заглушек для детей
         Object.entries(this.children).forEach(([key, child]) => {
             propsAndStubs[key] = `<div data-id="${
                 (child as Block)._id
             }"></div>`;
-            console.log(
-                `Generated stub for child with id: ${(child as Block)._id}`
-            );
-            console.log(
-                `STUB with id: ${(child as Block)._id} === ${JSON.stringify(
-                    child
-                )}`
-            );
         });
-        // Генерация заглушек для списков детей
+
         Object.keys(this.lists).forEach((key) => {
             propsAndStubs[key] = `<div data-id="__l_${_tmpId}"></div>`;
-            console.log(`Generated stub for list with id: __l_${_tmpId}`);
         });
 
         const fragment = this._createDocumentElement("template");
-        const compiledHTML = Handlebars.compile(this.render())(propsAndStubs);
-        console.log("Compiled HTML:", compiledHTML);
-        fragment.innerHTML = compiledHTML;
+        fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
-        // Заменяем заглушки на реальные дочерние компоненты
         Object.values(this.children).forEach((child) => {
             const stub = fragment.content.querySelector(
                 `[data-id="${(child as Block)._id}"]`
             );
-            if (stub) {
-                console.log(`Replacing stub with id: ${(child as Block)._id}`);
-
-                stub.replaceWith((child as Block).getContent());
-                console.log(`Replaced stub with id: ${(child as Block)._id}`);
-            } else {
-                console.error(`Stub not found for id: ${(child as Block)._id}`);
-            }
+            stub.replaceWith((child as Block).getContent());
         });
 
-        // Object.values(this.lists).forEach((child) => {
-        //     const listCont = this._createDocumentElement("template");
-        //     if (child instanceof Block) {
-        //         listCont.content.append(child.getContent());
-        //     } else {
-        //         listCont.content.append(`${child}`);
-        //     }
-        //     const stub = fragment.content.querySelector(
-        //         `[data-id="__l_${_tmpId}"]`
-        //     );
-        //     stub.replaceWith(listCont.content);
-        // });
-
-        // Заменяем заглушки для списков детей на реальные элементы
-        Object.entries(this.lists).forEach(([key, list]) => {
-            type TList = any[];
-            const listStub = fragment.content.querySelector(
+        Object.values(this.lists).forEach((child) => {
+            const listCont = this._createDocumentElement("template");
+            if (child instanceof Block) {
+                listCont.content.append(child.getContent());
+            } else {
+                listCont.content.append(`${child}`);
+            }
+            const stub = fragment.content.querySelector(
                 `[data-id="__l_${_tmpId}"]`
             );
-            if (listStub) {
-                (list as TList).forEach((item) => {
-                    if (item instanceof Block) {
-                        listStub.appendChild((item as Block).getContent());
-                    } else {
-                        const textNode = document.createTextNode(item);
-                        listStub.appendChild(textNode);
-                    }
-                });
-                console.log(`Replaced list stub with id: __l_${_tmpId}`);
-            } else {
-                console.error(`List stub not found for id: __l_${_tmpId}`);
-            }
+            stub.replaceWith(listCont.content);
         });
 
         const newElement = fragment.content.firstElementChild;

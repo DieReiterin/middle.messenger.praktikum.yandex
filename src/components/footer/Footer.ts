@@ -21,12 +21,12 @@ export default class Footer extends Block {
                 className: "footer__btn",
                 page: "login",
                 text: "Авторизация",
-                // func: () => {
-                //     // this.eventBus().emit("_navigate");
-                //     this.eventBus().emit(Block.EVENTS.NAVIGATE);
-                //     // const nav = new Navigator();
-                //     // nav.eventBus().emit("navigate");
-                // },
+                func: () => {
+                    // this.eventBus().emit("_navigate");
+                    this.eventBus().emit(Block.EVENTS.NAVIGATE);
+                    // const nav = new Navigator();
+                    // nav.eventBus().emit("navigate");
+                },
             }),
             btn2: new Button({
                 className: "footer__btn",

@@ -7,7 +7,8 @@ export default class ChatList extends Block {
     constructor(props?) {
         super({
             ...props,
-            content: [
+            content:
+                // [
                 new ChatItem({
                     className: "chat-page__chat-list",
                     avatar: favicon,
@@ -15,14 +16,14 @@ export default class ChatList extends Block {
                     message: "Изображение",
                     unread: "2",
                 }),
-                new ChatItem({
-                    className: "chat-page__chat-list",
-                    name: "Алена",
-                    message:
-                        "Друзья, у меня для вас особенный выпуск новостей!",
-                    unread: "1",
-                }),
-            ],
+            // new ChatItem({
+            //     className: "chat-page__chat-list",
+            //     name: "Алена",
+            //     message:
+            //         "Друзья, у меня для вас особенный выпуск новостей!",
+            //     unread: "1",
+            // }),
+            // ],
         });
     }
     render() {

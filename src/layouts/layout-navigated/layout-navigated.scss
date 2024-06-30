@@ -1,21 +1,18 @@
 .layout-navigated {
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+    position: relative;
+    z-index: 0;
 
-    flex-grow: 1;
-    box-sizing: border-box;
+    min-height: 100vh;
 
     &__content {
-        min-height: 500px;
-
-        flex-grow: 1;
+        min-height: 100vh;
     }
 
     &__footer {
-        position: fixed;
+        position: absolute;
         bottom: 0;
+        z-index: 3000;
+
         height: 100px;
-        flex-shrink: 0;
     }
 }
