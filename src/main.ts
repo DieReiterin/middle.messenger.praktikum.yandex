@@ -3,42 +3,52 @@
 import "./style.scss";
 // import LoginPage from "./pages/login-page/LoginPage.ts";
 // import SigninPage from "./pages/signin-page/SigninPage.ts";
-import ChatPage from "./pages/chat-page/ChatPage.ts";
+// import ChatPage from "./pages/chat-page/ChatPage.ts";
 // import ProfilePage from "./pages/profile-page/ProfilePage.ts";
 // import NotFoundPage from "./pages/not-found-page/NotFoundPage.ts";
-// import ProfilePage from "./pages/profile-page/ProfilePage.ts";
-// import NotFoundPage from "./pages/not-found-page/NotFoundPage.ts";
-import LayoutNavigated from "./layouts/layout-navigated/LayoutNavigated.ts";
+// import LayoutNavigated from "./layouts/layout-navigated/LayoutNavigated.ts";
 
 // import "./components/server-alert/server-alert.scss";
 // import "./pages/not-found-page/not-found-page.scss";
+import navigate from "./tools/navigate.ts";
 
-function setLayout(type) {
-    const container = document.getElementById("app")!;
-    container.append(type.getContent()!);
-}
-function navigate(page) {
-    const content = document.getElementById("layout-content");
-    content.innerHTML = "";
-    content.append(page.getContent()!);
-}
-const onLoadLayout = new LayoutNavigated();
+// function setLayout(type) {
+//     const container = document.getElementById("app")!;
+//     container.append(type.getContent()!);
+// }
+// function navigate(page) {
+//     const content = document.getElementById("layout-content");
+//     content.innerHTML = "";
+//     content.append(page.getContent()!);
+// }
+// const onLoadLayout = new LayoutNavigated();
 // const login = new LoginPage();
 // const signin = new SigninPage();
 // const notfound = new NotFoundPage();
-const chat = new ChatPage();
+// const chat = new ChatPage();
 // const profile = new ProfilePage();
 // const notFound = new NotFoundPage();
-setLayout(onLoadLayout);
-navigate(chat);
+// setLayout(onLoadLayout);
+// navigate(profile);
+navigate("layout", "navigated");
+navigate("page", "profile");
+
+document.querySelectorAll(`[page]`).forEach((el) => {
+    const route = el.getAttribute("page");
+    if (!route) return;
+
+    el.addEventListener("click", () => {
+        navigate("page", route);
+    });
+});
 
 // class Input extends Block {
 //     constructor(props) {
 //         super({
 //             ...props,
 //             events: {
-//                 change: (e: Event) =>
-//                     props.onChange((e.target as HTMLInputElement).value),
+// change: (e: Event) =>
+//     props.onChange((e.target as HTMLInputElement).value),
 //                 blur: () => this.validate(),
 //             },
 //         });
@@ -60,9 +70,9 @@ navigate(chat);
 //             }),
 //             input: new Input({
 //                 label: "input",
-//                 onChange: (value) => {
-//                     this.setProps({ buttonText: value });
-//                 },
+// onChange: (value) => {
+//     this.setProps({ buttonText: value });
+// },
 //             }),
 //         });
 //     }

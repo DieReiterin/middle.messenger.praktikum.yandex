@@ -1,15 +1,12 @@
 import EventBus from "./EventBus.ts";
 import Handlebars from "handlebars";
 
-// import LoginPage from "../pages/login-page/LoginPage.ts";
-
 export default class Block {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
         FLOW_CDU: "flow:component-did-update",
         FLOW_RENDER: "flow:render",
-        NAVIGATE: "navigate",
     };
 
     _element = null;
@@ -46,19 +43,6 @@ export default class Block {
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
-        // eventBus.on("navigate", this._navigate());
-        eventBus.on(Block.EVENTS.NAVIGATE, this._navigate.bind(this));
-        // eventBus.on("navigate", this._navigate.bind(this));
-    }
-
-    _navigate() {
-        console.log("_navigate");
-
-        // const content = document.getElementById("layout-content");
-        // content.innerHTML = "";
-
-        // const login = new LoginPage();
-        // content.append(login.getContent()!);
     }
 
     init() {
@@ -121,10 +105,18 @@ export default class Block {
 
     setProps = (nextProps) => {
         if (!nextProps) {
+            //
             return;
         }
+        const { children, lists } = this._getChildrenPropsAndProps(nextProps);
+        this.children = children;
 
-        Object.assign(this.props, nextProps);
+        Object.assign(this.props, nextProps); //
+
+        Object.entries(lists).forEach(([key, list]) => {
+            this.lists[key] = list;
+        });
+        // this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps)
     };
 
     get element() {

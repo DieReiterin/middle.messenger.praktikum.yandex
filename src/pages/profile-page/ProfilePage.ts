@@ -1,5 +1,7 @@
 import Block from "../../tools/Block.ts";
 import Profile from "../../components/profile/Profile.ts";
+// import Button from "../../components/button/Button.ts";
+// import InputField from "../../components/input-field/InputField.ts";
 import "./profile-page.scss";
 
 export default class ProfilePage extends Block {
@@ -8,9 +10,31 @@ export default class ProfilePage extends Block {
             ...props,
             profile: new Profile({
                 className: "profile-page__profile",
+                // children: new Button({
+                //     text: "Войти",
+                //     events: {
+                //         click: () => this.swap(),
+                //     },
+                // }),
             }),
         });
     }
+    // swap() {
+    //     console.log("swap");
+
+    //     const replace = new InputField({
+    //         className: "login-page__input",
+    //         label: "Логин",
+    //         placeholder: "введите логин",
+    //         error: "",
+    //         name: "login",
+    //         id: "login",
+    //     });
+    //     profile.children = replace;
+
+    //     // profile.updateChild(0, replace);
+    //     // profile.setProps({ children: replace });
+    // }
     override render() {
         return `<div class="profile-page">
                     <div class="profile-page__left">
