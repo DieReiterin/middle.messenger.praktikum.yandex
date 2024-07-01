@@ -1,5 +1,5 @@
 import Block from "../../tools/Block.ts";
-import Footer from "../../components/footer/Footer.ts";
+import { Footer } from "../../components/index.ts";
 import "./layout-navigated.scss";
 
 export default class LayoutNavigated extends Block {

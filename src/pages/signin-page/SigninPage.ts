@@ -1,8 +1,5 @@
 import Block from "../../tools/Block.ts";
-import Button from "../../components/button/Button.ts";
-import Link from "../../components/link/Link.ts";
-import PageTitle from "../../components/page-title/PageTitle.ts";
-import InputField from "../../components/input-field/InputField.ts";
+import { Button, Link, PageTitle, InputField } from "../../components/index.ts";
 import "./signin-page.scss";
 
 export default class SigninPage extends Block {
@@ -65,7 +62,7 @@ export default class SigninPage extends Block {
             btn: new Button({
                 className: "signin-page__submit-btn",
                 text: "Создать аккаунт",
-                page: "chat",
+                page: "chats",
             }),
             link: new Link({
                 className: "signin-page__link",

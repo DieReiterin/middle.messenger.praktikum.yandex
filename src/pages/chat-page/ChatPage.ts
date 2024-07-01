@@ -1,5 +1,5 @@
 import Block from "../../tools/Block.ts";
-import ChatList from "../../components/chat-list/ChatList.ts";
+import { ChatList } from "../../components/index.ts";
 import "./chat-page.scss";
 
 export default class ChatPage extends Block {

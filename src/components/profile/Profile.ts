@@ -1,33 +1,42 @@
 import Block from "../../tools/Block.ts";
-import Button from "../../components/button/Button.ts";
-import InputField from "../../components/input-field/InputField.ts";
+import { ProfileContent, SettingsContent } from "../../components/index.ts";
 import "./profile.scss";
 
 export default class Profile extends Block {
     constructor(props?) {
         super({
             ...props,
-            content: new Button({
-                text: "Войти",
-                events: {
-                    click: () => this.replace(),
-                },
-            }),
+            content: "",
+            // content: new ProfileContent({
+            //     onEdit: () => this.edit(),
+            // }),
+            // content: new Button({
+            //     text: "Войти",
+            //     events: {
+            //         click: () => this.setProps({ content: this.input }),
+            //     },
+            // }),
         });
     }
-    replace() {
-        console.log("replace");
-
-        this.content = this.input;
-    }
-    input = new InputField({
-        className: "login-page__input",
-        label: "Логин",
-        placeholder: "введите логин",
-        error: "",
-        name: "login",
-        id: "login",
+    default = new ProfileContent({
+        onEdit: () => this.edit(),
     });
+    settings = new SettingsContent({
+        onSave: () => this.save(),
+    });
+    edit() {
+        this.setProps({ content: this.settings });
+    }
+    save() {
+        this.setProps({ content: this.default });
+    }
+    componentDidMount() {
+        if (this.props.profileType === "settings") {
+            this.edit();
+        } else {
+            this.save();
+        }
+    }
     render() {
         return `<div class="profile {{ className }}">
                     <div class="profile__header">

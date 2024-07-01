@@ -1,5 +1,5 @@
 import Block from "../../tools/Block.ts";
-import ChatItem from "../../components/chat-item/ChatItem.ts";
+import { ChatItem } from "../../components/index.ts";
 import "./chat-list.scss";
 import favicon from "/icons/favicon.png";
 

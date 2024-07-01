@@ -1,8 +1,5 @@
 import Block from "../../tools/Block.ts";
-import Button from "../../components/button/Button.ts";
-import Link from "../../components/link/Link.ts";
-import PageTitle from "../../components/page-title/PageTitle.ts";
-import InputField from "../../components/input-field/InputField.ts";
+import { Button, Link, PageTitle, InputField } from "../../components/index.ts";
 import "./login-page.scss";
 
 export default class LoginPage extends Block {
@@ -32,7 +29,7 @@ export default class LoginPage extends Block {
             btn: new Button({
                 className: "login-page__submit-btn",
                 text: "Войти",
-                page: "chat",
+                page: "chats",
             }),
             link: new Link({
                 className: "login-page__link",
@@ -42,7 +39,7 @@ export default class LoginPage extends Block {
         });
     }
     override render() {
-        return `<form class="login-page">
+        return `<form class="login-page" action="">
                     <div class="login-page__main">
                         {{{title}}} 
                         {{{input1}}}  

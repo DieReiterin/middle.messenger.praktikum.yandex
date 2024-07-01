@@ -5,13 +5,10 @@ export default class InputField extends Block {
     constructor(props?) {
         super({
             ...props,
-            attr: {
-                class: `input-field`,
-            },
         });
     }
     render() {
-        return `<div class="{{className}} {{#if typeProfile}}input-field_type-profile{{/if}}">
+        return `<div class="input-field {{className}} {{#if typeProfile}}input-field_type-profile{{/if}}">
                     {{#if label}}
                         <label class="input-field__label" for="{{id}}">
                             {{label}}

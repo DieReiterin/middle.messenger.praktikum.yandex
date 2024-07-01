@@ -19,6 +19,10 @@ export default class Button extends Block {
     //     return true;
     // }
     render() {
-        return `<button class="button {{className}}" type="{{type}}" page="{{page}}">{{text}}</button>`;
+        return `<button 
+            class="button {{className}}" 
+            {{#if page}}page="{{page}}"{{/if}}
+            {{#if type}}type="{{type}}"{{/if}}
+        >{{text}}</button>`;
     }
 }

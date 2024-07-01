@@ -1,43 +1,18 @@
 // import Handlebars from "handlebars";
 // import Block from "./tools/Block.ts";
 import "./style.scss";
-// import LoginPage from "./pages/login-page/LoginPage.ts";
-// import SigninPage from "./pages/signin-page/SigninPage.ts";
-// import ChatPage from "./pages/chat-page/ChatPage.ts";
-// import ProfilePage from "./pages/profile-page/ProfilePage.ts";
-// import NotFoundPage from "./pages/not-found-page/NotFoundPage.ts";
-// import LayoutNavigated from "./layouts/layout-navigated/LayoutNavigated.ts";
-
-// import "./components/server-alert/server-alert.scss";
-// import "./pages/not-found-page/not-found-page.scss";
 import navigate from "./tools/navigate.ts";
 
-// function setLayout(type) {
-//     const container = document.getElementById("app")!;
-//     container.append(type.getContent()!);
-// }
-// function navigate(page) {
-//     const content = document.getElementById("layout-content");
-//     content.innerHTML = "";
-//     content.append(page.getContent()!);
-// }
-// const onLoadLayout = new LayoutNavigated();
-// const login = new LoginPage();
-// const signin = new SigninPage();
-// const notfound = new NotFoundPage();
-// const chat = new ChatPage();
-// const profile = new ProfilePage();
-// const notFound = new NotFoundPage();
-// setLayout(onLoadLayout);
-// navigate(profile);
 navigate("layout", "navigated");
-navigate("page", "profile");
+navigate("page", "login");
 
 document.querySelectorAll(`[page]`).forEach((el) => {
     const route = el.getAttribute("page");
-    if (!route) return;
 
     el.addEventListener("click", () => {
+        if (!route) return;
+        if (route === "chat") console.log("CHAT ERROR PATH");
+        console.log("route - " + route);
         navigate("page", route);
     });
 });
@@ -47,9 +22,12 @@ document.querySelectorAll(`[page]`).forEach((el) => {
 //         super({
 //             ...props,
 //             events: {
-// change: (e: Event) =>
-//     props.onChange((e.target as HTMLInputElement).value),
+//                 change: (e) =>
+//                     props.onChange(e.target.value),
 //                 blur: () => this.validate(),
+//             },
+//             attr: {
+//                 class: ``,
 //             },
 //         });
 //     }
@@ -61,6 +39,24 @@ document.querySelectorAll(`[page]`).forEach((el) => {
 //     }
 // }
 
+// class Button extends Block {
+//     constructor(props) {
+//       super({
+//         ...props,
+//         events: {
+//           click: () => console.log('event')
+//         },
+//         attr: {
+//           class: `fake`
+//         }
+//       })
+//     }
+
+//     render() {
+//       return "<button>{{text}}</button>"
+//     }
+//   }
+
 // class PageWithButton extends Block {
 //     constructor(props) {
 //         super({
@@ -70,9 +66,9 @@ document.querySelectorAll(`[page]`).forEach((el) => {
 //             }),
 //             input: new Input({
 //                 label: "input",
-// onChange: (value) => {
-//     this.setProps({ buttonText: value });
-// },
+//                 onChange: (value) => {
+//                     this.setProps({ buttonText: value });
+//                 },
 //             }),
 //         });
 //     }

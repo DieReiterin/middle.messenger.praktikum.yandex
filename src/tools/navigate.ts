@@ -1,16 +1,20 @@
-import LayoutNavigated from "../layouts/layout-navigated/LayoutNavigated.ts";
-import LoginPage from "../pages/login-page/LoginPage.ts";
-import SigninPage from "../pages/signin-page/SigninPage.ts";
-import ChatPage from "../pages/chat-page/ChatPage.ts";
-import ProfilePage from "../pages/profile-page/ProfilePage.ts";
-import NotFoundPage from "../pages/not-found-page/NotFoundPage.ts";
+import { LayoutNavigated, LayoutDefault } from "../layouts/index.ts";
+import {
+    LoginPage,
+    SigninPage,
+    ChatPage,
+    ProfilePage,
+    ErrorPage,
+} from "../pages/index.ts";
 
 function setLayout(type) {
     let layout;
     if (type === "navigated") {
         layout = new LayoutNavigated();
+    } else if (type === "default") {
+        layout = new LayoutDefault();
     } else {
-        throw new Error(`no such layout ${type}`);
+        throw new Error(`no such layout - ${type}`);
     }
     const container = document.getElementById("app")!;
     container.append(layout.getContent()!);
@@ -24,11 +28,15 @@ function setPage(type) {
     } else if (type === "chats") {
         page = new ChatPage();
     } else if (type === "profile") {
-        page = new ProfilePage();
-    } else if (type === "profile") {
-        page = new NotFoundPage();
+        page = new ProfilePage({ profileType: "default" });
+    } else if (type === "settings") {
+        page = new ProfilePage({ profileType: "settings" });
+    } else if (type === "not-found") {
+        page = new ErrorPage({ title: "400", subtitle: "Не туда попали" });
+    } else if (type === "server-error") {
+        page = new ErrorPage({ title: "500", subtitle: "Мы уже фиксим" });
     } else {
-        throw new Error(`no such page ${type}`);
+        throw new Error(`no such page - ${type}`);
     }
     const content = document.getElementById("layout-content");
     content.innerHTML = "";
@@ -42,7 +50,7 @@ export default function navigate(pageOrLayout, type) {
         setPage(type);
     } else {
         throw new Error(
-            `incorrect navigation params ${pageOrLayout} and ${type}`
+            `incorrect navigation params - ${pageOrLayout} and ${type}`
         );
     }
 }
