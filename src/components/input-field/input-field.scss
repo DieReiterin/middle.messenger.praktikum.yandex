@@ -14,22 +14,6 @@
         line-height: 100%;
         color: #999;
     }
-    &__control {
-        margin-bottom: 5px;
-        padding-bottom: 3px;
-
-        font-weight: 500;
-        font-size: 13px;
-        line-height: 100%;
-        color: #000;
-
-        border: none;
-        border-bottom: 1px solid #000;
-
-        &:focus {
-            outline: 1px solid #999;
-        }
-    }
     &__error {
         font-weight: 400;
         font-size: 12px;

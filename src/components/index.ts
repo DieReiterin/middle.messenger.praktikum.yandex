@@ -1,7 +1,9 @@
 export { default as Button } from "./button/Button.ts";
+export { default as ChatDialog } from "./chat-dialog/ChatDialog.ts";
 export { default as ChatItem } from "./chat-item/ChatItem.ts";
 export { default as ChatList } from "./chat-list/ChatList.ts";
 export { default as Footer } from "./footer/Footer.ts";
+export { default as Input } from "./input/Input.ts";
 export { default as InputField } from "./input-field/InputField.ts";
 export { default as Link } from "./link/Link.ts";
 export { default as PageTitle } from "./page-title/PageTitle.ts";

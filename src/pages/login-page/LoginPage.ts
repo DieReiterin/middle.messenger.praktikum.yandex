@@ -17,6 +17,8 @@ export default class LoginPage extends Block {
                 error: "",
                 name: "login",
                 id: "login",
+                onBlur: () => this.validate(),
+                onInput: (val) => this.logger(val),
             }),
             input2: new InputField({
                 className: "login-page__input",
@@ -25,6 +27,7 @@ export default class LoginPage extends Block {
                 error: "Неверный пароль",
                 name: "password",
                 id: "password",
+                onBlur: () => this.validate(),
             }),
             btn: new Button({
                 className: "login-page__submit-btn",
@@ -37,6 +40,26 @@ export default class LoginPage extends Block {
                 page: "signin",
             }),
         });
+    }
+    // data = "Неверный пароль";
+    validate() {
+        // this.setProps({
+        //     input1: new InputField({
+        //         className: "login-page__input",
+        //         label: "Логин",
+        //         placeholder: "введите логин",
+        //         error: this.data,
+        //         name: "login",
+        //         id: "login",
+        //         onBlur: () => this.validate(),
+        //         onInput: (val) => this.logger(val),
+        //     }),
+        // });
+        console.log("Here we call validation code on blur");
+    }
+    logger(val) {
+        console.log("val");
+        console.log(val);
     }
     override render() {
         return `<form class="login-page" action="">

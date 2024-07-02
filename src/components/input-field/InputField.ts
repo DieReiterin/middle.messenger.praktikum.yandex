@@ -1,10 +1,20 @@
 import Block from "../../tools/Block.ts";
+import { Input } from "../../components/index.ts";
 import "./input-field.scss";
 
 export default class InputField extends Block {
     constructor(props?) {
         super({
             ...props,
+            input: new Input({
+                name: props.name,
+                id: props.id,
+                placeholder: props.placeholder,
+                value: props.value,
+                onBlur: () => props.onBlur(),
+                onInput: (val) => props.onInput(val),
+            }),
+            error: props.error,
         });
     }
     render() {
@@ -14,14 +24,7 @@ export default class InputField extends Block {
                             {{label}}
                         </label>
                     {{/if}}
-                    <input
-                        name="{{name}}"
-                        class="input-field__control"
-                        type="text"
-                        id="{{id}}"
-                        placeholder="{{placeholder}}"
-                        value="{{value}}"
-                    />
+                    {{{input}}}
                     <label class="input-field__error" for="{{id}}">
                         {{error}}
                     </label>
