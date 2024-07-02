@@ -10,11 +10,31 @@ export default class InputField extends Block {
                 name: props.name,
                 id: props.id,
                 placeholder: props.placeholder,
-                value: props.value,
-                onBlur: () => props.onBlur(),
-                onInput: (val) => props.onInput(val),
+                value: "",
+                onBlur: () => this.validate(),
+                onInput: (val) => (this.value = val),
+                // onInput: (val) => props.onInput(val),
+                // onBlur: () => props.onBlur(),
             }),
-            error: props.error,
+            error: "",
+        });
+    }
+    value = "";
+    error = "";
+    validate() {
+        this.error = "someErr";
+        this.setProps({
+            input: new Input({
+                name: this.props.name,
+                id: this.props.id,
+                placeholder: this.props.placeholder,
+                value: this.value,
+                onBlur: () => this.validate(),
+                onInput: (val) => this.props.onInput(val),
+                // onInput: (val) => props.onInput(val),
+                // onBlur: () => props.onBlur(),
+            }),
+            error: this.error,
         });
     }
     render() {
