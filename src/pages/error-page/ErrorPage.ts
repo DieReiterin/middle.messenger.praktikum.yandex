@@ -1,6 +1,7 @@
 import Block from "../../tools/Block.ts";
 import { PageTitle, Link } from "../../components/index.ts";
 import "./error-page.scss";
+import navigate from "../../tools/navigate.ts";
 
 export default class ErrorPage extends Block {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class ErrorPage extends Block {
             link: new Link({
                 className: "error-page__subtitle",
                 text: "Назад к чатам",
-                page: "chats",
+                onClick: () => navigate("page", "chats"),
             }),
         });
     }

@@ -1,11 +1,83 @@
 import Block from "../../tools/Block.ts";
 import "./chat-dialog.scss";
+import { IconButton, Textarea } from "../../components/index.ts";
+import validate from "../../tools/validate.ts";
 
 export default class ChatDialog extends Block {
     constructor(props?) {
         super({
             ...props,
+            sendBtn: new IconButton({
+                className: "chat-dialog__send",
+                src: "/icons/arrow.svg",
+                alt: "Отправить",
+                onClick: () => this.submitForm(),
+            }),
+            textField: new Textarea({
+                className: "chat-dialog__text-field",
+                name: "message",
+                id: "message",
+                placeholder: "Сообщение...",
+                text: "",
+                onInput: (val) => {
+                    this.data.message = val;
+                },
+            }),
         });
+    }
+    data = {
+        message: "",
+    };
+    submitForm() {
+        if (this.validateField()) {
+            console.log(this.data);
+            console.log("Message sent");
+        }
+    }
+    validateField() {
+        const validationResult = validate("message", this.data.message);
+        if (validationResult && validationResult !== "ok") {
+            this.setProps({
+                sendBtn: new IconButton({
+                    className: "chat-dialog__send",
+                    src: "/icons/arrow.svg",
+                    alt: "Отправить",
+                    onClick: () => this.submitForm(),
+                }),
+                textField: new Textarea({
+                    className: "chat-dialog__text-field",
+                    name: "message",
+                    id: "message",
+                    placeholder: validationResult,
+                    text: "",
+                    onInput: (val) => {
+                        this.data.message = val;
+                    },
+                }),
+            });
+            return false;
+        } else if (validationResult && validationResult === "ok") {
+            this.setProps({
+                sendBtn: new IconButton({
+                    className: "chat-dialog__send",
+                    src: "/icons/arrow.svg",
+                    alt: "Отправить",
+                    onClick: () => this.submitForm(),
+                }),
+                textField: new Textarea({
+                    className: "chat-dialog__text-field",
+                    name: "message",
+                    id: "message",
+                    placeholder: "Сообщение...",
+                    text: this.data.message,
+                    onInput: (val) => {
+                        this.data.message = val;
+                    },
+                }),
+            });
+            return true;
+        }
+        return true;
     }
     render() {
         return `<div class="chat-dialog {{ className }}">
@@ -30,13 +102,11 @@ export default class ChatDialog extends Block {
                                 Круто!
                             </div> 
                     </div>
-                    <div class="chat-dialog__footer">  
+                    <form class="chat-dialog__footer">  
                         <img src="/icons/paper-clip.svg" alt="paper-clip" class="chat-dialog__attach">
-                        <div class="chat-dialog__text-field">
-                            Сообщение
-                        </div>
-                        <img src="/icons/arrow.svg" alt="Назад" class="chat-dialog__send">
-                    </div>
+                        {{{textField}}}
+                        {{{sendBtn}}}
+                    </form>
                 </div>`;
     }
 }

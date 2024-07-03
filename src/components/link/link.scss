@@ -12,4 +12,13 @@
     &_red {
         color: #ff0000;
     }
+
+    &_disabled {
+        color: #999;
+
+        &:hover {
+            color: #999;
+            cursor: default;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 import Block from "../../tools/Block.ts";
 import { Button, Link, PageTitle, InputField } from "../../components/index.ts";
 import "./login-page.scss";
+import navigate from "../../tools/navigate.ts";
 
 export default class LoginPage extends Block {
     constructor(props?) {
@@ -16,8 +17,9 @@ export default class LoginPage extends Block {
                 placeholder: "введите логин",
                 name: "login",
                 id: "login",
-                onBlur: () => this.validate(),
-                onInput: (val) => this.logger(val),
+                onInput: (val) => {
+                    this.data.login = val;
+                },
             }),
             input2: new InputField({
                 className: "login-page__input",
@@ -25,39 +27,34 @@ export default class LoginPage extends Block {
                 placeholder: "введите пароль",
                 name: "password",
                 id: "password",
-                onBlur: () => this.validate(),
+                onInput: (val) => {
+                    this.data.password = val;
+                },
             }),
             btn: new Button({
                 className: "login-page__submit-btn",
                 text: "Войти",
-                page: "chats",
+                onClick: () => this.submitForm(),
             }),
             link: new Link({
                 className: "login-page__link",
                 text: "Регистрация",
-                page: "signin",
+                onClick: () => navigate("page", "signin"),
             }),
         });
     }
-    // data = "Неверный пароль";
-    validate() {
-        // this.setProps({
-        //     input1: new InputField({
-        //         className: "login-page__input",
-        //         label: "Логин",
-        //         placeholder: "введите логин",
-        //         error: this.data,
-        //         name: "login",
-        //         id: "login",
-        //         onBlur: () => this.validate(),
-        //         onInput: (val) => this.logger(val),
-        //     }),
-        // });
-        console.log("Here we call validation code on blur");
-    }
-    logger(val) {
-        console.log("val");
-        console.log(val);
+    data = {
+        login: "",
+        password: "",
+    };
+    submitForm() {
+        if (
+            this.children.input1.validateField() &&
+            this.children.input2.validateField()
+        ) {
+            console.log(this.data);
+            navigate("page", "chats");
+        }
     }
     override render() {
         return `<form class="login-page" action="">

@@ -1,6 +1,7 @@
 import Block from "../../tools/Block.ts";
 import { Button } from "../../components/index.ts";
 import "./footer.scss";
+import navigate from "../../tools/navigate.ts";
 
 export default class Footer extends Block {
     constructor(props?) {
@@ -9,51 +10,41 @@ export default class Footer extends Block {
             nav: null,
             btn1: new Button({
                 className: "footer__btn",
-                page: "login",
                 text: "Авторизация",
+                onClick: () => navigate("page", "login"),
             }),
             btn2: new Button({
                 className: "footer__btn",
-                page: "signin",
                 text: "Регистрация",
+                onClick: () => navigate("page", "signin"),
             }),
             btn3: new Button({
                 className: "footer__btn",
-                page: "chats",
                 text: "Список чатов",
+                onClick: () => navigate("page", "chats"),
             }),
             btn4: new Button({
                 className: "footer__btn",
-                page: "profile",
                 text: "Профиль",
+                onClick: () => navigate("page", "profile"),
             }),
             btn5: new Button({
                 className: "footer__btn",
-                page: "settings",
                 text: "Настройки",
+                onClick: () => navigate("page", "settings"),
             }),
             btn6: new Button({
                 className: "footer__btn",
-                page: "not-found",
                 text: "Страница 404",
+                onClick: () => navigate("page", "not-found"),
             }),
             btn7: new Button({
                 className: "footer__btn",
-                page: "server-error",
                 text: "Страница 5**",
+                onClick: () => navigate("page", "server-error"),
             }),
         });
     }
-    // componentDidMount() {
-    //     // this.nav = new Navigator();
-    //     // this.eventBus().on("navigate", this.navigate);
-    //     // this.children.btn1.setProps({
-    //     //     onNavigate: () => {
-    //     //         this.eventBus().emit('navigate');
-    //     //     },
-    //     // });
-    //     return true;
-    // }
     render() {
         return `<nav class="footer {{ className }}">
                     <div class="footer__content">

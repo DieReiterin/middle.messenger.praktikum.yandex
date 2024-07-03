@@ -7,15 +7,6 @@ export default class Profile extends Block {
         super({
             ...props,
             content: "",
-            // content: new ProfileContent({
-            //     onEdit: () => this.edit(),
-            // }),
-            // content: new Button({
-            //     text: "Войти",
-            //     events: {
-            //         click: () => this.setProps({ content: this.input }),
-            //     },
-            // }),
         });
     }
     default = new ProfileContent({

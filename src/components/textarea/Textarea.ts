@@ -1,19 +1,19 @@
 import Block from "../../tools/Block.ts";
-import "./input.scss";
+import "./textarea.scss";
 
-export default class Input extends Block {
+export default class Textarea extends Block {
     constructor(props?) {
         super({
             ...props,
             events: {
-                blur: () => this.blurInput(),
+                blur: () => this.blurTextarea(),
                 input: (e) => {
                     this.enterText(e.target.value);
                 },
             },
         });
     }
-    blurInput() {
+    blurTextarea() {
         if (this.props.onBlur) {
             this.props.onBlur();
         }
@@ -24,13 +24,12 @@ export default class Input extends Block {
         }
     }
     render() {
-        return `<input
+        return `<textarea
+                    class="textarea {{className}}"
                     name="{{name}}"
-                    class="input {{#if typeProfile}}input_type-profile{{/if}}"
-                    type="text"
                     id="{{id}}"
                     placeholder="{{placeholder}}"
-                    value="{{value}}"
-                />`;
+                />{{text}}</textarea>
+                `;
     }
 }

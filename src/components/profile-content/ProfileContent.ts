@@ -2,6 +2,7 @@ import Block from "../../tools/Block.ts";
 import { Subtitle, Link } from "../../components/index.ts";
 
 import "./profile-content.scss";
+import navigate from "../../tools/navigate.ts";
 
 export default class ProfileContent extends Block {
     constructor(props?) {
@@ -58,20 +59,16 @@ export default class ProfileContent extends Block {
             editData: new Link({
                 className: "profile-content__link",
                 text: "Изменить данные",
-                events: {
-                    click: () => {
-                        this.props.onEdit();
-                    },
-                },
+                onClick: () => this.props.onEdit(),
             }),
             editPassword: new Link({
-                className: "profile-content__link",
+                className: "profile-content__link link_disabled",
                 text: "Изменить пароль",
             }),
             signout: new Link({
-                className: "profile-content__link",
+                className: "profile-content__link link_red",
                 text: "Выйти",
-                page: "login",
+                onClick: () => navigate("page", "login"),
             }),
         });
     }

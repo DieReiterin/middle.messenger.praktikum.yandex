@@ -51,7 +51,6 @@ export default class Block {
     }
 
     _componentDidMount() {
-        // console.log("Mount");
         this.componentDidMount();
 
         Object.values(this.children).forEach((child) => {
@@ -116,7 +115,6 @@ export default class Block {
         Object.entries(lists).forEach(([key, list]) => {
             this.lists[key] = list;
         });
-        // this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps)
     };
 
     get element() {
@@ -124,7 +122,6 @@ export default class Block {
     }
 
     _render() {
-        // console.log("Render");
         const propsAndStubs = { ...this.props };
         const _tmpId = Math.floor(100000 + Math.random() * 900000);
         Object.entries(this.children).forEach(([key, child]) => {

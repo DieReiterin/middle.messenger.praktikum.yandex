@@ -1,27 +1,24 @@
 import Block from "../../tools/Block.ts";
-import "./button.scss";
+import "./icon-button.scss";
 
-export default class Button extends Block {
+export default class IconButton extends Block {
     constructor(props?) {
         super({
             ...props,
             events: {
                 click: (e) => {
                     e.preventDefault();
-                    this.clickBtn();
+                    this.clickIcon();
                 },
             },
         });
     }
-    clickBtn() {
+    clickIcon() {
         if (this.props.onClick) {
             this.props.onClick();
         }
     }
     render() {
-        return `<button 
-            class="button {{className}}"
-            {{#if type}}type="{{type}}"{{/if}}
-        >{{text}}</button>`;
+        return `<img class="icon-button {{className}}" src="{{src}}" alt="{{alt}}">`;
     }
 }

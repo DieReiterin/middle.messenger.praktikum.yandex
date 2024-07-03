@@ -5,15 +5,24 @@ export default class Link extends Block {
     constructor(props?) {
         super({
             ...props,
+            events: {
+                click: (e) => {
+                    e.preventDefault();
+                    this.clickLink();
+                },
+            },
         });
     }
+    clickLink() {
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
+    }
     render() {
-        // {{#if page}}page="{{page}}"{{/if}}
         return `<a  
                     class="link {{className}}"
-                    href="{{href}}"
-                    action="{{action}}"
-                    page="{{page}}"
+                    {{#if href}}href="{{href}}"{{/if}}
+                    {{#if action}}action="{{action}}"{{/if}}
                 >{{text}}</a>`;
     }
 }
