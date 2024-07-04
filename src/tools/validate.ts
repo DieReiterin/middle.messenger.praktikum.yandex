@@ -19,7 +19,7 @@ const latinCyrillicWith_Dash = /^[a-zA-Zа-яА-Я-]*$/;
 const latinWith_Dash_Lodash = /^[a-zA-Z0-9-_]*$/;
 const latinWith_Nums_Dash_Lodash_Atsign_Point = /^[a-zA-Z0-9-_@.]*$/;
 
-function validateName(val) {
+function validateName(val: string) {
     if (!noNums.test(val)) {
         return "цифры недопустимы";
     } else if (!noSpaces.test(val)) {
@@ -33,7 +33,7 @@ function validateName(val) {
     }
 }
 
-function validateLogin(val) {
+function validateLogin(val: string) {
     if (!length3to20.test(val)) {
         return "от 3 до 20 символов";
     } else if (!noCyrillic.test(val)) {
@@ -49,7 +49,7 @@ function validateLogin(val) {
     }
 }
 
-function validateEmail(val) {
+function validateEmail(val: string) {
     if (!noCyrillic.test(val)) {
         return "только латиница";
     } else if (!latinWith_Nums_Dash_Lodash_Atsign_Point.test(val)) {
@@ -61,7 +61,7 @@ function validateEmail(val) {
     }
 }
 
-function validatePassword(val) {
+function validatePassword(val: string) {
     if (!length8to40.test(val)) {
         return "от 8 до 40 символов";
     } else if (!hasCapital.test(val)) {
@@ -73,7 +73,7 @@ function validatePassword(val) {
     }
 }
 
-function validatePhone(val) {
+function validatePhone(val: string) {
     if (!length10to15.test(val)) {
         return "от 10 до 15 символов";
     } else if (!numsWith_Plus.test(val)) {
@@ -85,7 +85,7 @@ function validatePhone(val) {
     }
 }
 
-function validateMessage(val) {
+function validateMessage(val: string) {
     if (val.length === 0) {
         return "Поле не может быть пустым";
     } else {
@@ -93,7 +93,7 @@ function validateMessage(val) {
     }
 }
 
-function validatePasswordRepeat(val) {
+function validatePasswordRepeat(val: string) {
     if (val.length === 0) {
         return "Поле не может быть пустым";
     } else {
@@ -101,7 +101,7 @@ function validatePasswordRepeat(val) {
     }
 }
 
-function validateDisplayName(val) {
+function validateDisplayName(val: string) {
     if (val.length === 0) {
         return "Поле не может быть пустым";
     } else {
@@ -109,7 +109,7 @@ function validateDisplayName(val) {
     }
 }
 
-export default function validate(type, val) {
+export default function validate(type: string, val: string) {
     if (type === "first_name" || type === "second_name") {
         return validateName(val);
     } else if (type === "display_name") {

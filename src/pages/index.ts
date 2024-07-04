@@ -1,5 +1,5 @@
-export { default as ChatPage } from "./chat-page/ChatPage.ts";
-export { default as ErrorPage } from "./error-page/ErrorPage.ts";
-export { default as LoginPage } from "./login-page/LoginPage.ts";
-export { default as ProfilePage } from "./profile-page/ProfilePage.ts";
-export { default as SigninPage } from "./signin-page/SigninPage.ts";
+export { default as ChatPage } from "@/pages/chat-page/ChatPage";
+export { default as ErrorPage } from "@/pages/error-page/ErrorPage";
+export { default as LoginPage } from "@/pages/login-page/LoginPage";
+export { default as ProfilePage } from "@/pages/profile-page/ProfilePage";
+export { default as SigninPage } from "@/pages/signin-page/SigninPage";

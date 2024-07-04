@@ -1,5 +1,5 @@
 import "./style.scss";
-import navigate from "./tools/navigate.ts";
+import navigate from "@/tools/navigate";
 
 navigate("layout", "navigated");
-navigate("page", "profile");
+navigate("page", "login");

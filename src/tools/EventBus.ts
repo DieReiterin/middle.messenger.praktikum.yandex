@@ -1,13 +1,13 @@
-type TEventHandler = (...args: any[]) => void;
+type THandler = (...args: any[]) => void;
 
 export default class EventBus {
-    private listeners: { [key: string]: TEventHandler[] };
+    private listeners: { [key: string]: THandler[] };
 
     constructor() {
         this.listeners = {};
     }
 
-    on(event: string, callback: TEventHandler): void {
+    on(event: string, callback: THandler): void {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
@@ -15,7 +15,7 @@ export default class EventBus {
         this.listeners[event].push(callback);
     }
 
-    off(event: string, callback: TEventHandler): void {
+    off(event: string, callback: THandler): void {
         if (!this.listeners[event]) {
             return;
         }

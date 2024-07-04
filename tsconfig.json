@@ -1,22 +1,43 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@": ["src"],
+      "@/tools/navigate": ["src/tools/navigate.ts"],
+      "@/tools/EventBus": ["src/tools/EventBus.ts"],
+      "@/tools/Block": ["src/tools/Block.ts"],
+      "@/layouts/index": ["src/layouts/index.ts"],
+      "@/pages/index": ["src/pages/index.ts"],
+      "@/pages/chat-page/ChatPage": ["src/pages/chat-page/ChatPage.ts"],
+      "@/pages/error-page/ErrorPage": ["src/pages/error-page/ErrorPage.ts"],
+      "@/pages/login-page/LoginPage": ["src/pages/login-page/LoginPage.ts"],
+      "@/pages/profile-page/ProfilePage": [
+        "src/pages/profile-page/ProfilePage.ts"
+      ],
+      "@/pages/signin-page/SigninPage": ["src/pages/signin-page/SigninPage.ts"],
+      "@/components/index": ["src/components/index.ts"]
+      // "@/components/input-field/InputField": [
+      //   "src/components/input-field/InputField.ts"
+      // ],
+      // "@/components/page-title/PageTitle": [
+      //   "src/components/page-title/PageTitle.ts"
+      // ],
+      // "@/components/button/Button": ["src/components/button/Button.ts"],
+      // "@/components/link/Link": ["src/components/link/Link.ts"]
+    },
     "target": "ESNext",
-    "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "Node",
     "strict": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "esModuleInterop": true,
-    "noEmit": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitAny": false,
-    "noImplicitReturns": true,
-    "strictNullChecks": false,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "sourceMap": true,
+    "strictNullChecks": true
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts", "src/**/*.d.ts"]
 }

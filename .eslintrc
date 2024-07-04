@@ -1,0 +1,22 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["airbnb", "plugin:@typescript-eslint/recommended"],
+    "rules": {
+        "quotes": ["warn", "double"],
+        "semi": ["warn", "always"],
+        "no-unused-vars": ["warn"],
+        "indent": ["warn", 4],
+        "max-len": ["warn", 100],
+        "max-params": ["warn", 3],
+        "import/no-extraneous-dependencies": "off",
+        "linebreak-style": ["warn", "windows"],
+        "prefer-arrow-callback": "off",
+        "func-names": "off",
+        "react/react-in-jsx-scope": "off"
+    }
+}

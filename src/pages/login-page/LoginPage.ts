@@ -1,10 +1,10 @@
-import Block from "../../tools/Block.ts";
-import { Button, Link, PageTitle, InputField } from "../../components/index.ts";
+import Block, { IProps } from "@/tools/Block";
+import { Button, Link, PageTitle, InputField } from "@/components/index";
 import "./login-page.scss";
-import navigate from "../../tools/navigate.ts";
+import navigate from "@/tools/navigate";
 
 export default class LoginPage extends Block {
-    constructor(props?) {
+    constructor(props: IProps) {
         super({
             ...props,
             title: new PageTitle({
@@ -17,7 +17,7 @@ export default class LoginPage extends Block {
                 placeholder: "введите логин",
                 name: "login",
                 id: "login",
-                onInput: (val) => {
+                onInput: (val: string) => {
                     this.data.login = val;
                 },
             }),
@@ -27,7 +27,7 @@ export default class LoginPage extends Block {
                 placeholder: "введите пароль",
                 name: "password",
                 id: "password",
-                onInput: (val) => {
+                onInput: (val: string) => {
                     this.data.password = val;
                 },
             }),
@@ -48,9 +48,11 @@ export default class LoginPage extends Block {
         password: "",
     };
     submitForm() {
+        const input1: unknown = this.children.input1;
+        const input2: unknown = this.children.input2;
         if (
-            this.children.input1.validateField() &&
-            this.children.input2.validateField()
+            (input1 as { validateField: () => boolean }).validateField() &&
+            (input2 as { validateField: () => boolean }).validateField()
         ) {
             console.log(this.data);
             navigate("page", "chats");

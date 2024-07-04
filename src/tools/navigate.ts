@@ -1,13 +1,13 @@
-import { LayoutNavigated, LayoutDefault } from "../layouts/index.ts";
+import { LayoutNavigated, LayoutDefault } from "@/layouts/index";
 import {
     LoginPage,
     SigninPage,
     ChatPage,
     ProfilePage,
     ErrorPage,
-} from "../pages/index.ts";
+} from "@/pages/index";
 
-function setLayout(type) {
+function setLayout(type: string) {
     let layout;
     if (type === "navigated") {
         layout = new LayoutNavigated();
@@ -19,7 +19,7 @@ function setLayout(type) {
     const container = document.getElementById("app")!;
     container.append(layout.getContent()!);
 }
-function setPage(type) {
+function setPage(type: string) {
     let page;
     if (type === "login") {
         page = new LoginPage();
@@ -38,12 +38,15 @@ function setPage(type) {
     } else {
         throw new Error(`no such page - ${type}`);
     }
-    const content = document.getElementById("layout-content");
-    content.innerHTML = "";
-    content.append(page.getContent()!);
+    const content: HTMLElement | null =
+        document.getElementById("layout-content");
+    if (content) {
+        content.innerHTML = "";
+        content.append(page.getContent()!);
+    }
 }
 
-export default function navigate(pageOrLayout, type) {
+export default function navigate(pageOrLayout: string, type: string) {
     if (pageOrLayout === "layout") {
         setLayout(type);
     } else if (pageOrLayout === "page") {

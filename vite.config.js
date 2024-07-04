@@ -16,7 +16,7 @@ export default defineConfig({
         alias: {
             "@": fileURLToPath(new URL("./src", import.meta.url)),
         },
-        extensions: [".js", ".json", ".jsx", ".mjs"],
+        extensions: [".ts", ".js", ".json", ".jsx", ".mjs"],
     },
     css: {
         preprocessorOptions: {
