@@ -23,8 +23,10 @@ function queryStringify(data: Record<string, any>) {
     }, '?');
 }
 
+type HTTPMethod = (url: string, options?: IOptions) => Promise<unknown>;
+
 export default class HttpTransport {
-    get = (url: string, options: IOptions) => {
+    get: HTTPMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
@@ -32,7 +34,7 @@ export default class HttpTransport {
         );
     };
 
-    post = (url: string, options: IOptions) => {
+    post: HTTPMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
@@ -40,7 +42,7 @@ export default class HttpTransport {
         );
     };
 
-    put = (url: string, options: IOptions) => {
+    put: HTTPMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
@@ -48,7 +50,7 @@ export default class HttpTransport {
         );
     };
 
-    delete = (url: string, options: IOptions) => {
+    delete: HTTPMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },
