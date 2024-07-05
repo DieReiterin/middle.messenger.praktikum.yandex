@@ -8,8 +8,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "start": "vite build && node express.js",
-        "express": "node express.js",
+        "start": "vite build && node express.mjs",
+        "express": "node express.mjs",
         "lint": "eslint . --ext .ts",
         "stylelint": "stylelint ./**/*.scss",
         "type-check": "tsc --noEmit",

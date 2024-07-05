@@ -14,7 +14,7 @@
         "quotes": ["error", "single"],
         "prettier/prettier": "error",
         "semi": ["warn", "always"],
-        "no-unused-vars": ["warn"],
+        "no-unused-vars": "off",
         "indent": ["warn", 4],
         "max-len": ["warn", 500],
         "max-params": ["warn", 3],
@@ -36,7 +36,6 @@
         "import/no-absolute-path": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-this-alias": "off",
-        "no-param-reassign": "off",
-        "no-unused-vars": "off"
+        "no-param-reassign": "off"
     }
 }

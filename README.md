@@ -4,9 +4,9 @@
 
 ![preview.png](https://github.com/DieReiterin/middle.messenger.praktikum.yandex/blob/deploy/static/images/preview.png)
 
--   [Прототип в фигме](https://www.figma.com/proto/7mFfupXYkX3Iy9iZ4iNnm1/TURTEL-CHAT?node-id=0-1&t=rD8v5FVHA5vzu38k-1),
+-   [Прототип в фигме](https://www.figma.com/proto/7mFfupXYkX3Iy9iZ4iNnm1/TURTEL-CHAT?node-id=0-1&t=rD8v5FVHA5vzu38k-1)
 
--   [Актуальная сборка на Нетлифай](https://turtel-chat.netlify.app/),
+-   [Актуальная сборка на Нетлифай](https://turtel-chat.netlify.app/)
 
 ---
 
