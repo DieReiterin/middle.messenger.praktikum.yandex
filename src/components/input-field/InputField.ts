@@ -1,10 +1,10 @@
-import Block from "../../tools/Block.ts";
-import { Input } from "../../components/index.ts";
-import "./input-field.scss";
-import validate from "../../tools/validate.ts";
+import Block, { IProps } from '@/tools/Block';
+import { Input } from '@/components/index';
+import './input-field.scss';
+import validate from '@/tools/validate';
 
 export default class InputField extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             input: new Input({
@@ -12,21 +12,21 @@ export default class InputField extends Block {
                 name: props.name,
                 id: props.id,
                 placeholder: props.placeholder,
-                value: "",
+                value: '',
                 onBlur: () => this.blurInput(),
-                onInput: (val) => this.enterText(val),
+                onInput: (val: string) => this.enterText(val),
             }),
-            error: "",
+            error: '',
         });
     }
-    value = "";
+    value = '';
     blurInput() {
         if (this.props.onBlur) {
             this.props.onBlur();
         }
         this.validateField();
     }
-    enterText(val) {
+    enterText(val: string) {
         if (this.props.onInput) {
             this.props.onInput(val);
         }
@@ -34,7 +34,7 @@ export default class InputField extends Block {
     }
     validateField() {
         const validationResult = validate(this.props.name, this.value);
-        if (validationResult && validationResult !== "ok") {
+        if (validationResult && validationResult !== 'ok') {
             this.setProps({
                 input: new Input({
                     typeProfile: this.props.typeProfile,
@@ -43,12 +43,12 @@ export default class InputField extends Block {
                     placeholder: this.props.placeholder,
                     value: this.value,
                     onBlur: () => this.blurInput(),
-                    onInput: (val) => this.enterText(val),
+                    onInput: (val: string) => this.enterText(val),
                 }),
                 error: validationResult,
             });
             return false;
-        } else if (validationResult && validationResult === "ok") {
+        } else if (validationResult && validationResult === 'ok') {
             this.setProps({
                 input: new Input({
                     typeProfile: this.props.typeProfile,
@@ -57,9 +57,9 @@ export default class InputField extends Block {
                     placeholder: this.props.placeholder,
                     value: this.value,
                     onBlur: () => this.blurInput(),
-                    onInput: (val) => this.enterText(val),
+                    onInput: (val: string) => this.enterText(val),
                 }),
-                error: "",
+                error: '',
             });
             return true;
         }

@@ -1,76 +1,76 @@
-import Block from "../../tools/Block.ts";
-import "./chat-dialog.scss";
-import { IconButton, Textarea } from "../../components/index.ts";
-import validate from "../../tools/validate.ts";
+import Block, { IProps } from '@/tools/Block';
+import './chat-dialog.scss';
+import { IconButton, Textarea } from '@/components/index';
+import validate from '@/tools/validate';
 
 export default class ChatDialog extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             sendBtn: new IconButton({
-                className: "chat-dialog__send",
-                src: "/icons/arrow.svg",
-                alt: "Отправить",
+                className: 'chat-dialog__send',
+                src: '/icons/arrow.svg',
+                alt: 'Отправить',
                 onClick: () => this.submitForm(),
             }),
             textField: new Textarea({
-                className: "chat-dialog__text-field",
-                name: "message",
-                id: "message",
-                placeholder: "Сообщение...",
-                text: "",
-                onInput: (val) => {
+                className: 'chat-dialog__text-field',
+                name: 'message',
+                id: 'message',
+                placeholder: 'Сообщение...',
+                text: '',
+                onInput: (val: string) => {
                     this.data.message = val;
                 },
             }),
         });
     }
     data = {
-        message: "",
+        message: '',
     };
     submitForm() {
         if (this.validateField()) {
             console.log(this.data);
-            console.log("Message sent");
+            console.log('Message sent');
         }
     }
     validateField() {
-        const validationResult = validate("message", this.data.message);
-        if (validationResult && validationResult !== "ok") {
+        const validationResult = validate('message', this.data.message);
+        if (validationResult && validationResult !== 'ok') {
             this.setProps({
                 sendBtn: new IconButton({
-                    className: "chat-dialog__send",
-                    src: "/icons/arrow.svg",
-                    alt: "Отправить",
+                    className: 'chat-dialog__send',
+                    src: '/icons/arrow.svg',
+                    alt: 'Отправить',
                     onClick: () => this.submitForm(),
                 }),
                 textField: new Textarea({
-                    className: "chat-dialog__text-field",
-                    name: "message",
-                    id: "message",
+                    className: 'chat-dialog__text-field',
+                    name: 'message',
+                    id: 'message',
                     placeholder: validationResult,
-                    text: "",
-                    onInput: (val) => {
+                    text: '',
+                    onInput: (val: string) => {
                         this.data.message = val;
                     },
                 }),
             });
             return false;
-        } else if (validationResult && validationResult === "ok") {
+        } else if (validationResult && validationResult === 'ok') {
             this.setProps({
                 sendBtn: new IconButton({
-                    className: "chat-dialog__send",
-                    src: "/icons/arrow.svg",
-                    alt: "Отправить",
+                    className: 'chat-dialog__send',
+                    src: '/icons/arrow.svg',
+                    alt: 'Отправить',
                     onClick: () => this.submitForm(),
                 }),
                 textField: new Textarea({
-                    className: "chat-dialog__text-field",
-                    name: "message",
-                    id: "message",
-                    placeholder: "Сообщение...",
+                    className: 'chat-dialog__text-field',
+                    name: 'message',
+                    id: 'message',
+                    placeholder: 'Сообщение...',
                     text: this.data.message,
-                    onInput: (val) => {
+                    onInput: (val: string) => {
                         this.data.message = val;
                     },
                 }),

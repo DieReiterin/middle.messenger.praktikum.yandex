@@ -1,18 +1,18 @@
-import Block from "../../tools/Block.ts";
-import { ChatItem } from "../../components/index.ts";
-import "./chat-list.scss";
-import favicon from "/icons/favicon.png";
+import Block, { IProps } from '@/tools/Block';
+import { ChatItem } from '@/components/index';
+import './chat-list.scss';
+import favicon from '/icons/favicon.png';
 
 export default class ChatList extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             content: new ChatItem({
-                className: "chat-page__chat-list",
+                className: 'chat-page__chat-list',
                 avatar: favicon,
-                name: "Егор",
-                message: "Изображение",
-                unread: "2",
+                name: 'Егор',
+                message: 'Изображение',
+                unread: '2',
             }),
         });
     }

@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./link.scss";
+import Block, { IProps } from '@/tools/Block';
+import './link.scss';
 
 export default class Link extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             events: {

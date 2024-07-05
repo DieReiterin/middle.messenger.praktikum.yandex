@@ -1,47 +1,47 @@
-import Block from "../../tools/Block.ts";
-import { Button } from "../../components/index.ts";
-import "./footer.scss";
-import navigate from "../../tools/navigate.ts";
+import Block, { IProps } from '@/tools/Block';
+import { Button } from '@/components/index';
+import './footer.scss';
+import navigate from '@/tools/navigate';
 
 export default class Footer extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             nav: null,
             btn1: new Button({
-                className: "footer__btn",
-                text: "Авторизация",
-                onClick: () => navigate("page", "login"),
+                className: 'footer__btn',
+                text: 'Авторизация',
+                onClick: () => navigate('page', 'login'),
             }),
             btn2: new Button({
-                className: "footer__btn",
-                text: "Регистрация",
-                onClick: () => navigate("page", "signin"),
+                className: 'footer__btn',
+                text: 'Регистрация',
+                onClick: () => navigate('page', 'signin'),
             }),
             btn3: new Button({
-                className: "footer__btn",
-                text: "Список чатов",
-                onClick: () => navigate("page", "chats"),
+                className: 'footer__btn',
+                text: 'Список чатов',
+                onClick: () => navigate('page', 'chats'),
             }),
             btn4: new Button({
-                className: "footer__btn",
-                text: "Профиль",
-                onClick: () => navigate("page", "profile"),
+                className: 'footer__btn',
+                text: 'Профиль',
+                onClick: () => navigate('page', 'profile'),
             }),
             btn5: new Button({
-                className: "footer__btn",
-                text: "Настройки",
-                onClick: () => navigate("page", "settings"),
+                className: 'footer__btn',
+                text: 'Настройки',
+                onClick: () => navigate('page', 'settings'),
             }),
             btn6: new Button({
-                className: "footer__btn",
-                text: "Страница 404",
-                onClick: () => navigate("page", "not-found"),
+                className: 'footer__btn',
+                text: 'Страница 404',
+                onClick: () => navigate('page', 'not-found'),
             }),
             btn7: new Button({
-                className: "footer__btn",
-                text: "Страница 5**",
-                onClick: () => navigate("page", "server-error"),
+                className: 'footer__btn',
+                text: 'Страница 5**',
+                onClick: () => navigate('page', 'server-error'),
             }),
         });
     }

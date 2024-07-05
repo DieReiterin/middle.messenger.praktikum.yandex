@@ -1,12 +1,12 @@
-import Block from "../../tools/Block.ts";
-import { ProfileContent, SettingsContent } from "../../components/index.ts";
-import "./profile.scss";
+import Block, { IProps } from '@/tools/Block';
+import { ProfileContent, SettingsContent } from '@/components/index';
+import './profile.scss';
 
 export default class Profile extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
-            content: "",
+            content: '',
         });
     }
     default = new ProfileContent({
@@ -22,7 +22,7 @@ export default class Profile extends Block {
         this.setProps({ content: this.default });
     }
     componentDidMount() {
-        if (this.props.profileType === "settings") {
+        if (this.props.profileType === 'settings') {
             this.edit();
         } else {
             this.save();

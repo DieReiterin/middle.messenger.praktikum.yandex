@@ -1,13 +1,13 @@
-import Block from "../../tools/Block.ts";
-import { Footer } from "../../components/index.ts";
-import "./layout-navigated.scss";
+import Block, { IProps } from '@/tools/Block';
+import { Footer } from '@/components/index';
+import './layout-navigated.scss';
 
 export default class LayoutNavigated extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             footer: new Footer({
-                className: "layout-navigated__footer",
+                className: 'layout-navigated__footer',
             }),
         });
     }

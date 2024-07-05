@@ -6,23 +6,21 @@ interface IOptions {
 }
 
 const METHODS: Record<string, string> = {
-    GET: "GET",
-    POST: "POST",
-    PUT: "PUT",
-    DELETE: "DELETE",
+    GET: 'GET',
+    POST: 'POST',
+    PUT: 'PUT',
+    DELETE: 'DELETE',
 };
 
 function queryStringify(data: Record<string, any>) {
-    if (typeof data !== "object") {
-        throw new Error("Data must be object");
+    if (typeof data !== 'object') {
+        throw new Error('Data must be object');
     }
 
     const keys = Object.keys(data);
     return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${
-            index < keys.length - 1 ? "&" : ""
-        }`;
-    }, "?");
+        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+    }, '?');
 }
 
 export default class HttpTransport {
@@ -30,7 +28,7 @@ export default class HttpTransport {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -38,7 +36,7 @@ export default class HttpTransport {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -46,7 +44,7 @@ export default class HttpTransport {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -54,7 +52,7 @@ export default class HttpTransport {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -63,7 +61,7 @@ export default class HttpTransport {
 
         return new Promise(function (resolve, reject) {
             if (!method) {
-                reject("No method");
+                reject('No method');
                 return;
             }
             const xhr = new XMLHttpRequest();

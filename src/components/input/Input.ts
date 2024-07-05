@@ -1,14 +1,17 @@
-import Block from "../../tools/Block.ts";
-import "./input.scss";
+import Block, { IProps } from '@/tools/Block';
+import './input.scss';
 
 export default class Input extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             events: {
                 blur: () => this.blurInput(),
-                input: (e) => {
-                    this.enterText(e.target.value);
+                input: (e: Event) => {
+                    const val = (e.target as HTMLInputElement).value;
+                    if (val) {
+                        this.enterText(val);
+                    }
                 },
             },
         });
@@ -18,9 +21,9 @@ export default class Input extends Block {
             this.props.onBlur();
         }
     }
-    enterText(e) {
+    enterText(val: string) {
         if (this.props.onInput) {
-            this.props.onInput(e);
+            this.props.onInput(val);
         }
     }
     render() {

@@ -1,24 +1,24 @@
-import Block from "../../tools/Block.ts";
-import { PageTitle, Link } from "../../components/index.ts";
-import "./error-page.scss";
-import navigate from "../../tools/navigate.ts";
+import Block, { IProps } from '@/tools/Block';
+import { PageTitle, Link } from '@/components/index';
+import './error-page.scss';
+import navigate from '@/tools/navigate';
 
 export default class ErrorPage extends Block {
-    constructor(props) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             title: new PageTitle({
-                className: "error-page__title",
+                className: 'error-page__title',
                 text: props.title,
             }),
             subtitle: new PageTitle({
-                className: "error-page__subtitle",
+                className: 'error-page__subtitle',
                 text: props.subtitle,
             }),
             link: new Link({
-                className: "error-page__subtitle",
-                text: "Назад к чатам",
-                onClick: () => navigate("page", "chats"),
+                className: 'error-page__subtitle',
+                text: 'Назад к чатам',
+                onClick: () => navigate('page', 'chats'),
             }),
         });
     }

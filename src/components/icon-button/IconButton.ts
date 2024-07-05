@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./icon-button.scss";
+import Block, { IProps } from '@/tools/Block';
+import './icon-button.scss';
 
 export default class IconButton extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             events: {
@@ -19,6 +19,6 @@ export default class IconButton extends Block {
         }
     }
     render() {
-        return `<img class="icon-button {{className}}" src="{{src}}" alt="{{alt}}">`;
+        return '<img class="icon-button {{className}}" src="{{src}}" alt="{{alt}}">';
     }
 }

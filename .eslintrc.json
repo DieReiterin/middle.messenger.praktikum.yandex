@@ -1,0 +1,42 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint", "prettier"],
+    "extends": [
+        "airbnb",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "quotes": ["error", "single"],
+        "prettier/prettier": "error",
+        "semi": ["warn", "always"],
+        "no-unused-vars": ["warn"],
+        "indent": ["warn", 4],
+        "max-len": ["warn", 500],
+        "max-params": ["warn", 3],
+        "import/no-extraneous-dependencies": "off",
+        "linebreak-style": ["warn", "unix"],
+        "prefer-arrow-callback": "off",
+        "func-names": "off",
+        "react/react-in-jsx-scope": "off",
+        "no-underscore-dangle": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "lines-between-class-members": "off",
+        "prefer-destructuring": "off",
+        "no-else-return": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "class-methods-use-this": "off",
+        "prefer-promise-reject-errors": "off",
+        "no-console": "off",
+        "import/no-absolute-path": "off",
+        "no-use-before-define": "off",
+        "@typescript-eslint/no-this-alias": "off",
+        "no-param-reassign": "off",
+        "no-unused-vars": "off"
+    }
+}

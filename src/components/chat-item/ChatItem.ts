@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./chat-item.scss";
+import Block, { IProps } from '@/tools/Block';
+import './chat-item.scss';
 
 export default class ChatItem extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
         });

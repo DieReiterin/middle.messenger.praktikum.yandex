@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./button.scss";
+import Block, { IProps } from '@/tools/Block';
+import './button.scss';
 
 export default class Button extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             events: {

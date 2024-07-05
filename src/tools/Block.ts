@@ -1,5 +1,5 @@
-import EventBus from "@/tools/EventBus";
-import Handlebars from "handlebars";
+import Handlebars from 'handlebars';
+import EventBus from '@/tools/EventBus';
 
 interface IEvents {
     [key: string]: EventListener | EventListenerObject;
@@ -21,10 +21,10 @@ interface ILists {
 
 export default class Block {
     static EVENTS = {
-        INIT: "init",
-        FLOW_CDM: "flow:component-did-mount",
-        FLOW_CDU: "flow:component-did-update",
-        FLOW_RENDER: "flow:render",
+        INIT: 'init',
+        FLOW_CDM: 'flow:component-did-mount',
+        FLOW_CDU: 'flow:component-did-update',
+        FLOW_RENDER: 'flow:render',
     };
     private _element: HTMLElement | null = null;
     private _id: number = Math.floor(100000 + Math.random() * 900000);
@@ -163,13 +163,13 @@ export default class Block {
         });
 
         const fragment = this._createDocumentElement(
-            "template"
+            'template',
         ) as HTMLTemplateElement;
         fragment.innerHTML = Handlebars.compile(this.render())(propsAndStubs);
 
         Object.values(this.children).forEach((child) => {
             const stub = fragment.content.querySelector(
-                `[data-id="${child._id}"]`
+                `[data-id="${child._id}"]`,
             );
             const childContent = child.getContent();
             if (stub && childContent) {
@@ -179,7 +179,7 @@ export default class Block {
 
         Object.values(this.lists).forEach((list) => {
             const listCont = this._createDocumentElement(
-                "template"
+                'template',
             ) as HTMLTemplateElement;
 
             list.forEach((item) => {
@@ -190,7 +190,7 @@ export default class Block {
             });
 
             const stub = fragment.content.querySelector(
-                `[data-id="__l_${_tmpId}"]`
+                `[data-id="__l_${_tmpId}"]`,
             );
             if (stub) {
                 stub.replaceWith(listCont.content);
@@ -207,7 +207,7 @@ export default class Block {
     }
 
     protected render(): string {
-        return "";
+        return '';
     }
 
     public getContent() {
@@ -220,7 +220,7 @@ export default class Block {
         return new Proxy(props, {
             get(target, prop: string) {
                 const value = target[prop];
-                return typeof value === "function" ? value.bind(target) : value;
+                return typeof value === 'function' ? value.bind(target) : value;
             },
             set(target, prop: string, value) {
                 const oldTarget = { ...target };
@@ -229,7 +229,7 @@ export default class Block {
                 return true;
             },
             deleteProperty() {
-                throw new Error("No access");
+                throw new Error('No access');
             },
         });
     }
@@ -241,14 +241,14 @@ export default class Block {
     public show() {
         const content = this.getContent();
         if (content) {
-            content.style.display = "block";
+            content.style.display = 'block';
         }
     }
 
     public hide() {
         const content = this.getContent();
         if (content) {
-            content.style.display = "none";
+            content.style.display = 'none';
         }
     }
 }

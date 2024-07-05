@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./page-title.scss";
+import Block, { IProps } from '@/tools/Block';
+import './page-title.scss';
 
 export default class PageTitle extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
         });

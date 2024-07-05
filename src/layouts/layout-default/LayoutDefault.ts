@@ -1,8 +1,8 @@
-import Block from "../../tools/Block.ts";
-import "./layout-default.scss";
+import Block, { IProps } from '@/tools/Block';
+import './layout-default.scss';
 
 export default class LayoutDefault extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
         });

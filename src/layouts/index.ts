@@ -1,2 +1,2 @@
-export { default as LayoutDefault } from "./layout-default/LayoutDefault.ts";
-export { default as LayoutNavigated } from "./layout-navigated/LayoutNavigated.ts";
+export { default as LayoutDefault } from '@/layouts/layout-default/LayoutDefault';
+export { default as LayoutNavigated } from '@/layouts/layout-navigated/LayoutNavigated';

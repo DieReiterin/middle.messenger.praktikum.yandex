@@ -1,16 +1,16 @@
-import Block from "../../tools/Block.ts";
-import { ChatList, ChatDialog } from "../../components/index.ts";
-import "./chat-page.scss";
+import Block, { IProps } from '@/tools/Block';
+import { ChatList, ChatDialog } from '@/components/index';
+import './chat-page.scss';
 
 export default class ChatPage extends Block {
-    constructor(props?) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             list: new ChatList({
-                className: "chat-page__chat-list",
+                className: 'chat-page__chat-list',
             }),
             dialog: new ChatDialog({
-                className: "chat-page__chat-dialog",
+                className: 'chat-page__chat-dialog',
             }),
         });
     }
