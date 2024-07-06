@@ -7,9 +7,9 @@
 
     background: linear-gradient(
         transparent,
-        rgba(#e4edfd, 0.6),
-        rgba(#e4edfd, 0.9),
-        rgba(#e4edfd, 1)
+        rgba($color-bg-footer, 0.6),
+        rgba($color-bg-footer, 0.9),
+        rgba($color-bg-footer, 1)
     );
 
     &__content {

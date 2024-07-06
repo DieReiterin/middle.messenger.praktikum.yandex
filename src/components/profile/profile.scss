@@ -21,13 +21,13 @@
         margin-bottom: 20px;
 
         border-radius: 50%;
-        background-color: #efefef;
+        background-color: $color-bg-secondary;
     }
 
     &__title {
         font-weight: 600;
         font-size: 16px;
         line-height: 100%;
-        color: #1e1e1e;
+        color: $color-text;
     }
 }

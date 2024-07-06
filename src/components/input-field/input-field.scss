@@ -11,14 +11,14 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 100%;
-        color: #999;
+        color: $color-accent-soft;
     }
 
     &__error {
         font-weight: 400;
         font-size: 12px;
         line-height: 100%;
-        color: #ff2f2f;
+        color: $color-error;
     }
 
     &_type-profile {

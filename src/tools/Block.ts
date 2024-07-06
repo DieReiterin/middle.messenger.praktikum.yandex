@@ -24,6 +24,7 @@ export default class Block {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
         FLOW_CDU: 'flow:component-did-update',
+        FLOW_CDUM: 'flow:component-did-unmount',
         FLOW_RENDER: 'flow:render',
     };
     private _element: HTMLElement | null = null;
@@ -71,6 +72,10 @@ export default class Block {
         eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
         eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+        eventBus.on(
+            Block.EVENTS.FLOW_CDUM,
+            this._componentDidUnmount.bind(this),
+        );
         eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     }
 
@@ -104,6 +109,20 @@ export default class Block {
 
     protected componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
         return Object.keys(oldProps).length + Object.keys(newProps).length > 0;
+    }
+
+    private _componentDidUnmount() {
+        this.componentDidUnmount();
+
+        Object.values(this.children).forEach((child) => {
+            child.dispatchComponentDidUnmount();
+        });
+    }
+
+    protected componentDidUnmount() {}
+
+    public dispatchComponentDidUnmount() {
+        this.eventBus().emit(Block.EVENTS.FLOW_CDUM);
     }
 
     private _getChildrenPropsAndProps(propsAndChildren: IProps): {
@@ -209,6 +228,7 @@ export default class Block {
         const newElement = fragment.content.firstElementChild;
         if (this._element && newElement) {
             this._removeEvents();
+            this._componentDidUnmount();
             this._element.replaceWith(newElement);
         }
         this._element = newElement as HTMLElement;

@@ -7,7 +7,8 @@
         "color-function-notation": "legacy",
         "block-no-empty": null,
         "shorthand-property-no-redundant-values": null,
-        "alpha-value-notation": "number"
+        "alpha-value-notation": "number",
+        "color-hex-length": "long"
     },
     "ignoreFiles": ["dist/*"]
 }

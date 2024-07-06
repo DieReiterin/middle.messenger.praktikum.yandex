@@ -1,8 +1,8 @@
 .subtitle {
-    color: #1e1e1e;
+    color: $color-text;
 
     &_grey {
-        color: #999;
+        color: $color-accent-soft;
     }
 
     &_bold {

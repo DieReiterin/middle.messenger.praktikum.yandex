@@ -8,7 +8,7 @@
         width: 65px;
         min-height: 100%;
 
-        background-color: #fbfbfb;
+        background-color: $color-bg-secondary;
     }
 
     &__nav {
@@ -25,11 +25,11 @@
             padding: 5px;
 
             border-radius: 50%;
-            background-color: #b0abfe;
+            background-color: $color-btn;
 
             &:hover {
                 cursor: pointer;
-                background-color: #c0c6fb;
+                background-color: $color-btn-hover;
             }
         }
     }

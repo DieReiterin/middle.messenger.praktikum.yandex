@@ -1,6 +1,6 @@
 .chat-list {
     min-height: 100px;
-    background-color: #fbfbfb;
+    background-color: $color-bg-secondary;
 
     &__top {
         display: flex;
@@ -22,7 +22,7 @@
         font-weight: 500;
         font-size: 12px;
         line-height: 100%;
-        color: #999;
+        color: $color-accent-soft;
     }
 
     &__search {
@@ -33,7 +33,7 @@
         width: 290px;
         height: 32px;
         border-radius: 5px;
-        background-color: #c0c6fb;
+        background-color: $color-bg-tertiary;
 
         &-text {
             margin: 0;
@@ -42,7 +42,7 @@
             font-weight: 600;
             font-size: 12px;
             line-height: 100%;
-            color: #000;
+            color: $color-text;
         }
     }
 }

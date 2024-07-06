@@ -12,8 +12,8 @@
     padding: 50px 30px 30px;
 
     border-radius: 15px;
-    background-color: #fbfbfb;
-    box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.14);
+    background-color: $color-bg-secondary;
+    box-shadow: 0 0 6px 0 rgba($color-text, 0.14);
 
     &__main {
         min-height: 100px;

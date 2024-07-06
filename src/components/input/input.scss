@@ -5,13 +5,13 @@
     font-weight: 500;
     font-size: 14px;
     line-height: 100%;
-    color: #000;
+    color: $color-text;
 
     border: none;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid $color-border2;
 
     &:focus {
-        outline: 1px solid #999;
+        outline: 1px solid $color-accent-soft;
     }
 
     &_type-profile {
