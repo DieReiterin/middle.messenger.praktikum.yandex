@@ -1,7 +1,7 @@
 import { LayoutNavigated, LayoutDefault } from '@/layouts/index';
 import {
     LoginPage,
-    SigninPage,
+    SignupPage,
     ChatPage,
     ProfilePage,
     ErrorPage,
@@ -23,8 +23,8 @@ function setPage(type: string) {
     let page;
     if (type === 'login') {
         page = new LoginPage();
-    } else if (type === 'signin') {
-        page = new SigninPage();
+    } else if (type === 'signup') {
+        page = new SignupPage();
     } else if (type === 'chats') {
         page = new ChatPage();
     } else if (type === 'profile') {

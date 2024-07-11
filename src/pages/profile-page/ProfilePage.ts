@@ -1,10 +1,9 @@
 import Block, { IProps } from '@/tools/Block';
 import { Profile, IconButton } from '@/components/index';
 import './profile-page.scss';
-import navigate from '@/tools/navigate';
 
 export default class ProfilePage extends Block {
-    constructor(props: IProps = {}) {
+    constructor(props: IProps = { profileType: 'default' }) {
         super({
             ...props,
             profile: new Profile({
@@ -15,7 +14,7 @@ export default class ProfilePage extends Block {
                 className: 'profile-page__nav-btn',
                 src: '/icons/arrow.svg',
                 alt: 'Назад',
-                onClick: () => navigate('page', 'chats'),
+                onClick: () => window.router.go('/messenger'),
             }),
         });
     }

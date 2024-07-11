@@ -16,10 +16,14 @@
         "strictNullChecks": true,
         "paths": {
             "@": ["src"],
+            "@/utils/isEqual": ["src/utils/isEqual.ts"],
+            "@/utils/renderDom": ["src/utils/renderDom.ts"],
             "@/tools/Block": ["src/tools/Block.ts"],
             "@/tools/EventBus": ["src/tools/EventBus.ts"],
             "@/tools/HttpTransport": ["src/tools/HttpTransport.ts"],
             "@/tools/navigate": ["src/tools/navigate.ts"],
+            "@/tools/Route": ["src/tools/Route.ts"],
+            "@/tools/Router": ["src/tools/Router.ts"],
             "@/tools/validate": ["src/tools/validate.ts"],
             "@/layouts/index": ["src/layouts/index.ts"],
             "@/layouts/layout-default/LayoutDefault": [
@@ -39,8 +43,8 @@
             "@/pages/profile-page/ProfilePage": [
                 "src/pages/profile-page/ProfilePage.ts"
             ],
-            "@/pages/signin-page/SigninPage": [
-                "src/pages/signin-page/SigninPage.ts"
+            "@/pages/signup-page/SignupPage": [
+                "src/pages/signup-page/SignupPage.ts"
             ],
             "@/components/index": ["src/components/index.ts"],
             "@/components/button/Button": ["src/components/button/Button.ts"],

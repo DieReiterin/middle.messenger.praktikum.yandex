@@ -1,7 +1,6 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
-import './signin-page.scss';
-import navigate from '@/tools/navigate';
+import './signup-page.scss';
 
 export default class SigninPage extends Block {
     constructor(props: IProps = {}) {
@@ -89,7 +88,7 @@ export default class SigninPage extends Block {
             link: new Link({
                 className: 'signin-page__link',
                 text: 'Вход',
-                onClick: () => navigate('page', 'login'),
+                onClick: () => window.router.go('/'),
             }),
         });
     }
@@ -103,25 +102,25 @@ export default class SigninPage extends Block {
         'password-repeat': '',
     };
     submitForm() {
-        const input1: unknown = this.children.input1;
-        const input2: unknown = this.children.input2;
-        const input3: unknown = this.children.input3;
-        const input4: unknown = this.children.input4;
-        const input5: unknown = this.children.input5;
-        const input6: unknown = this.children.input6;
-        const input7: unknown = this.children.input7;
-        if (
-            (input1 as { validateField: () => boolean }).validateField() &&
-            (input2 as { validateField: () => boolean }).validateField() &&
-            (input3 as { validateField: () => boolean }).validateField() &&
-            (input4 as { validateField: () => boolean }).validateField() &&
-            (input5 as { validateField: () => boolean }).validateField() &&
-            (input6 as { validateField: () => boolean }).validateField() &&
-            (input7 as { validateField: () => boolean }).validateField()
-        ) {
-            console.log(this.data);
-            navigate('page', 'login');
-        }
+        // const input1: unknown = this.children.input1;
+        // const input2: unknown = this.children.input2;
+        // const input3: unknown = this.children.input3;
+        // const input4: unknown = this.children.input4;
+        // const input5: unknown = this.children.input5;
+        // const input6: unknown = this.children.input6;
+        // const input7: unknown = this.children.input7;
+        // if (
+        //     (input1 as { validateField: () => boolean }).validateField() &&
+        //     (input2 as { validateField: () => boolean }).validateField() &&
+        //     (input3 as { validateField: () => boolean }).validateField() &&
+        //     (input4 as { validateField: () => boolean }).validateField() &&
+        //     (input5 as { validateField: () => boolean }).validateField() &&
+        //     (input6 as { validateField: () => boolean }).validateField() &&
+        //     (input7 as { validateField: () => boolean }).validateField()
+        // ) {
+        //     console.log(this.data);
+        window.router.go('/');
+        // }
     }
     override render() {
         return `<form class="signin-page">

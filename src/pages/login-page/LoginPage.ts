@@ -1,7 +1,6 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
-import navigate from '@/tools/navigate';
 
 export default class LoginPage extends Block {
     constructor(props: IProps = {}) {
@@ -39,7 +38,7 @@ export default class LoginPage extends Block {
             link: new Link({
                 className: 'login-page__link',
                 text: 'Регистрация',
-                onClick: () => navigate('page', 'signin'),
+                onClick: () => window.router.go('/sign-up'),
             }),
         });
     }
@@ -48,27 +47,30 @@ export default class LoginPage extends Block {
         password: '',
     };
     submitForm() {
-        const input1: unknown = this.children.input1;
-        const input2: unknown = this.children.input2;
-        if (
-            (input1 as { validateField: () => boolean }).validateField() &&
-            (input2 as { validateField: () => boolean }).validateField()
-        ) {
-            console.log(this.data);
-            navigate('page', 'chats');
-        }
+        // const input1: unknown = this.children.input1;
+        // const input2: unknown = this.children.input2;
+        // if (
+        //     (input1 as { validateField: () => boolean }).validateField() &&
+        //     (input2 as { validateField: () => boolean }).validateField()
+        // ) {
+        //     console.log(this.data);
+        window.router.go('/messenger');
+        // }
     }
+
     override render() {
-        return `<form class="login-page" action="">
-                    <div class="login-page__main">
-                        {{{title}}} 
-                        {{{input1}}}  
-                        {{{input2}}}                          
-                    </div>
-                    <div class="login-page__footer">
-                        {{{btn}}}    
-                        {{{link}}}           
-                    </div>
-                </form>`;
+        return `<div class="login-page__wrapper">
+                    <form class="login-page" action="">
+                        <div class="login-page__main">
+                            {{{title}}} 
+                            {{{input1}}}  
+                            {{{input2}}}                          
+                        </div>
+                        <div class="login-page__footer">
+                            {{{btn}}}    
+                            {{{link}}}           
+                        </div>
+                    </form>
+                </div>`;
     }
 }

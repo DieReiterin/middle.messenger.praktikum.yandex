@@ -2,7 +2,6 @@ import Block, { IProps } from '@/tools/Block';
 import { Subtitle, Link } from '@/components/index';
 
 import './profile-content.scss';
-import navigate from '@/tools/navigate';
 
 export default class ProfileContent extends Block {
     constructor(props: IProps = {}) {
@@ -68,7 +67,7 @@ export default class ProfileContent extends Block {
             signout: new Link({
                 className: 'profile-content__link link_red',
                 text: 'Выйти',
-                onClick: () => navigate('page', 'login'),
+                onClick: () => window.router.go('/'),
             }),
         });
     }

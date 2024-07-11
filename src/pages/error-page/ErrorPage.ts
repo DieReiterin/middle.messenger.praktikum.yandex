@@ -1,10 +1,9 @@
 import Block, { IProps } from '@/tools/Block';
 import { PageTitle, Link } from '@/components/index';
 import './error-page.scss';
-import navigate from '@/tools/navigate';
 
 export default class ErrorPage extends Block {
-    constructor(props: IProps = {}) {
+    constructor(props: IProps = { title: '400', subtitle: 'Не туда попали' }) {
         super({
             ...props,
             title: new PageTitle({
@@ -18,7 +17,7 @@ export default class ErrorPage extends Block {
             link: new Link({
                 className: 'error-page__subtitle',
                 text: 'Назад к чатам',
-                onClick: () => navigate('page', 'chats'),
+                onClick: () => window.router.go('/messenger'),
             }),
         });
     }

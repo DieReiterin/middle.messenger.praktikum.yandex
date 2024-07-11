@@ -273,6 +273,10 @@ export default class Block {
         if (content) {
             content.style.display = 'block';
         }
+        // const content = this.getContent();
+        // if (content && content.parentNode) {
+        //     content.parentNode.appendChild(content);
+        // }
     }
 
     public hide() {
@@ -280,5 +284,16 @@ export default class Block {
         if (content) {
             content.style.display = 'none';
         }
+        // const content = this.getContent();
+        // if (content && content.parentNode) {
+        //     content.parentNode.removeChild(content);
+        // }
     }
+
+    // public removeFromDom() {
+    //     const content = this.getContent();
+    //     if (content && content.parentNode) {
+    //         content.parentNode.removeChild(content);
+    //     }
+    // }
 }
