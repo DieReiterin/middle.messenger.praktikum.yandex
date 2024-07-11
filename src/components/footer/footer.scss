@@ -7,9 +7,9 @@
 
     background: linear-gradient(
         transparent,
-        rgba(#fbe4c9, 0.6),
-        rgba(#fbe4c9, 0.9),
-        rgba(#fbe4c9, 1)
+        rgba($color-bg-footer, 0.6),
+        rgba($color-bg-footer, 0.9),
+        rgba($color-bg-footer, 1)
     );
 
     &__content {
@@ -23,6 +23,10 @@
 
     &__btn {
         flex-basis: 120px;
-        margin-right: 60px;
+        margin-right: 30px;
+
+        &:last-child {
+            margin-right: 0;
+        }
     }
 }

@@ -9,7 +9,7 @@
         width: 100%;
         margin-bottom: 12px;
 
-        background-color: #eaeaea;
+        background-color: $color-border3;
     }
 
     &__block {
@@ -23,7 +23,7 @@
         width: 45px;
         border-radius: 50%;
 
-        background-color: #c0c6fb;
+        background-color: $color-bg-tertiary;
     }
 
     &__text {
@@ -37,7 +37,7 @@
             font-weight: 600;
             font-size: 13px;
             line-height: 100%;
-            color: #1e1e1e;
+            color: $color-text;
         }
 
         &-message {
@@ -46,7 +46,7 @@
             font-weight: 500;
             font-size: 12px;
             line-height: 125%;
-            color: #999;
+            color: $color-accent-soft;
         }
     }
 }

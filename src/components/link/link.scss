@@ -1,14 +1,24 @@
 .link {
-    color: #000;
+    color: $color-text;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
 
     &:hover {
-        color: #999;
+        color: $color-accent-soft;
+        cursor: pointer;
     }
 
     &_red {
-        color: #ff0000;
+        color: $color-error;
+    }
+
+    &_disabled {
+        color: $color-accent-soft;
+
+        &:hover {
+            color: $color-accent-soft;
+            cursor: default;
+        }
     }
 }

@@ -1,0 +1,87 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "ESNext",
+        "module": "ESNext",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "sourceMap": true,
+        "strictNullChecks": true,
+        "paths": {
+            "@": ["src"],
+            "@/tools/Block": ["src/tools/Block.ts"],
+            "@/tools/EventBus": ["src/tools/EventBus.ts"],
+            "@/tools/HttpTransport": ["src/tools/HttpTransport.ts"],
+            "@/tools/navigate": ["src/tools/navigate.ts"],
+            "@/tools/validate": ["src/tools/validate.ts"],
+            "@/layouts/index": ["src/layouts/index.ts"],
+            "@/layouts/layout-default/LayoutDefault": [
+                "src/layouts/layout-default/LayoutDefault.ts"
+            ],
+            "@/layouts/layout-navigated/LayoutNavigated": [
+                "src/layouts/layout-navigated/LayoutNavigated.ts"
+            ],
+            "@/pages/index": ["src/pages/index.ts"],
+            "@/pages/chat-page/ChatPage": ["src/pages/chat-page/ChatPage.ts"],
+            "@/pages/error-page/ErrorPage": [
+                "src/pages/error-page/ErrorPage.ts"
+            ],
+            "@/pages/login-page/LoginPage": [
+                "src/pages/login-page/LoginPage.ts"
+            ],
+            "@/pages/profile-page/ProfilePage": [
+                "src/pages/profile-page/ProfilePage.ts"
+            ],
+            "@/pages/signin-page/SigninPage": [
+                "src/pages/signin-page/SigninPage.ts"
+            ],
+            "@/components/index": ["src/components/index.ts"],
+            "@/components/button/Button": ["src/components/button/Button.ts"],
+            "@/components/chat-dialog/ChatDialog": [
+                "src/components/chat-dialog/ChatDialog.ts"
+            ],
+            "@/components/chat-item/ChatItem": [
+                "src/components/chat-item/ChatItem.ts"
+            ],
+            "@/components/chat-list/ChatList": [
+                "src/components/chat-list/ChatList.ts"
+            ],
+            "@/components/footer/Footer": ["src/components/footer/Footer.ts"],
+            "@/components/icon-button/IconButton": [
+                "src/components/icon-button/IconButton.ts"
+            ],
+            "@/components/input/Input": ["src/components/input/Input.ts"],
+            "@/components/input-field/InputField": [
+                "src/components/input-field/InputField.ts"
+            ],
+            "@/components/link/Link": ["src/components/link/Link.ts"],
+            "@/components/page-title/PageTitle": [
+                "src/components/page-title/PageTitle.ts"
+            ],
+            "@/components/profile/Profile": [
+                "src/components/profile/Profile.ts"
+            ],
+            "@/components/profile-content/ProfileContent": [
+                "src/components/profile-content/ProfileContent.ts"
+            ],
+            "@/components/settings-content/SettingsContent": [
+                "src/components/settings-content/SettingsContent.ts"
+            ],
+            "@/components/subtitle/Subtitle": [
+                "src/components/subtitle/Subtitle.ts"
+            ],
+            "@/components/textarea/Textarea": [
+                "src/components/textarea/Textarea.ts"
+            ]
+        }
+    },
+    "include": ["src/**/*.ts", "index.d.ts"],
+    "exclude": ["node_modules"]
+}
