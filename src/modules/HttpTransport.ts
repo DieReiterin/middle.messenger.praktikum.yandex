@@ -3,6 +3,7 @@ interface IOptions {
     method?: string;
     headers?: Record<string, any>;
     data?: Record<string, any>;
+    [key: string]: any;
 }
 
 const METHODS: Record<string, string> = {
@@ -23,10 +24,10 @@ function queryStringify(data: Record<string, any>) {
     }, '?');
 }
 
-type HTTPMethod = (url: string, options?: IOptions) => Promise<unknown>;
+type HttpMethod = (url: string, options?: IOptions) => Promise<unknown>;
 
 export default class HttpTransport {
-    get: HTTPMethod = (url, options = {}) => {
+    get: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
@@ -34,7 +35,7 @@ export default class HttpTransport {
         );
     };
 
-    post: HTTPMethod = (url, options = {}) => {
+    post: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
@@ -42,7 +43,7 @@ export default class HttpTransport {
         );
     };
 
-    put: HTTPMethod = (url, options = {}) => {
+    put: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
@@ -50,7 +51,7 @@ export default class HttpTransport {
         );
     };
 
-    delete: HTTPMethod = (url, options = {}) => {
+    delete: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },

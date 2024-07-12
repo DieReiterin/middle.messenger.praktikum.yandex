@@ -1,8 +1,10 @@
 import Block, { IProps } from '@/tools/Block';
 import { ProfileContent, SettingsContent } from '@/components/index';
 import './profile.scss';
+// import connect from '@/tools/connect';
 
 export default class Profile extends Block {
+    // class Profile extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -55,3 +57,15 @@ export default class Profile extends Block {
         //         </div>`;
     }
 }
+// type TStateMapped = {
+//     [key: string]: any;
+// };
+// function mapUserToProps(state: TStateMapped): TStateMapped | void {
+//     if (!state.user) return;
+//     return {
+//         name: state.user.name,
+//         avatar: state.user.avatar,
+//     };
+// }
+// const connectedProfile = connect(Profile);
+// export default connectedProfile;
