@@ -34,6 +34,7 @@ export default class Router {
     start(): void {
         window.onpopstate = (event: PopStateEvent) => {
             const target = event.currentTarget as Window;
+
             this._onRoute(target.location.pathname);
         };
 
@@ -44,7 +45,6 @@ export default class Router {
         const route = this.getRoute(pathname);
         if (!route) {
             return;
-            console.log('no such route in Router routes array');
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
@@ -71,26 +71,3 @@ export default class Router {
         return this.routes.find((route) => route.match(pathname));
     }
 }
-
-// const router = new Router("#app");
-
-// // Можно обновиться на /user и получить сразу пользователя
-// router
-//   .use("/", Chats)
-//   .use("/users", Users)
-//   .start();
-
-// // Через секунду контент изменится сам, достаточно дёрнуть переход
-// setTimeout(() => {
-//   router.go("/users");
-// }, 1000);
-
-// // А можно и назад
-// setTimeout(() => {
-//   router.back();
-// }, 3000);
-
-// // И снова вперёд
-// setTimeout(() => {
-//   router.forward();
-// }, 5000);

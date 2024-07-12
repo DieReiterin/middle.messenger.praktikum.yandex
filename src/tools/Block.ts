@@ -28,6 +28,7 @@ export default class Block {
         FLOW_RENDER: 'flow:render',
     };
     private _element: HTMLElement | null = null;
+    private _parentElement: HTMLElement | null = null;
     private _id: number = Math.floor(100000 + Math.random() * 900000);
     private eventBus: () => EventBus;
 
@@ -232,6 +233,7 @@ export default class Block {
             this._element.replaceWith(newElement);
         }
         this._element = newElement as HTMLElement;
+        this._parentElement = this._element.parentElement;
         this._addEvents();
         this.addAttributes();
     }
@@ -241,7 +243,7 @@ export default class Block {
     }
 
     public getContent() {
-        return this.element;
+        return this._element;
     }
 
     private _makePropsProxy(props: IProps): IProps {
@@ -270,30 +272,18 @@ export default class Block {
 
     public show() {
         const content = this.getContent();
-        if (content) {
-            content.style.display = 'block';
+
+        if (content && this._parentElement) {
+            this._parentElement.appendChild(content);
         }
-        // const content = this.getContent();
-        // if (content && content.parentNode) {
-        //     content.parentNode.appendChild(content);
-        // }
     }
 
     public hide() {
         const content = this.getContent();
-        if (content) {
-            content.style.display = 'none';
-        }
-        // const content = this.getContent();
-        // if (content && content.parentNode) {
-        //     content.parentNode.removeChild(content);
-        // }
-    }
 
-    // public removeFromDom() {
-    //     const content = this.getContent();
-    //     if (content && content.parentNode) {
-    //         content.parentNode.removeChild(content);
-    //     }
-    // }
+        if (content && content.parentNode) {
+            this._parentElement = content.parentElement;
+            content.parentNode.removeChild(content);
+        }
+    }
 }
