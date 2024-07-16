@@ -9,7 +9,8 @@ type TLoginRequest = {
 };
 
 type TLoginResponse = {
-    user_id: number;
+    user_id?: number;
+    reason?: string;
 };
 
 export default class LoginAPI extends BaseAPI {

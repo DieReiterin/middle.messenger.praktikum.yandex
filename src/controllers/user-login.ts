@@ -1,4 +1,5 @@
 import LoginAPI from '@/api/login-api';
+import validate from '@/tools/validate';
 
 interface LoginFormModel {
     login: string;
@@ -15,14 +16,22 @@ export default class UserLoginController {
             // console.log('Loading...');
             console.log('UserLoginController called');
 
-            // const validateData = userLoginValidator(data);
+            const validateLogin = validate('login', data.login);
+            const validatePassword = validate('password', data.password);
 
-            // if (!validateData.isCorrect) {
-            //     throw new Error(validateData);
-            // }
+            if (validateLogin !== 'ok' || validatePassword !== 'ok') {
+                console.log('login validation: ' + validateLogin);
+                console.log('password validation: ' + validatePassword);
+                return;
+            }
 
             // const response = loginApi.request(prepareDataToRequest(data));
             const response = await loginApi.request(data);
+
+            if (!response.user_id) {
+                console.log('Server error reason: ' + response.reason);
+                return;
+            }
             console.log('User ID: ', response.user_id);
 
             window.router.go('/messenger');
