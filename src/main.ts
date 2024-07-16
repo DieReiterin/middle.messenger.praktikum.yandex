@@ -1,4 +1,6 @@
 import './style.scss';
+import '../global.d.ts';
+
 import Router from '@/tools/Router';
 import {
     LoginPage,
@@ -7,7 +9,8 @@ import {
     ProfilePage,
     ErrorPage,
 } from '@/pages/index';
-import '../global.d.ts';
+
+// let connectedLoginPage = connect(LoginPage);
 
 const router = new Router('#app');
 

@@ -1,8 +1,10 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
+import store from '@/tools/Store';
+import connect from '@/tools/connect';
 
-export default class LoginPage extends Block {
+class LoginPage extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -28,12 +30,23 @@ export default class LoginPage extends Block {
                 id: 'password',
                 onInput: (val: string) => {
                     this.data.password = val;
+                    // store.dispatch({
+                    //     type: 'SET_TEXT',
+                    //     buttonText: val,
+                    // });
                 },
             }),
             btn: new Button({
                 className: 'login-page__submit-btn',
-                text: 'Войти',
-                onClick: () => this.submitForm(),
+                // text: 'Войти',
+                text: store.getState().buttonText,
+                // onClick: () => this.submitForm(),
+                onClick: () => {
+                    store.dispatch({
+                        type: 'SET_TEXT',
+                        buttonText: 'this.data.password',
+                    });
+                },
             }),
             link: new Link({
                 className: 'login-page__link',
@@ -42,6 +55,14 @@ export default class LoginPage extends Block {
             }),
         });
     }
+
+    componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+        if (oldProps.buttonText !== newProps.buttonText) {
+            this.children.btn.setProps({ text: newProps.buttonText });
+        }
+        return true;
+    }
+
     data = {
         login: '',
         password: '',
@@ -74,3 +95,5 @@ export default class LoginPage extends Block {
                 </div>`;
     }
 }
+
+export default connect(LoginPage);

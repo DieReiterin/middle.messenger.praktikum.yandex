@@ -165,14 +165,13 @@ export default class Block {
         if (!nextProps) {
             return;
         }
-        const { children, lists } = this._getChildrenPropsAndProps(nextProps);
-        this.children = children;
+        // const { children, lists } = this._getChildrenPropsAndProps(nextProps);
+        // this.children = children;
+        // Object.entries(lists).forEach(([key, list]) => {
+        //     this.lists[key] = list;
+        // });
 
         Object.assign(this.props, nextProps);
-
-        Object.entries(lists).forEach(([key, list]) => {
-            this.lists[key] = list;
-        });
     };
 
     public get element(): HTMLElement | null {
