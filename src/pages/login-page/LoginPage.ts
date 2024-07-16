@@ -3,6 +3,9 @@ import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
 import store from '@/tools/Store';
 import connect from '@/tools/connect';
+import UserLoginController from '@/controllers/user-login';
+
+const userLoginController = new UserLoginController();
 
 class LoginPage extends Block {
     constructor(props: IProps = {}) {
@@ -30,17 +33,21 @@ class LoginPage extends Block {
                 id: 'password',
                 onInput: (val: string) => {
                     this.data.password = val;
-                    // store.dispatch({
-                    //     type: 'SET_TEXT',
-                    //     buttonText: val,
-                    // });
                 },
             }),
             btn: new Button({
                 className: 'login-page__submit-btn',
-                // text: 'Войти',
-                text: store.getState().buttonText,
+                text: 'Войти',
                 // onClick: () => this.submitForm(),
+                onClick: () => {
+                    this.handleLogin();
+                },
+            }),
+            link: new Link({
+                className: 'login-page__link',
+                // text: 'Регистрация',
+                // onClick: () => window.router.go('/sign-up'),
+                text: store.getState().buttonText,
                 onClick: () => {
                     store.dispatch({
                         type: 'SET_TEXT',
@@ -48,17 +55,23 @@ class LoginPage extends Block {
                     });
                 },
             }),
-            link: new Link({
-                className: 'login-page__link',
-                text: 'Регистрация',
-                onClick: () => window.router.go('/sign-up'),
-            }),
         });
+    }
+
+    async handleLogin() {
+        console.log('handleLogin method called');
+
+        const { login, password } = this.data;
+        try {
+            await userLoginController.login({ login, password });
+        } catch (error) {
+            console.error('LoginPage Login failed:', error);
+        }
     }
 
     componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
         if (oldProps.buttonText !== newProps.buttonText) {
-            this.children.btn.setProps({ text: newProps.buttonText });
+            this.children.link.setProps({ text: newProps.buttonText });
         }
         return true;
     }

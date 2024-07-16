@@ -1,3 +1,5 @@
+import config from '@/config';
+
 interface IOptions {
     timeout?: number;
     method?: string;
@@ -59,7 +61,11 @@ export default class HttpTransport {
         );
     };
 
-    request = (url: string, options: IOptions, timeout = 5000) => {
+    request = (
+        url: string,
+        options: IOptions,
+        timeout = 5000,
+    ): Promise<XMLHttpRequest> => {
         const { headers = {}, method, data } = options;
 
         return new Promise(function (resolve, reject) {
@@ -70,10 +76,12 @@ export default class HttpTransport {
             const xhr = new XMLHttpRequest();
             const isGet = method === METHODS.GET;
 
+            const fullUrl = `${config.BASE_URL}${url}`;
+
             if (isGet && !!data) {
-                xhr.open(method, `${url}${queryStringify(data)}`);
+                xhr.open(method, `${fullUrl}${queryStringify(data)}`);
             } else {
-                xhr.open(method, url);
+                xhr.open(method, fullUrl);
             }
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);

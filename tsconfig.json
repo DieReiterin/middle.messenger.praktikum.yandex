@@ -16,7 +16,10 @@
         "strictNullChecks": true,
         "paths": {
             "@": ["src"],
+            "@/config": ["src/config.ts"],
             "@/api/chat-api": ["src/api/chat-api.ts"],
+            "@/api/login-api": ["src/api/login-api.ts"],
+            "@/controllers/user-login": ["src/controllers/user-login.ts"],
             "@/modules/HttpTransport": ["src/modules/HttpTransport.ts"],
             "@/modules/http/base-api": ["src/modules/http/base-api.ts"],
             "@/utils/isEqual": ["src/utils/isEqual.ts"],
