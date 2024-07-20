@@ -80,17 +80,6 @@ class LoginPage extends Block {
         login: '',
         password: '',
     };
-    // submitForm() {
-    //     const input1: unknown = this.children.input1;
-    //     const input2: unknown = this.children.input2;
-    //     if (
-    //         (input1 as { validateField: () => boolean }).validateField() &&
-    //         (input2 as { validateField: () => boolean }).validateField()
-    //     ) {
-    //         console.log(this.data);
-    //         window.router.go('/messenger');
-    //     }
-    // }
 
     override render() {
         return `<div class="login-page__wrapper">

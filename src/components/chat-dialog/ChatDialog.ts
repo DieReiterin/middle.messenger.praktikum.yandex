@@ -101,6 +101,16 @@ export default class ChatDialog extends Block {
                             <div class="chat-dialog__msg chat-dialog__msg_my">
                                 Круто!
                             </div> 
+                            <div class="chat-dialog__msg chat-dialog__msg_partner">
+                                Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
+                                Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
+                            </div>
+                            <div class="chat-dialog__msg chat-dialog__msg_partner chat-dialog__msg_pictured">
+                                <img src="/images/camera.jpg" alt="camera" class="chat-dialog__msg-pic">
+                            </div>
+                            <div class="chat-dialog__msg chat-dialog__msg_my">
+                                Круто!
+                            </div> 
                     </div>
                     <form class="chat-dialog__footer">  
                         <img src="/icons/paper-clip.svg" alt="paper-clip" class="chat-dialog__attach">

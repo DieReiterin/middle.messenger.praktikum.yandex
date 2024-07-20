@@ -1,8 +1,13 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './signup-page.scss';
+// import store from '@/tools/Store';
+import connect from '@/tools/connect';
+import UserSignupController from '@/controllers/user-signup';
 
-export default class SigninPage extends Block {
+const userSignupController = new UserSignupController();
+
+class SignupPage extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -83,7 +88,9 @@ export default class SigninPage extends Block {
             btn: new Button({
                 className: 'signin-page__submit-btn',
                 text: 'Создать аккаунт',
-                onClick: () => this.submitForm(),
+                onClick: () => {
+                    this.handleSignup();
+                },
             }),
             link: new Link({
                 className: 'signin-page__link',
@@ -101,27 +108,26 @@ export default class SigninPage extends Block {
         password: '',
         'password-repeat': '',
     };
-    submitForm() {
-        // const input1: unknown = this.children.input1;
-        // const input2: unknown = this.children.input2;
-        // const input3: unknown = this.children.input3;
-        // const input4: unknown = this.children.input4;
-        // const input5: unknown = this.children.input5;
-        // const input6: unknown = this.children.input6;
-        // const input7: unknown = this.children.input7;
-        // if (
-        //     (input1 as { validateField: () => boolean }).validateField() &&
-        //     (input2 as { validateField: () => boolean }).validateField() &&
-        //     (input3 as { validateField: () => boolean }).validateField() &&
-        //     (input4 as { validateField: () => boolean }).validateField() &&
-        //     (input5 as { validateField: () => boolean }).validateField() &&
-        //     (input6 as { validateField: () => boolean }).validateField() &&
-        //     (input7 as { validateField: () => boolean }).validateField()
-        // ) {
-        //     console.log(this.data);
-        window.router.go('/');
-        // }
+
+    async handleSignup() {
+        console.log('handleSignup method called');
+
+        const { email, login, first_name, second_name, phone, password } =
+            this.data;
+        try {
+            await userSignupController.signup({
+                email,
+                login,
+                first_name,
+                second_name,
+                phone,
+                password,
+            });
+        } catch (error) {
+            console.error('SignupPage Signup failed:', error);
+        }
     }
+
     override render() {
         return `<form class="signin-page">
                     <div class="signin-page__main">
@@ -141,3 +147,5 @@ export default class SigninPage extends Block {
                 </form>`;
     }
 }
+
+export default connect(SignupPage);

@@ -1,29 +1,33 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const loginAPIInstance = new HttpTransport();
+const signupAPIInstance = new HttpTransport();
 
-type TLoginRequest = {
+type TSignupRequest = {
+    email: string;
     login: string;
+    first_name: string;
+    second_name: string;
+    phone: string;
     password: string;
 };
 
-type TLoginResponse = {
+type TSignupResponse = {
     user_id?: number;
     reason?: string;
 };
 
-export default class LoginAPI extends BaseAPI {
-    request(user: TLoginRequest): Promise<TLoginResponse> {
-        return loginAPIInstance
-            .post('/auth/signin', {
+export default class SignupAPI extends BaseAPI {
+    request(user: TSignupRequest): Promise<TSignupResponse> {
+        return signupAPIInstance
+            .post('/auth/signup', {
                 data: user,
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const response = JSON.parse(
                     (xhr as XMLHttpRequest).responseText,
-                ) as TLoginResponse;
+                ) as TSignupResponse;
                 return response;
             });
         // .post('/login', user)
