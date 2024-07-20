@@ -8,10 +8,12 @@ type TLoginRequest = {
     password: string;
 };
 
-type TLoginResponse = {
+type TLoginObjectResponse = {
     user_id?: number;
     reason?: string;
 };
+
+type TLoginResponse = string | TLoginObjectResponse;
 
 export default class LoginAPI extends BaseAPI {
     request(user: TLoginRequest): Promise<TLoginResponse> {
@@ -21,9 +23,11 @@ export default class LoginAPI extends BaseAPI {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
-                const response = JSON.parse(
-                    (xhr as XMLHttpRequest).responseText,
-                ) as TLoginResponse;
+                const rawResponse = (xhr as XMLHttpRequest).responseText;
+                if (typeof rawResponse === 'string') {
+                    return rawResponse;
+                }
+                const response = JSON.parse(rawResponse) as TLoginResponse;
                 return response;
             });
         // .post('/login', user)

@@ -8,7 +8,9 @@ export default class Profile extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
-            content: '',
+            content: new ProfileContent({
+                onEdit: () => this.edit(),
+            }),
         });
     }
     default = new ProfileContent({
@@ -21,15 +23,16 @@ export default class Profile extends Block {
         this.setProps({ content: this.settings });
     }
     save() {
-        this.setProps({ content: this.default });
+        // this.setProps({ content: this.default });
+        this.setProps({
+            content: new ProfileContent({
+                onEdit: () => this.edit(),
+            }),
+        });
     }
-    componentDidMount() {
-        if (this.props.profileType === 'settings') {
-            this.edit();
-        } else {
-            this.save();
-        }
-    }
+    // componentDidMount() {
+    //     this.save();
+    // }
     render() {
         return `<div class="profile {{ className }}">
                     <div class="profile__header">

@@ -66,8 +66,20 @@ class LoginPage extends Block {
             await userLoginController.login({ login, password });
         } catch (error) {
             console.error('LoginPage Login failed:', error);
+        } finally {
+            // this.getUserInfo();
         }
     }
+
+    // async getUserInfo() {
+    //     console.log('getUserInfo method called');
+
+    //     try {
+    //         await userLoginController.getInfo();
+    //     } catch (error) {
+    //         console.error('LoginPage getUserInfo failed:', error);
+    //     }
+    // }
 
     componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
         if (oldProps.buttonText !== newProps.buttonText) {

@@ -7,14 +7,14 @@ export default function connect(Component: typeof Block) {
             super(...args);
 
             store.subscribe(() => {
-                console.log('We are in store subscription by connect');
+                console.log('store subscription connected');
 
                 this.setProps({ ...store.getState() });
-                console.log('this.props');
-                console.log(this.props);
+                // console.log('this.props');
+                // console.log(this.props);
             });
 
-            console.log(this);
+            // console.log(this);
         }
     };
 }

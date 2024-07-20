@@ -3,12 +3,11 @@ import { Profile, IconButton } from '@/components/index';
 import './profile-page.scss';
 
 export default class ProfilePage extends Block {
-    constructor(props: IProps = { profileType: 'default' }) {
+    constructor(props: IProps = {}) {
         super({
             ...props,
             profile: new Profile({
                 className: 'profile-page__profile',
-                profileType: props.profileType,
             }),
             backBtn: new IconButton({
                 className: 'profile-page__nav-btn',

@@ -86,6 +86,7 @@ export default class HttpTransport {
             Object.keys(headers).forEach((key) => {
                 xhr.setRequestHeader(key, headers[key]);
             });
+            xhr.withCredentials = true;
             xhr.onload = function () {
                 resolve(xhr);
             };

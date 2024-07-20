@@ -1,4 +1,5 @@
 import LoginAPI from '@/api/login-api';
+import GetUserInfoAPI from '@/api/get-user-info-api';
 import validate from '@/tools/validate';
 
 interface LoginFormModel {
@@ -7,6 +8,7 @@ interface LoginFormModel {
 }
 
 const loginApi = new LoginAPI();
+const getUserInfoAPI = new GetUserInfoAPI();
 // const userLoginValidator = validateLoginFields(validateRules);
 
 export default class UserLoginController {
@@ -14,7 +16,7 @@ export default class UserLoginController {
         try {
             // Запускаем крутилку
             // console.log('Loading...');
-            console.log('UserLoginController called');
+            // console.log('UserLoginController called');
 
             const validateLogin = validate('login', data.login);
             const validatePassword = validate('password', data.password);
@@ -28,19 +30,28 @@ export default class UserLoginController {
             // const response = loginApi.request(prepareDataToRequest(data));
             const response = await loginApi.request(data);
 
-            if (!response.user_id) {
+            if (typeof response === 'object' && 'reason' in response) {
                 console.log('Server error reason: ' + response.reason);
                 return;
             }
-            console.log('User ID: ', response.user_id);
+            console.log('response: ', response);
 
             window.router.go('/messenger');
+        } catch (error) {
+            console.log('Controller Login failed:', error);
+        }
+    }
 
-            console.log('Loading complete');
+    public async getInfo() {
+        try {
+            // console.log('UserLoginController called');
+            const response = await getUserInfoAPI.request();
 
-            // RouteManagement.go('/chats');
-
-            // Останавливаем крутилку
+            if (typeof response === 'object' && 'reason' in response) {
+                console.log('Server error reason: ' + response.reason);
+                return;
+            }
+            console.log('response: ', response);
         } catch (error) {
             console.log('Controller Login failed:', error);
         }
