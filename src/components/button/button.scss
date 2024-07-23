@@ -14,4 +14,12 @@
         cursor: pointer;
         background-color: $color-btn-hover;
     }
+
+    &:active {
+        border-color: $color-btn-active;
+    }
+
+    &_hidden {
+        display: none;
+    }
 }

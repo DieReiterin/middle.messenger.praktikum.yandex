@@ -30,7 +30,13 @@
             justify-content: flex-start;
         }
 
-        &:last-child {
+        &_content-align-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        &:nth-last-child(1),
+        &:nth-last-child(2) {
             border: none;
         }
     }

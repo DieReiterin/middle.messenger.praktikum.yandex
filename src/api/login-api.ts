@@ -1,7 +1,7 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const loginAPIInstance = new HttpTransport();
+const loginApiInstance = new HttpTransport();
 
 type TLoginRequest = {
     login: string;
@@ -15,9 +15,9 @@ type TLoginObjectResponse = {
 
 type TLoginResponse = string | TLoginObjectResponse;
 
-export default class LoginAPI extends BaseAPI {
+export default class LoginApi extends BaseAPI {
     request(user: TLoginRequest): Promise<TLoginResponse> {
-        return loginAPIInstance
+        return loginApiInstance
             .post('/auth/signin', {
                 data: user,
                 headers: { 'Content-Type': 'application/json' },
@@ -27,7 +27,9 @@ export default class LoginAPI extends BaseAPI {
                 if (typeof rawResponse === 'string') {
                     return rawResponse;
                 }
-                const response = JSON.parse(rawResponse) as TLoginResponse;
+                const response = JSON.parse(
+                    rawResponse,
+                ) as TLoginObjectResponse;
                 return response;
             });
         // .post('/login', user)

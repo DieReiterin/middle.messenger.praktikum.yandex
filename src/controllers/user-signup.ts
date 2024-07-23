@@ -1,4 +1,4 @@
-import SignupAPI from '@/api/signup-api';
+import SignupApi from '@/api/signup-api';
 import validate from '@/tools/validate';
 
 interface SignupFormModel {
@@ -10,7 +10,7 @@ interface SignupFormModel {
     password: string;
 }
 
-const signupAPI = new SignupAPI();
+const signupApi = new SignupApi();
 // const userLoginValidator = validateLoginFields(validateRules);
 
 export default class UserSignupController {
@@ -48,7 +48,7 @@ export default class UserSignupController {
             }
 
             // const response = loginApi.request(prepareDataToRequest(data));
-            const response = await signupAPI.request(data);
+            const response = await signupApi.request(data);
 
             if (response.reason) {
                 console.log('Server error reason: ' + response.reason);

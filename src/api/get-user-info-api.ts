@@ -1,7 +1,7 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const getUserInfoAPIInstance = new HttpTransport();
+const getUserInfoApiInstance = new HttpTransport();
 
 type TErrorResponse = {
     reason: string;
@@ -20,9 +20,9 @@ type TCorrectResponse = {
 
 type TResponse = TErrorResponse | TCorrectResponse | string;
 
-export default class GetUserInfoAPI extends BaseAPI {
+export default class GetUserInfoApi extends BaseAPI {
     request(): Promise<TResponse> {
-        return getUserInfoAPIInstance.get('/auth/user').then((xhr) => {
+        return getUserInfoApiInstance.get('/auth/user').then((xhr) => {
             const rawResponse = (xhr as XMLHttpRequest).responseText;
             if (typeof rawResponse === 'string') {
                 return rawResponse;

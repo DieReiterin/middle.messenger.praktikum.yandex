@@ -1,18 +1,18 @@
-import LoginAPI from '@/api/login-api';
-import GetUserInfoAPI from '@/api/get-user-info-api';
+import LoginApi from '@/api/login-api';
+import GetUserInfoApi from '@/api/get-user-info-api';
 import validate from '@/tools/validate';
 
-interface LoginFormModel {
+interface ILoginFormModel {
     login: string;
     password: string;
 }
 
-const loginApi = new LoginAPI();
-const getUserInfoAPI = new GetUserInfoAPI();
+const loginApi = new LoginApi();
+const getUserInfoApi = new GetUserInfoApi();
 // const userLoginValidator = validateLoginFields(validateRules);
 
 export default class UserLoginController {
-    public async login(data: LoginFormModel) {
+    public async login(data: ILoginFormModel) {
         try {
             // Запускаем крутилку
             // console.log('Loading...');
@@ -45,7 +45,7 @@ export default class UserLoginController {
     public async getInfo() {
         try {
             // console.log('UserLoginController called');
-            const response = await getUserInfoAPI.request();
+            const response = await getUserInfoApi.request();
 
             if (typeof response === 'object' && 'reason' in response) {
                 console.log('Server error reason: ' + response.reason);

@@ -108,7 +108,10 @@ export default class Block {
         return true;
     }
 
-    protected componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    protected componentDidUpdate(
+        oldProps: IProps = {},
+        newProps: IProps = {},
+    ): boolean {
         return Object.keys(oldProps).length + Object.keys(newProps).length > 0;
     }
 
@@ -165,13 +168,15 @@ export default class Block {
         if (!nextProps) {
             return;
         }
-        // const { children, lists } = this._getChildrenPropsAndProps(nextProps);
-        // this.children = children;
-        // Object.entries(lists).forEach(([key, list]) => {
-        //     this.lists[key] = list;
-        // });
+        const { children, props, lists } =
+            this._getChildrenPropsAndProps(nextProps); //
+        Object.assign(this.children, children); //
+        Object.assign(this.lists, lists); //
+        Object.assign(this.props, props); //
 
-        Object.assign(this.props, nextProps);
+        // Object.assign(this.props, nextProps);
+
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps); //
     };
 
     public get element(): HTMLElement | null {
@@ -243,6 +248,10 @@ export default class Block {
 
     public getContent() {
         return this._element;
+    }
+
+    public toString() {
+        return this.render();
     }
 
     private _makePropsProxy(props: IProps): IProps {

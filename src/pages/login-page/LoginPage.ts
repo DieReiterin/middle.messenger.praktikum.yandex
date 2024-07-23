@@ -65,7 +65,7 @@ class LoginPage extends Block {
         try {
             await userLoginController.login({ login, password });
         } catch (error) {
-            console.error('LoginPage Login failed:', error);
+            console.error('handleLogin method failed:', error);
         } finally {
             // this.getUserInfo();
         }

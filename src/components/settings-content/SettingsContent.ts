@@ -1,102 +1,152 @@
 import Block, { IProps } from '@/tools/Block';
 import { Subtitle, InputField, Button } from '@/components/index';
 import './settings-content.scss';
+import connect from '@/tools/connect';
 
-export default class SettingsContent extends Block {
+class SettingsContent extends Block {
+    private emailTitleElem: Subtitle;
+    private emailElem: InputField;
+
+    private loginTitleElem: Subtitle;
+    private loginElem: InputField;
+
+    private nameTitleElem: Subtitle;
+    private nameElem: InputField;
+
+    private surnameTitleElem: Subtitle;
+    private surnameElem: InputField;
+
+    private displayNameTitleElem: Subtitle;
+    private displayNameElem: InputField;
+
+    private phoneTitleElem: Subtitle;
+    private phoneElem: InputField;
+
+    private saveChangesElem: Button;
+
     constructor(props: IProps = {}) {
         super({
             ...props,
-            emailTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Почта',
-            }),
-            email: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: 'pochta@yandex.ru',
-                name: 'email',
-                id: 'email',
-                onInput: (val: string) => {
-                    this.data.email = val;
-                },
-            }),
-            loginTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Логин',
-            }),
-            login: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: 'ivanivanov',
-                name: 'login',
-                id: 'login',
-                onInput: (val: string) => {
-                    this.data.login = val;
-                },
-            }),
-            nameTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Имя',
-            }),
-            name: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: 'Иван',
-                name: 'first_name',
-                id: 'first_name',
-                onInput: (val: string) => {
-                    this.data.first_name = val;
-                },
-            }),
-            surnameTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Фамилия',
-            }),
-            surname: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: 'Иванов',
-                name: 'second_name',
-                id: 'second_name',
-                onInput: (val: string) => {
-                    this.data.second_name = val;
-                },
-            }),
-            displayNameTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Имя в чате',
-            }),
-            displayName: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: 'Иван',
-                name: 'display_name',
-                id: 'display_name',
-                onInput: (val: string) => {
-                    this.data.display_name = val;
-                },
-            }),
-            phoneTitle: new Subtitle({
-                className: 'settings-content__row-title subtitle_bold',
-                text: 'Телефон',
-            }),
-            phone: new InputField({
-                className: 'settings-content__row-text',
-                typeProfile: 'true',
-                placeholder: '+7 (909) 967 30 30',
-                name: 'phone',
-                id: 'phone',
-                onInput: (val: string) => {
-                    this.data.phone = val;
-                },
-            }),
-            saveChanges: new Button({
-                className: 'settings-content__btn',
-                text: 'Сохранить',
-                onClick: () => this.submitForm(),
-            }),
+        });
+        this.emailTitleElem = new Subtitle({
+            text: 'Почта',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.emailElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.email',
+            name: 'email',
+            id: 'email',
+            onInput: (val: string) => {
+                this.data.email = val;
+            },
+        });
+
+        this.loginTitleElem = new Subtitle({
+            text: 'Логин',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.loginElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.login',
+            name: 'login',
+            id: 'login',
+            onInput: (val: string) => {
+                this.data.login = val;
+            },
+        });
+
+        this.nameTitleElem = new Subtitle({
+            text: 'Имя',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.nameElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.first_name',
+            name: 'first_name',
+            id: 'first_name',
+            onInput: (val: string) => {
+                this.data.first_name = val;
+            },
+        });
+
+        this.surnameTitleElem = new Subtitle({
+            text: 'Фамилия',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.surnameElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.second_name',
+            name: 'second_name',
+            id: 'second_name',
+            onInput: (val: string) => {
+                this.data.second_name = val;
+            },
+        });
+
+        this.displayNameTitleElem = new Subtitle({
+            text: 'Имя в чате',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.displayNameElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.display_name',
+            name: 'display_name',
+            id: 'display_name',
+            onInput: (val: string) => {
+                this.data.display_name = val;
+            },
+        });
+
+        this.phoneTitleElem = new Subtitle({
+            text: 'Телефон',
+            className: 'settings-content__row-title subtitle_bold',
+        });
+        this.phoneElem = new InputField({
+            className: 'settings-content__row-text',
+            typeProfile: 'true',
+            placeholder: 'profile.phone',
+            name: 'phone',
+            id: 'phone',
+            onInput: (val: string) => {
+                this.data.phone = val;
+            },
+        });
+
+        this.saveChangesElem = new Button({
+            className: 'settings-content__btn',
+            text: 'Сохранить',
+            onClick: () => this.submitForm(),
+        });
+
+        this.setProps({
+            emailTitle: this.emailTitleElem,
+            email: this.emailElem,
+
+            loginTitle: this.loginTitleElem,
+            login: this.loginElem,
+
+            nameTitle: this.nameTitleElem,
+            name: this.nameElem,
+
+            surnameTitle: this.surnameTitleElem,
+            surname: this.surnameElem,
+
+            displayNameTitle: this.displayNameTitleElem,
+            displayName: this.displayNameElem,
+
+            phoneTitle: this.phoneTitleElem,
+            phone: this.phoneElem,
+
+            saveChanges: this.saveChangesElem,
         });
     }
+
     data = {
         email: '',
         login: '',
@@ -105,6 +155,7 @@ export default class SettingsContent extends Block {
         display_name: '',
         phone: '',
     };
+
     submitForm() {
         const email: unknown = this.children.email;
         const login: unknown = this.children.login;
@@ -124,7 +175,22 @@ export default class SettingsContent extends Block {
             this.props.onSave();
         }
     }
-    render() {
+
+    componentDidMount() {
+        const { profile } = this.props;
+        // console.log(profile);
+
+        if (profile) {
+            this.emailElem.setProps({ text: profile.email });
+            this.loginElem.setProps({ text: profile.login });
+            this.nameElem.setProps({ text: profile.first_name });
+            this.surnameElem.setProps({ text: profile.second_name });
+            this.displayNameElem.setProps({ text: profile.display_name });
+            this.phoneElem.setProps({ text: profile.phone });
+        }
+    }
+
+    override render() {
         return `<form class="settings-content">
                     <div class="settings-content__main">
                         <div class="settings-content__row settings-content__row_content-spaced">
@@ -161,3 +227,5 @@ export default class SettingsContent extends Block {
                 `;
     }
 }
+
+export default connect(SettingsContent);

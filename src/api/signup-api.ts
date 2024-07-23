@@ -1,7 +1,7 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const signupAPIInstance = new HttpTransport();
+const signupApiInstance = new HttpTransport();
 
 type TSignupRequest = {
     email: string;
@@ -17,9 +17,9 @@ type TSignupResponse = {
     reason?: string;
 };
 
-export default class SignupAPI extends BaseAPI {
+export default class SignupApi extends BaseAPI {
     request(user: TSignupRequest): Promise<TSignupResponse> {
-        return signupAPIInstance
+        return signupApiInstance
             .post('/auth/signup', {
                 data: user,
                 headers: { 'Content-Type': 'application/json' },
