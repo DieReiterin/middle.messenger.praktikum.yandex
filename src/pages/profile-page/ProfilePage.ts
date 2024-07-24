@@ -6,7 +6,7 @@ export default class ProfilePage extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
-            profile: new Profile({
+            content: new Profile({
                 className: 'profile-page__profile',
             }),
             backBtn: new IconButton({
@@ -25,7 +25,7 @@ export default class ProfilePage extends Block {
                         </nav>
                     </div>
                     <div class="profile-page__main">
-                        {{{profile}}}
+                        {{{content}}}
                     </div>
                 </div>`;
     }

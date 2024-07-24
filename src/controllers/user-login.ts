@@ -1,4 +1,5 @@
 import LoginApi from '@/api/login-api';
+import LogoutAPI from '@/api/logout-api';
 import GetUserInfoApi from '@/api/get-user-info-api';
 import validate from '@/tools/validate';
 
@@ -8,8 +9,8 @@ interface ILoginFormModel {
 }
 
 const loginApi = new LoginApi();
+const logoutAPI = new LogoutAPI();
 const getUserInfoApi = new GetUserInfoApi();
-// const userLoginValidator = validateLoginFields(validateRules);
 
 export default class UserLoginController {
     public async login(data: ILoginFormModel) {
@@ -39,6 +40,22 @@ export default class UserLoginController {
             window.router.go('/messenger');
         } catch (error) {
             console.log('Controller Login failed:', error);
+        }
+    }
+
+    public async logout() {
+        try {
+            const response = await logoutAPI.request();
+
+            console.log('response');
+            console.log(response);
+
+            if (response !== 'OK') {
+                throw new Error(response);
+            }
+            window.router.go('/');
+        } catch (error) {
+            throw error;
         }
     }
 

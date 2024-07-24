@@ -1,4 +1,5 @@
 import ProfileAPI from '@/api/profile-api';
+import EditPasswordAPI from '@/api/edit-password-api';
 import validate from '@/tools/validate';
 
 interface IProfileFormModel {
@@ -10,10 +11,18 @@ interface IProfileFormModel {
     phone: string;
 }
 
+interface IPasswordFormModel {
+    password: string;
+    old_password: string;
+    new_password: string;
+    repeat_password: string;
+}
+
 const profileAPI = new ProfileAPI();
+const editPasswordAPI = new EditPasswordAPI();
 
 export default class ProfileController {
-    public async changeProfile(requestData: IProfileFormModel) {
+    public async editProfile(requestData: IProfileFormModel) {
         try {
             // console.log('UserLoginController called');
 
@@ -49,10 +58,14 @@ export default class ProfileController {
                 console.log('second_name validation: ' + validateSecondName);
                 console.log('display_name validation: ' + validateDisplayName);
                 console.log('phone validation: ' + validatePhone);
-                return;
-                // throw new Error('changeProfile validation failed');
+                throw new Error('editProfile validation failed');
+                // return;
             }
+            console.log('requestData');
+            console.log(requestData);
             const response = await profileAPI.request(requestData);
+            console.log('response');
+            console.log(response);
 
             const responseData = JSON.parse(response);
 
@@ -71,11 +84,56 @@ export default class ProfileController {
             if ('reason' in responseData) {
                 console.log('Server error reason: ' + responseData.reason);
                 // return;
-                throw new Error('changeProfile Server error');
+                throw new Error('editProfile Server error');
             }
             // return response;
         } catch (error) {
             // console.log('Profile controller failed:', error);
+            throw error;
+        }
+    }
+
+    public async editPassword(data: IPasswordFormModel) {
+        try {
+            const validateNewPassword = validate('password', data.new_password);
+
+            if (data.old_password !== data.password) {
+                console.log('incorrect current password');
+                throw new Error('editPassword validation failed');
+            }
+            if (data.old_password === data.new_password) {
+                console.log('new password cannot be equal to current one');
+                throw new Error('editPassword validation failed');
+            }
+            if (validateNewPassword !== 'ok') {
+                console.log('new password validation: ' + validateNewPassword);
+                throw new Error('editPassword validation failed');
+            }
+            if (data.repeat_password !== data.new_password) {
+                console.log('incorrect repeat password');
+                throw new Error('editPassword validation failed');
+            }
+
+            const preppedData = {
+                oldPassword: data.old_password,
+                newPassword: data.new_password,
+            };
+            console.log('requestData');
+            console.log(preppedData);
+            const response = await editPasswordAPI.request(preppedData);
+            console.log('response');
+            console.log(response);
+
+            // if (response !== 'OK') {
+            //     const responseData = JSON.parse(response);
+            //     if ('reason' in responseData) {
+            //         // console.log('Server error reason: ' + responseData.reason);
+            //         throw new Error('editPassword Server error');
+            //     }
+            //     // console.log('parsedResponse');
+            //     // console.log(responseData);
+            // }
+        } catch (error) {
             throw error;
         }
     }

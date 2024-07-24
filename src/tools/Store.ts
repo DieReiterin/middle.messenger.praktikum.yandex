@@ -22,6 +22,7 @@ let state: IState = {
         second_name: 'Testovich',
         display_name: 'Testovich Testovich',
         phone: '+79099673030',
+        password: 'Testovich1',
     },
 };
 

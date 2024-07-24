@@ -18,10 +18,12 @@
             "@": ["src"],
             "@/config": ["src/config.ts"],
             "@/api/login-api": ["src/api/login-api.ts"],
+            "@/api/get-user-info-api": ["src/api/get-user-info-api.ts"],
             "@/api/signup-api": ["src/api/signup-api.ts"],
             "@/api/chats-api": ["src/api/chats-api.ts"],
             "@/api/profile-api": ["src/api/profile-api.ts"],
-            "@/api/get-user-info-api": ["src/api/get-user-info-api.ts"],
+            "@/api/edit-password-api": ["src/api/edit-password-api.ts"],
+            "@/api/logout-api": ["src/api/logout-api.ts"],
             "@/controllers/user-login": ["src/controllers/user-login.ts"],
             "@/controllers/user-signup": ["src/controllers/user-signup.ts"],
             "@/controllers/chats": ["src/controllers/chats.ts"],
@@ -85,12 +87,6 @@
             ],
             "@/components/profile/Profile": [
                 "src/components/profile/Profile.ts"
-            ],
-            "@/components/profile-content/ProfileContent": [
-                "src/components/profile-content/ProfileContent.ts"
-            ],
-            "@/components/settings-content/SettingsContent": [
-                "src/components/settings-content/SettingsContent.ts"
             ],
             "@/components/subtitle/Subtitle": [
                 "src/components/subtitle/Subtitle.ts"
