@@ -13,22 +13,25 @@ interface IProfileFormModel {
 const profileAPI = new ProfileAPI();
 
 export default class ProfileController {
-    public async changeProfile(data: IProfileFormModel) {
+    public async changeProfile(requestData: IProfileFormModel) {
         try {
             // console.log('UserLoginController called');
 
-            const validateEmail = validate('email', data.email);
-            const validateLogin = validate('login', data.login);
-            const validateFirstName = validate('first_name', data.first_name);
+            const validateEmail = validate('email', requestData.email);
+            const validateLogin = validate('login', requestData.login);
+            const validateFirstName = validate(
+                'first_name',
+                requestData.first_name,
+            );
             const validateSecondName = validate(
                 'second_name',
-                data.second_name,
+                requestData.second_name,
             );
             const validateDisplayName = validate(
                 'display_name',
-                data.display_name,
+                requestData.display_name,
             );
-            const validatePhone = validate('phone', data.phone);
+            const validatePhone = validate('phone', requestData.phone);
 
             const statuses = [
                 validateEmail,
@@ -46,19 +49,34 @@ export default class ProfileController {
                 console.log('second_name validation: ' + validateSecondName);
                 console.log('display_name validation: ' + validateDisplayName);
                 console.log('phone validation: ' + validatePhone);
-                // return;
-                throw new Error('changeProfile validation failed');
+                return;
+                // throw new Error('changeProfile validation failed');
             }
-            const response = await profileAPI.request(data);
+            const response = await profileAPI.request(requestData);
 
-            if (typeof response === 'object' && 'reason' in response) {
-                console.log('Server error reason: ' + response.reason);
+            const responseData = JSON.parse(response);
+
+            // console.log(responseData);
+
+            // if (typeof response === 'string') {
+            //     console.log('string response');
+            //     console.log(response);
+            // }
+
+            // if (typeof response === 'object') {
+            //     console.log('object response');
+            //     console.log(response);
+            // }
+
+            if ('reason' in responseData) {
+                console.log('Server error reason: ' + responseData.reason);
                 // return;
                 throw new Error('changeProfile Server error');
             }
-            console.log('response: ', response);
+            // return response;
         } catch (error) {
-            console.log('Profile controller failed:', error);
+            // console.log('Profile controller failed:', error);
+            throw error;
         }
     }
 }

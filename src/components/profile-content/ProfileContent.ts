@@ -8,12 +8,30 @@ import ProfileController from '@/controllers/profile';
 const profileController = new ProfileController();
 
 class ProfileContent extends Block {
-    private emailElem: Subtitle;
-    private loginElem: Subtitle;
-    private firstNameElem: Subtitle;
-    private secondNameElem: Subtitle;
-    private displayNameElem: Subtitle;
-    private phoneElem: Subtitle;
+    private emailElem: Subtitle = new Subtitle({
+        text: 'profile.email',
+        className: 'profile-content__row-text subtitle_grey',
+    });
+    private loginElem: Subtitle = new Subtitle({
+        text: 'profile.login',
+        className: 'profile-content__row-text subtitle_grey',
+    });
+    private firstNameElem: Subtitle = new Subtitle({
+        text: 'profile.first_name',
+        className: 'profile-content__row-text subtitle_grey',
+    });
+    private secondNameElem: Subtitle = new Subtitle({
+        text: 'profile.second_name',
+        className: 'profile-content__row-text subtitle_grey',
+    });
+    private displayNameElem: Subtitle = new Subtitle({
+        text: 'profile.display_name',
+        className: 'profile-content__row-text subtitle_grey',
+    });
+    private phoneElem: Subtitle = new Subtitle({
+        text: 'profile.phone',
+        className: 'profile-content__row-text subtitle_grey',
+    });
 
     private data = {
         email: '',
@@ -28,31 +46,10 @@ class ProfileContent extends Block {
         super({
             ...props,
         });
-        this.emailElem = new Subtitle({
-            text: 'profile.email',
-            className: 'profile-content__row-text subtitle_grey',
-        });
-        this.loginElem = new Subtitle({
-            text: 'profile.login',
-            className: 'profile-content__row-text subtitle_grey',
-        });
-        this.firstNameElem = new Subtitle({
-            text: 'profile.first_name',
-            className: 'profile-content__row-text subtitle_grey',
-        });
-        this.secondNameElem = new Subtitle({
-            text: 'profile.second_name',
-            className: 'profile-content__row-text subtitle_grey',
-        });
-        this.displayNameElem = new Subtitle({
-            text: 'profile.display_name',
-            className: 'profile-content__row-text subtitle_grey',
-        });
-        this.phoneElem = new Subtitle({
-            text: 'profile.phone',
-            className: 'profile-content__row-text subtitle_grey',
-        });
+        this.initProps();
+    }
 
+    initProps() {
         this.setProps({
             emailTitle: new Subtitle({
                 text: 'Почта',
@@ -109,6 +106,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.email,
+                value: profile.email,
                 name: 'email',
                 id: 'email',
                 onInput: (val: string) => {
@@ -119,6 +117,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.login,
+                value: profile.login,
                 name: 'login',
                 id: 'login',
                 onInput: (val: string) => {
@@ -129,6 +128,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.first_name,
+                value: profile.first_name,
                 name: 'first_name',
                 id: 'first_name',
                 onInput: (val: string) => {
@@ -139,6 +139,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.second_name,
+                value: profile.second_name,
                 name: 'second_name',
                 id: 'second_name',
                 onInput: (val: string) => {
@@ -149,6 +150,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.display_name,
+                value: profile.display_name,
                 name: 'display_name',
                 id: 'display_name',
                 onInput: (val: string) => {
@@ -159,6 +161,7 @@ class ProfileContent extends Block {
                 className: 'profile-content__row-text',
                 typeProfile: 'true',
                 placeholder: profile.phone,
+                value: profile.phone,
                 name: 'phone',
                 id: 'phone',
                 onInput: (val: string) => {
@@ -175,11 +178,41 @@ class ProfileContent extends Block {
                 className: 'settings-content__btn',
                 text: 'Сохранить',
                 onClick: () => this.requestChangeProfile(),
+                // onClick: () => this.updateStoreAndRerender(),
             }),
         });
     }
 
+    async requestChangeProfile() {
+        console.log('requestChangeProfile method called');
+
+        const { email, login, first_name, second_name, display_name, phone } =
+            this.data;
+        try {
+            await profileController.changeProfile({
+                email,
+                login,
+                first_name,
+                second_name,
+                display_name,
+                phone,
+            });
+            this.updateStoreAndRerender();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            // console.log(this.props.profile);
+        }
+    }
+
     updateStoreAndRerender() {
+        console.log('updateStoreAndRerender');
+
+        store.dispatch({
+            type: 'SET_PROFILE',
+            profile: this.data,
+        });
+
         this.setProps({
             email: new Subtitle({
                 text: this.data.email,
@@ -217,11 +250,6 @@ class ProfileContent extends Block {
                 text: 'Сохранить',
             }),
         });
-
-        store.dispatch({
-            type: 'SET_PROFILE',
-            profile: this.data,
-        });
     }
 
     componentDidUpdate(): boolean {
@@ -238,28 +266,6 @@ class ProfileContent extends Block {
             this.phoneElem.setProps({ text: profile.phone });
         }
         return true;
-    }
-
-    async requestChangeProfile() {
-        console.log('requestChangeProfile method called');
-
-        const { email, login, first_name, second_name, display_name, phone } =
-            this.data;
-        try {
-            await profileController.changeProfile({
-                email,
-                login,
-                first_name,
-                second_name,
-                display_name,
-                phone,
-            });
-            this.updateStoreAndRerender();
-        } catch (error) {
-            console.error(error);
-        } finally {
-            console.log(this.props.profile);
-        }
     }
 
     override render() {

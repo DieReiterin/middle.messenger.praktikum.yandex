@@ -12,12 +12,13 @@ export default class InputField extends Block {
                 name: props.name,
                 id: props.id,
                 placeholder: props.placeholder,
-                value: '',
+                value: props.value,
                 onBlur: () => this.blurInput(),
                 onInput: (val: string) => this.enterText(val),
             }),
             error: '',
         });
+        this.value = props.value;
     }
     value = '';
     blurInput() {

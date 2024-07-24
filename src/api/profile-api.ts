@@ -12,12 +12,13 @@ type TChangeProfileRequest = {
     phone: string;
 };
 
-type TChangeProfileObjectResponse = {
-    reason?: string;
-    [key: string]: any;
-};
+// type TChangeProfileObjectResponse = {
+//     reason?: string;
+//     [key: string]: any;
+// };
 
-type TChangeProfileResponse = string | TChangeProfileObjectResponse;
+// type TChangeProfileResponse = string | TChangeProfileObjectResponse;
+type TChangeProfileResponse = string;
 
 export default class ProfileAPI extends BaseAPI {
     request(dataParam: TChangeProfileRequest): Promise<TChangeProfileResponse> {
@@ -28,13 +29,15 @@ export default class ProfileAPI extends BaseAPI {
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
-                if (typeof rawResponse === 'string') {
-                    return rawResponse;
-                }
-                const response = JSON.parse(
-                    rawResponse,
-                ) as TChangeProfileObjectResponse;
-                return response;
+                // if (typeof rawResponse === 'string') {
+                //     console.log('api returned string response');
+                return rawResponse;
+                // }
+                // console.log('api returned parsed object response');
+                // const response = JSON.parse(
+                //     rawResponse,
+                // ) as TChangeProfileObjectResponse;
+                // return response;
             });
     }
 }

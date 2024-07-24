@@ -16,12 +16,12 @@ interface IState {
 let state: IState = {
     buttonText: 'Initial text',
     profile: {
-        email: 'pochta@yandex.ru',
-        login: 'ivanivanov',
-        first_name: 'Иван',
-        second_name: 'Иванов',
-        display_name: 'Иван Иванов',
-        phone: '+7 (909) 967 30 30',
+        email: 'testovich@yandex.ru',
+        login: 'Testovich',
+        first_name: 'Testovich',
+        second_name: 'Testovich',
+        display_name: 'Testovich Testovich',
+        phone: '+79099673030',
     },
 };
 
@@ -35,13 +35,13 @@ const deepCopy = <T>(obj: T) => JSON.parse(JSON.stringify(obj));
 const reducer: TReducer<IState> = (state, action) => {
     let newState = deepCopy(state);
     if (action.type === 'SET_TEXT') {
-        console.log('action.buttonText');
-        console.log(action.buttonText);
+        // console.log('action.buttonText');
+        // console.log(action.buttonText);
         newState.buttonText = action.buttonText;
         return newState;
     } else if (action.type === 'SET_PROFILE') {
-        console.log('action.profile');
-        console.log(action.profile);
+        // console.log('action.profile');
+        // console.log(action.profile);
         newState.profile = action.profile;
         return newState;
     } else {
