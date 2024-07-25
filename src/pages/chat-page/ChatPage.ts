@@ -17,9 +17,7 @@ export default class ChatPage extends Block {
     override render() {
         return `<div class="chat-page">
                     {{{list}}}
-                    <div class="chat-page__main">
-                        {{{dialog}}}
-                    </div>
+                    {{{dialog}}}
                 </div>
                 `;
     }

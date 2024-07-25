@@ -20,7 +20,7 @@
             "@/api/login-api": ["src/api/login-api.ts"],
             "@/api/get-user-info-api": ["src/api/get-user-info-api.ts"],
             "@/api/signup-api": ["src/api/signup-api.ts"],
-            "@/api/chats-api": ["src/api/chats-api.ts"],
+            "@/api/get-chats-api": ["src/api/get-chats-api.ts"],
             "@/api/profile-api": ["src/api/profile-api.ts"],
             "@/api/edit-password-api": ["src/api/edit-password-api.ts"],
             "@/api/logout-api": ["src/api/logout-api.ts"],

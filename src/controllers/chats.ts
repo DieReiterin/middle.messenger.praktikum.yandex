@@ -1,6 +1,6 @@
-import ChatAPI from '@/api/chats-api';
+import GetChatsAPI from '@/api/get-chats-api';
 
-const chatAPI = new ChatAPI();
+const getChatsAPI = new GetChatsAPI();
 
 export default class ChatController {
     public async getChats() {
@@ -8,7 +8,7 @@ export default class ChatController {
             // console.log('Loading...');
             // console.log('ChatController called');
 
-            const response = await chatAPI.request();
+            const response = await getChatsAPI.request();
 
             if (typeof response === 'object' && 'reason' in response) {
                 console.log('Server error reason: ' + response.reason);

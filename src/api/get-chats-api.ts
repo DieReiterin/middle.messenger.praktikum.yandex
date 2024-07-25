@@ -34,7 +34,7 @@ interface IChat {
 
 type TChatResponse = TErrorResponse | IChat[] | string;
 
-export default class ChatAPI extends BaseAPI {
+export default class GetChatsAPI extends BaseAPI {
     // create() {
     //     return chatAPIInstance.post('api/v1/chats', { title: 'string' });
     // }
@@ -43,11 +43,11 @@ export default class ChatAPI extends BaseAPI {
         // return chatAPIInstance.get('/chats');
         return chatAPIInstance.get('/chats').then((xhr) => {
             const rawResponse = (xhr as XMLHttpRequest).responseText;
-            if (typeof rawResponse === 'string') {
-                return rawResponse;
-            }
-            const response = JSON.parse(rawResponse) as TChatResponse;
-            return response;
+            // if (typeof rawResponse === 'string') {
+            return rawResponse;
+            // }
+            // const response = JSON.parse(rawResponse) as TChatResponse;
+            // return response;
         });
     }
 }
