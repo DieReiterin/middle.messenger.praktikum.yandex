@@ -4,6 +4,10 @@
     height: 70px;
     padding: 0 10px;
 
+    &:hover {
+        cursor: pointer;
+    }
+
     &__line {
         height: 1px;
         width: 100%;

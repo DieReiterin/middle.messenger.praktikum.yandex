@@ -14,15 +14,17 @@ interface IState {
     [key: string]: any;
 }
 let state: IState = {
-    buttonText: 'Initial text',
+    user: {
+        id: '',
+        avatar: '',
+    },
     profile: {
-        email: 'testovich@yandex.ru',
-        login: 'Testovich',
-        first_name: 'Testovich',
-        second_name: 'Testovich',
-        display_name: 'Testovich Testovich',
-        phone: '+79099673030',
-        password: 'Testovich1',
+        first_name: '',
+        second_name: '',
+        display_name: '',
+        phone: '',
+        login: '',
+        email: '',
     },
 };
 
@@ -35,15 +37,46 @@ const deepCopy = <T>(obj: T) => JSON.parse(JSON.stringify(obj));
 
 const reducer: TReducer<IState> = (state, action) => {
     let newState = deepCopy(state);
-    if (action.type === 'SET_TEXT') {
-        // console.log('action.buttonText');
-        // console.log(action.buttonText);
-        newState.buttonText = action.buttonText;
+    // console.log('state before action', state);
+    // console.log('newState before action', newState);
+
+    if (action.type === 'SET_USER_DATA') {
+        const {
+            id,
+            avatar,
+            email,
+            login,
+            first_name,
+            second_name,
+            display_name,
+            phone,
+        } = action.data;
+
+        newState.user = {
+            id,
+            avatar,
+        };
+        newState.profile = {
+            login,
+            first_name,
+            second_name,
+            display_name,
+            phone,
+            email,
+        };
         return newState;
     } else if (action.type === 'SET_PROFILE') {
-        // console.log('action.profile');
-        // console.log(action.profile);
-        newState.profile = action.profile;
+        const { email, login, first_name, second_name, display_name, phone } =
+            action.profile;
+
+        newState.profile = {
+            login,
+            first_name,
+            second_name,
+            display_name,
+            phone,
+            email,
+        };
         return newState;
     } else {
         return state;

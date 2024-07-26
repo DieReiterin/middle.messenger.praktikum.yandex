@@ -12,7 +12,6 @@ interface IProfileFormModel {
 }
 
 interface IPasswordFormModel {
-    password: string;
     old_password: string;
     new_password: string;
     repeat_password: string;
@@ -97,10 +96,10 @@ export default class ProfileController {
         try {
             const validateNewPassword = validate('password', data.new_password);
 
-            if (data.old_password !== data.password) {
-                console.log('incorrect current password');
-                throw new Error('editPassword validation failed');
-            }
+            // if (data.old_password !== data.password) {
+            //     console.log('incorrect current password');
+            //     throw new Error('editPassword validation failed');
+            // }
             if (data.old_password === data.new_password) {
                 console.log('new password cannot be equal to current one');
                 throw new Error('editPassword validation failed');

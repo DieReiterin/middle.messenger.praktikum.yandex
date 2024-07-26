@@ -8,6 +8,7 @@ type TAction = {
 
 function mapStateToProps(state: any) {
     return {
+        user: state.user,
         profile: state.profile,
     };
 }

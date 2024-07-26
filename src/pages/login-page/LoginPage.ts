@@ -1,7 +1,7 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
-import store from '@/tools/Store';
+// import store from '@/tools/Store';
 import connect from '@/tools/connect';
 import UserLoginController from '@/controllers/user-login';
 
@@ -38,22 +38,15 @@ class LoginPage extends Block {
             btn: new Button({
                 className: 'login-page__submit-btn',
                 text: 'Войти',
-                // onClick: () => this.submitForm(),
                 onClick: () => {
                     this.handleLogin();
                 },
             }),
             link: new Link({
                 className: 'login-page__link',
-                // text: 'Регистрация',
-                // onClick: () => window.router.go('/sign-up'),
-                text: store.getState().buttonText,
-                onClick: () => {
-                    store.dispatch({
-                        type: 'SET_TEXT',
-                        buttonText: 'this.data.password',
-                    });
-                },
+                text: 'Регистрация',
+                onClick: () => window.router.go('/sign-up'),
+                // text: store.getState().buttonText,
             }),
         });
     }
@@ -64,28 +57,21 @@ class LoginPage extends Block {
         const { login, password } = this.data;
         try {
             await userLoginController.login({ login, password });
+            this.getUserInfo();
+            window.router.go('/messenger');
         } catch (error) {
             console.error('handleLogin method failed:', error);
-        } finally {
-            // this.getUserInfo();
         }
     }
 
-    // async getUserInfo() {
-    //     console.log('getUserInfo method called');
+    async getUserInfo() {
+        console.log('getUserInfo method called');
 
-    //     try {
-    //         await userLoginController.getInfo();
-    //     } catch (error) {
-    //         console.error('LoginPage getUserInfo failed:', error);
-    //     }
-    // }
-
-    componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
-        if (oldProps.buttonText !== newProps.buttonText) {
-            this.children.link.setProps({ text: newProps.buttonText });
+        try {
+            await userLoginController.getInfo();
+        } catch (error) {
+            console.error('LoginPage getUserInfo failed:', error);
         }
-        return true;
     }
 
     data = {

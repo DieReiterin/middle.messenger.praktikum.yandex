@@ -11,6 +11,8 @@
         margin-bottom: 20px;
 
         &__image {
+            position: relative;
+
             display: flex;
             align-items: center;
             justify-content: center;
@@ -21,6 +23,35 @@
 
             border-radius: 50%;
             background-color: $color-bg-secondary;
+
+            &::after {
+                position: absolute;
+                left: 0;
+                top: 0;
+                content: 'Поменять\Aаватар';
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                font-size: 14px;
+                text-align: center;
+                color: $color-text2;
+                white-space: pre;
+
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: rgba($color: $bunker, $alpha: 0.5);
+                transition: opacity 0.5s;
+                opacity: 0;
+            }
+            &:hover {
+                cursor: pointer;
+                &::after {
+                    opacity: 1;
+                }
+            }
         }
 
         &__title {
@@ -31,46 +62,52 @@
         }
     }
 
-    &-content {
-        &__main {
-            min-height: 50px;
-            margin-bottom: 20px;
-        }
+    &-main {
+        min-height: 50px;
+        margin-bottom: 20px;
+    }
 
-        &__footer {
-            min-height: 50px;
-        }
+    &-footer {
+        min-height: 50px;
+    }
 
-        &__row {
+    &__row {
+        display: flex;
+        align-items: center;
+
+        height: 24px;
+        padding: 10px 0;
+
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 100%;
+
+        &_spaced {
             display: flex;
-            align-items: center;
-
-            height: 24px;
-            padding: 10px 0;
-            border-bottom: 1px solid $color-border;
-
-            font-weight: 500;
-            font-size: 14px;
-            line-height: 100%;
-
-            &_content-spaced {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            &_content-align-left {
-                display: flex;
-                justify-content: flex-start;
-            }
-
-            &_content-align-center {
-                display: flex;
-                justify-content: center;
-            }
-
-            &:nth-last-child(1) {
-                border: none;
-            }
+            justify-content: space-between;
         }
+
+        &_align-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        &_align-center {
+            display: flex;
+            justify-content: center;
+        }
+
+        &_bordered {
+            // border-bottom: 1px solid $color-border;
+            border: 1px solid $color-border;
+        }
+
+        // &-file {
+        //     margin-right: -35px;
+        // }
+
+        // &:nth-last-child(1) {
+        //     border: none;
+        // }
     }
 }

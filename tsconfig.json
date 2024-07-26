@@ -81,6 +81,9 @@
             "@/components/input-field/InputField": [
                 "src/components/input-field/InputField.ts"
             ],
+            "@/components/input-file/InputFile": [
+                "src/components/input-file/InputFile.ts"
+            ],
             "@/components/link/Link": ["src/components/link/Link.ts"],
             "@/components/page-title/PageTitle": [
                 "src/components/page-title/PageTitle.ts"

@@ -1,5 +1,11 @@
 import Block, { IProps } from '@/tools/Block';
-import { Subtitle, InputField, Link, Button } from '@/components/index';
+import {
+    Subtitle,
+    InputField,
+    InputFile,
+    Link,
+    Button,
+} from '@/components/index';
 import './profile.scss';
 import store from '@/tools/Store';
 import connect from '@/tools/connect';
@@ -13,53 +19,64 @@ class Profile extends Block {
     private profileTitleElem: Subtitle = new Subtitle({
         text: 'profile.display_name',
     });
+    private avatarElem: Subtitle = new InputFile({
+        className: 'profile__row-file',
+        name: 'avatar',
+        id: 'avatar',
+        accept: 'image/*',
+        onChange: (file: File) => {
+            this.data.avatar = file;
+            console.log('this.data:', this.data);
+        },
+        // accept: 'image/png, image/jpeg',
+    });
 
     private emailElem: Subtitle = new Subtitle({
         text: 'profile.email',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private loginElem: Subtitle = new Subtitle({
         text: 'profile.login',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private firstNameElem: Subtitle = new Subtitle({
         text: 'profile.first_name',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private secondNameElem: Subtitle = new Subtitle({
         text: 'profile.second_name',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private displayNameElem: Subtitle = new Subtitle({
         text: 'profile.display_name',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private phoneElem: Subtitle = new Subtitle({
         text: 'profile.phone',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
 
     private oldPasswordElem: Subtitle = new Subtitle({
         text: '',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private newPasswordElem: Subtitle = new Subtitle({
         text: '',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
     private repeatPasswordElem: Subtitle = new Subtitle({
         text: '',
-        className: 'profile-content__row-text subtitle_grey',
+        className: 'profile__row-text subtitle_grey',
     });
 
     private data = {
+        avatar: null as File | null,
         email: '',
         login: '',
         first_name: '',
         second_name: '',
         display_name: '',
         phone: '',
-        password: '',
         old_password: '',
         new_password: '',
         repeat_password: '',
@@ -69,64 +86,71 @@ class Profile extends Block {
         super({
             ...props,
         });
+        this.getUserInfo();
+
         this.initTitles();
         this.initControls();
         this.initComponents();
+        // console.log('store.getState(): ', store.getState());
     }
 
     initTitles(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
+                avatarTitle: new Subtitle({
+                    text: 'Загрузите файл',
+                    className: 'profile__row-title subtitle_bold',
+                }),
                 emailTitle: new Subtitle({
                     text: 'Почта',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 loginTitle: new Subtitle({
                     text: 'Логин',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 firstNameTitle: new Subtitle({
                     text: 'Имя',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 secondNameTitle: new Subtitle({
                     text: 'Фамилия',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 displayNameTitle: new Subtitle({
                     text: 'Имя в чате',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 phoneTitle: new Subtitle({
                     text: 'Телефон',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 oldPasswordTitle: new Subtitle({
                     text: '',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 newPasswordTitle: new Subtitle({
                     text: '',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 repeatPasswordTitle: new Subtitle({
                     text: '',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
             });
         } else if (type === 'onEditPassword') {
             this.setProps({
                 oldPasswordTitle: new Subtitle({
                     text: 'Старый пароль',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 newPasswordTitle: new Subtitle({
                     text: 'Новый пароль',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
                 repeatPasswordTitle: new Subtitle({
                     text: 'Повторите новый пароль',
-                    className: 'profile-content__row-title subtitle_bold',
+                    className: 'profile__row-title subtitle_bold',
                 }),
             });
         }
@@ -200,6 +224,7 @@ class Profile extends Block {
         if (type === 'default') {
             this.setProps({
                 profileTitle: this.profileTitleElem,
+                avatar: this.avatarElem,
 
                 email: this.emailElem,
                 login: this.loginElem,
@@ -216,7 +241,7 @@ class Profile extends Block {
             const { profile } = this.props;
             this.setProps({
                 email: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.email,
                     value: profile.email,
@@ -227,7 +252,7 @@ class Profile extends Block {
                     },
                 }),
                 login: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.login,
                     value: profile.login,
@@ -238,7 +263,7 @@ class Profile extends Block {
                     },
                 }),
                 firstName: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.first_name,
                     value: profile.first_name,
@@ -249,7 +274,7 @@ class Profile extends Block {
                     },
                 }),
                 secondName: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.second_name,
                     value: profile.second_name,
@@ -260,7 +285,7 @@ class Profile extends Block {
                     },
                 }),
                 displayName: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.display_name,
                     value: profile.display_name,
@@ -271,7 +296,7 @@ class Profile extends Block {
                     },
                 }),
                 phone: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: profile.phone,
                     value: profile.phone,
@@ -285,7 +310,7 @@ class Profile extends Block {
         } else if (type === 'onEditPassword') {
             this.setProps({
                 oldPassword: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: 'Старый пароль',
                     name: 'old_password',
@@ -295,7 +320,7 @@ class Profile extends Block {
                     },
                 }),
                 newPassword: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: 'Новый пароль',
                     name: 'password',
@@ -305,7 +330,7 @@ class Profile extends Block {
                     },
                 }),
                 repeatPassword: new InputField({
-                    className: 'profile-content__row-text',
+                    className: 'profile__row-text',
                     typeProfile: 'true',
                     placeholder: 'Повторите новый пароль',
                     name: 'password-repeat',
@@ -330,6 +355,16 @@ class Profile extends Block {
         this.initComponents('onEditPassword');
     }
 
+    async getUserInfo() {
+        console.log('getUserInfo method called');
+
+        try {
+            await userLoginController.getInfo();
+        } catch (error) {
+            console.error('LoginPage getUserInfo failed:', error);
+        }
+    }
+
     async requestChangeProfile() {
         console.log('requestChangeProfile method called');
 
@@ -344,7 +379,7 @@ class Profile extends Block {
                 display_name,
                 phone,
             });
-            this.updateStoreAndRerender();
+            this.updateStoreAndRerender('afterSetProfile');
         } catch (error) {
             console.error(error);
         } finally {
@@ -355,16 +390,14 @@ class Profile extends Block {
     async requestChangePassword() {
         console.log('requestChangePassword method called');
 
-        const { password, old_password, new_password, repeat_password } =
-            this.data;
+        const { old_password, new_password, repeat_password } = this.data;
         try {
             await profileController.editPassword({
-                password,
                 old_password,
                 new_password,
                 repeat_password,
             });
-            this.updateStoreAndRerender();
+            this.updateStoreAndRerender('afterSetPassword');
         } catch (error) {
             console.error(error);
         }
@@ -379,14 +412,14 @@ class Profile extends Block {
         }
     }
 
-    updateStoreAndRerender() {
+    updateStoreAndRerender(action: string = 'unset') {
         // console.log('updateStoreAndRerender');
-
-        store.dispatch({
-            type: 'SET_PROFILE',
-            profile: this.data,
-        });
-
+        if (action === 'afterSetProfile') {
+            store.dispatch({
+                type: 'SET_PROFILE',
+                profile: this.data,
+            });
+        }
         // this.profileMode = 'default';
         this.initTitles();
         this.initControls();
@@ -398,6 +431,8 @@ class Profile extends Block {
 
         if (profile) {
             this.data = profile;
+            // console.log('profile');
+            // console.log(profile);
 
             this.emailElem.setProps({ text: profile.email });
             this.loginElem.setProps({ text: profile.login });
@@ -421,69 +456,71 @@ class Profile extends Block {
                             {{{profileTitle}}}
                         </span>
                     </div>
-                    <div class="profile-content">
-                        <div class="profile-content__main">
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{emailTitle}}}
-                                {{{email}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{loginTitle}}}
-                                {{{login}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{firstNameTitle}}}
-                                {{{firstName}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{secondNameTitle}}}
-                                {{{secondName}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{displayNameTitle}}}
-                                {{{displayName}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{phoneTitle}}}
-                                {{{phone}}}
-                            </div>              
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                            </div>              
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{oldPasswordTitle}}}
-                                {{{oldPassword}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{newPasswordTitle}}}
-                                {{{newPassword}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-spaced">
-                                {{{repeatPasswordTitle}}}
-                                {{{repeatPassword}}}
-                            </div>
+                    <div class="profile-main">
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{avatarTitle}}}
+                            {{{avatar}}}
                         </div>
-                        <div class="profile-content__footer">
-                            <div class="profile-content__row profile-content__row_content-align-left">
-                                {{{editData}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-align-left">
-                                {{{editPassword}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-align-left">
-                                {{{signout}}}
-                            </div>
-                            <div class="profile-content__row profile-content__row_content-align-center">
-                            </div>
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{emailTitle}}}
+                            {{{email}}}
                         </div>
-                        <div class="profile-content__footer">
-                            <div class="profile-content__row profile-content__row_content-align-center">
-                                {{{saveChanges}}} 
-                            </div>
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{loginTitle}}}
+                            {{{login}}}
                         </div>
-                        
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{firstNameTitle}}}
+                            {{{firstName}}}
+                        </div>
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{secondNameTitle}}}
+                            {{{secondName}}}
+                        </div>
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{displayNameTitle}}}
+                            {{{displayName}}}
+                        </div>
+                        <div class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{phoneTitle}}}
+                            {{{phone}}}
+                        </div>              
+                        <div class="profile__row profile__row_spaced">
+                            {{{oldPasswordTitle}}}
+                            {{{oldPassword}}}
+                        </div>
+                        <div class="profile__row profile__row_spaced">
+                            {{{newPasswordTitle}}}
+                            {{{newPassword}}}
+                        </div>
+                        <div class="profile__row profile__row_spaced">
+                            {{{repeatPasswordTitle}}}
+                            {{{repeatPassword}}}
+                        </div>
                     </div>
+                    <div class="profile-footer">
+                        <div class="profile__row profile__row_align-left profile__row_bordered">
+                            {{{editData}}}
+                        </div>
+                        <div class="profile__row profile__row_align-left profile__row_bordered">
+                            {{{editPassword}}}
+                        </div>
+                        <div class="profile__row profile__row_align-left">
+                            {{{signout}}}
+                        </div>
+                    </div>
+                    <div class="profile-footer">
+                        <div class="profile__row profile__row_align-center">
+                            {{{saveChanges}}} 
+                        </div>
+                    </div>                
                 </div>`;
     }
 }
+// const withProfile = connect((state) => ({
+//     profile: { ...state.profile },
+// }));
+
+// export default withProfile(Profile);
 
 export default connect(Profile);

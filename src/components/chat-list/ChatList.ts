@@ -7,204 +7,114 @@ import ChatController from '@/controllers/chats';
 const chatController = new ChatController();
 
 export default class ChatList extends Block {
+    private contentElems: ChatItem[] = [
+        new ChatItem({
+            className: 'chat-page__chat-list',
+            avatar: favicon,
+            name: 'Изображение',
+            message: 'Изображение',
+            unread: '2',
+            onClick: () => {
+                this.clickChat();
+            },
+        }),
+        new ChatItem({
+            className: 'chat-page__chat-list',
+            avatar: favicon,
+            name: 'Егор',
+            message: 'Изображение',
+            unread: '2',
+            onClick: () => {
+                this.clickChat();
+            },
+        }),
+    ];
+    private data = {
+        newChatTitle: '',
+    };
+
     constructor(props: IProps = {}) {
         super({
             ...props,
-            profileLink: new Link({
-                className: 'chat-list__link',
-                text: 'Профиль',
-                onClick: () => window.router.go('/settings'),
-            }),
-            createChatInput: new InputField({
-                className: 'chat-list__input input-field_hidden',
-            }),
-            createChatBtn: new Button({
-                className: 'chat-list__btn',
-                text: 'Создать чат',
-                onClick: () => this.showAddChat(),
-            }),
-            content: [
-                new ChatItem({
-                    className: 'chat-page__chat-list',
-                    avatar: favicon,
-                    name: 'Изображение',
-                    message: 'Изображение',
-                    unread: '2',
-                }),
-            ],
-            // content: [
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Изображение',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            //     new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: favicon,
-            //         name: 'Егор',
-            //         message: 'Изображение',
-            //         unread: '2',
-            //     }),
-            // ],
         });
 
+        this.initControls();
+        this.initContent();
         this.fetchChats();
     }
-    hideAddChat() {
-        this.setProps({
-            createChatInput: new InputField({
-                className: 'chat-list__input input-field_hidden',
-                placeholder: 'Введите название чата',
-                name: 'new_chat',
-                id: 'new_chat',
-                // onInput: (val: string) => {
-                //     this.data.old_password = val;
-                // },
-            }),
-            createChatBtn: new Button({
-                className: 'chat-list__btn',
-                text: 'Создать чат',
-                onClick: () => this.showAddChat(),
-            }),
-        });
+
+    initControls(type: string = 'default') {
+        if (type === 'default') {
+            this.setProps({
+                profileLink: new Link({
+                    className: 'chat-list__link',
+                    text: 'Профиль',
+                    onClick: () => window.router.go('/settings'),
+                }),
+                createChatInput: new InputField({
+                    className: 'chat-list__input input-field_hidden',
+                }),
+                createChatBtn: new Button({
+                    className: 'chat-list__btn',
+                    text: 'Создать чат',
+                    onClick: () => this.initControls('toggleAddChat'),
+                }),
+            });
+        } else if (type === 'toggleAddChat') {
+            this.setProps({
+                createChatInput: new InputField({
+                    className: 'chat-list__input',
+                    placeholder: 'Введите название чата',
+                    name: 'new_chat',
+                    id: 'new_chat',
+                    onInput: (val: string) => {
+                        this.data.newChatTitle = val;
+                    },
+                }),
+                createChatBtn: new Button({
+                    className: 'chat-list__btn',
+                    text: 'Создать чат',
+                    onClick: () => this.addChat(),
+                }),
+            });
+        }
     }
 
-    showAddChat() {
-        this.setProps({
-            createChatInput: new InputField({
-                className: 'chat-list__input',
-                placeholder: 'Введите название чата',
-                name: 'new_chat',
-                id: 'new_chat',
-                // onInput: (val: string) => {
-                //     this.data.old_password = val;
-                // },
-            }),
-            createChatBtn: new Button({
-                className: 'chat-list__btn',
-                text: 'Создать чат',
-                onClick: () => this.addChat(),
-            }),
-        });
+    initContent(type: string = 'syncContentElemToProps', newItem?: ChatItem) {
+        if (type === 'syncContentElemToProps') {
+            this.setProps({
+                content: this.contentElems,
+            });
+        } else if (type === 'addChatItem' && newItem) {
+            const newContent = [...this.contentElems, newItem];
+            this.contentElems = newContent;
+            this.initContent();
+        }
     }
 
     addChat() {
-        // const newChat = new ChatItem({
-        //     className: 'chat-page__chat-list',
-        //     avatar: favicon,
-        //     name: 'Изображение',
-        //     message: 'Изображение',
-        //     unread: '2',
-        // });
-        // const newContent = this.props.content;
-        // newContent.push(newChat);
-        // this.setProps({
-        //     content: newContent,
-        // });
-        console.log(this.props);
+        if (this.data.newChatTitle === '') return;
 
-        // this.props.content;
-        this.hideAddChat();
+        this.initControls();
+
+        const newChat = new ChatItem({
+            className: 'chat-page__chat-list',
+            avatar: favicon,
+            name: this.data.newChatTitle,
+            message: 'Изображение',
+            unread: '2',
+            onClick: () => {
+                this.clickChat();
+            },
+        });
+        this.initContent('addChatItem', newChat);
+        this.data.newChatTitle = '';
+    }
+
+    clickChat() {
+        if (this.props.onClickChat) {
+            this.props.onClickChat();
+        }
     }
 
     async fetchChats() {
@@ -228,10 +138,10 @@ export default class ChatList extends Block {
         }
     }
 
-    componentDidUpdate(): boolean {
-        this.fetchChats();
-        return true;
-    }
+    // componentDidUpdate(): boolean {
+    //     this.fetchChats();
+    //     return true;
+    // }
 
     render() {
         return `<aside class="chat-list {{ className }}">

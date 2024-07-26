@@ -6,6 +6,7 @@ export { default as Footer } from '@/components/footer/Footer';
 export { default as IconButton } from '@/components/icon-button/IconButton';
 export { default as Input } from '@/components/input/Input';
 export { default as InputField } from '@/components/input-field/InputField';
+export { default as InputFile } from '@/components/input-file/InputFile';
 export { default as Link } from '@/components/link/Link';
 export { default as PageTitle } from '@/components/page-title/PageTitle';
 export { default as Profile } from '@/components/profile/Profile';

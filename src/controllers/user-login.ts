@@ -2,6 +2,7 @@ import LoginApi from '@/api/login-api';
 import LogoutAPI from '@/api/logout-api';
 import GetUserInfoApi from '@/api/get-user-info-api';
 import validate from '@/tools/validate';
+import store from '@/tools/Store';
 
 interface ILoginFormModel {
     login: string;
@@ -25,30 +26,24 @@ export default class UserLoginController {
             if (validateLogin !== 'ok' || validatePassword !== 'ok') {
                 console.log('login validation: ' + validateLogin);
                 console.log('password validation: ' + validatePassword);
-                return;
+                throw new Error('editPassword validation failed');
             }
 
-            // const response = loginApi.request(prepareDataToRequest(data));
             const response = await loginApi.request(data);
-
-            if (typeof response === 'object' && 'reason' in response) {
-                console.log('Server error reason: ' + response.reason);
-                return;
-            }
             console.log('response: ', response);
 
-            window.router.go('/messenger');
+            if (response !== 'OK') {
+                throw new Error('server login failed');
+            }
         } catch (error) {
-            console.log('Controller Login failed:', error);
+            throw error;
         }
     }
 
     public async logout() {
         try {
             const response = await logoutAPI.request();
-
-            console.log('response');
-            console.log(response);
+            console.log('response: ', response);
 
             if (response !== 'OK') {
                 throw new Error(response);
@@ -61,16 +56,20 @@ export default class UserLoginController {
 
     public async getInfo() {
         try {
-            // console.log('UserLoginController called');
             const response = await getUserInfoApi.request();
+            const parsedResponse = JSON.parse(response);
+            // console.log('parsedResponse: ', parsedResponse);
 
-            if (typeof response === 'object' && 'reason' in response) {
-                console.log('Server error reason: ' + response.reason);
-                return;
+            if (!('id' in parsedResponse)) {
+                throw new Error('server getInfo failed');
+            } else {
+                store.dispatch({
+                    type: 'SET_USER_DATA',
+                    data: parsedResponse,
+                });
             }
-            console.log('response: ', response);
         } catch (error) {
-            console.log('Controller Login failed:', error);
+            throw error;
         }
     }
 }
