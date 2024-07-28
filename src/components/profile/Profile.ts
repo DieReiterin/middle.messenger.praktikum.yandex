@@ -17,18 +17,12 @@ const userLoginController = new UserLoginController();
 
 class Profile extends Block {
     private profileTitleElem: Subtitle = new Subtitle({
-        text: 'profile.display_name',
+        text: 'profile.title',
+        className: 'profile__row-text subtitle_grey',
     });
-    private avatarElem: Subtitle = new InputFile({
-        className: 'profile__row-file',
-        name: 'avatar',
-        id: 'avatar',
-        accept: 'image/*',
-        onChange: (file: File) => {
-            this.data.avatar = file;
-            console.log('this.data:', this.data);
-        },
-        // accept: 'image/png, image/jpeg',
+    private avatarInputElem: Subtitle = new Subtitle({
+        text: '',
+        className: 'profile__row-text subtitle_grey',
     });
 
     private emailElem: Subtitle = new Subtitle({
@@ -70,7 +64,7 @@ class Profile extends Block {
     });
 
     private data = {
-        avatar: null as File | null,
+        avatar: '',
         email: '',
         login: '',
         first_name: '',
@@ -81,7 +75,8 @@ class Profile extends Block {
         new_password: '',
         repeat_password: '',
     };
-    // private profileMode = 'default';
+    private avatarFile: File | null = null;
+    private avatarURL: string | null = null;
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -97,10 +92,6 @@ class Profile extends Block {
     initTitles(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
-                avatarTitle: new Subtitle({
-                    text: 'Загрузите файл',
-                    className: 'profile__row-title subtitle_bold',
-                }),
                 emailTitle: new Subtitle({
                     text: 'Почта',
                     className: 'profile__row-title subtitle_bold',
@@ -158,6 +149,11 @@ class Profile extends Block {
     initControls(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
+                avatarLink: new Link({
+                    text: 'Поменять аватар',
+                    className: 'profile-content__link',
+                    onClick: () => this.editAvatar(),
+                }),
                 editData: new Link({
                     className: 'profile-content__link',
                     text: 'Изменить данные',
@@ -218,13 +214,22 @@ class Profile extends Block {
                     onClick: () => this.requestChangePassword(),
                 }),
             });
+        } else if (type === 'onEditAvatar') {
+            this.setProps({
+                avatarLink: new Link({
+                    text: 'Поменять',
+                    // className: 'profile-header__title profile-content__link',
+                    className: 'profile-content__link link_red',
+                    onClick: () => this.requestChangeAvatar(),
+                }),
+            });
         }
     }
     initComponents(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
                 profileTitle: this.profileTitleElem,
-                avatar: this.avatarElem,
+                avatarInput: this.avatarInputElem,
 
                 email: this.emailElem,
                 login: this.loginElem,
@@ -340,28 +345,70 @@ class Profile extends Block {
                     },
                 }),
             });
+        } else if (type === 'onEditAvatar') {
+            this.setProps({
+                avatarInput: new InputFile({
+                    className: 'profile__row-file',
+                    name: 'avatar',
+                    id: 'avatar',
+                    accept: 'image/*',
+                    // accept: 'image/png, image/jpeg',
+                    onChange: (file: File) => {
+                        this.avatarFile = file;
+                        this.data.avatar = '/' + file.name;
+                    },
+                }),
+            });
         }
     }
 
     editProfile() {
-        // this.profileMode = 'editProfile';
         this.initControls('onEditProfile');
         this.initComponents('onEditProfile');
     }
     editPassword() {
-        // this.profileMode = 'editPassword';
         this.initTitles('onEditPassword');
         this.initControls('onEditPassword');
         this.initComponents('onEditPassword');
     }
+    editAvatar() {
+        this.initControls('onEditAvatar');
+        this.initComponents('onEditAvatar');
+    }
 
     async getUserInfo() {
-        console.log('getUserInfo method called');
-
+        // console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
         } catch (error) {
-            console.error('LoginPage getUserInfo failed:', error);
+            console.error('getUserInfo failed:', error);
+        }
+    }
+    async getUserAvatar(path: string) {
+        // console.log('getUserAvatar method called');
+
+        try {
+            const result = await userLoginController.getStatic(path);
+            // console.log('getUserAvatar result', result);
+            return result;
+        } catch (error) {
+            console.error('getUserAvatar failed:', error);
+        }
+    }
+
+    async requestChangeAvatar() {
+        const avatar = this.avatarFile;
+        if (!avatar) return;
+        console.log('requestChangeAvatar method called');
+
+        const formData = new FormData();
+        formData.append('avatar', avatar);
+
+        try {
+            await profileController.editAvatar(formData);
+            this.updateStoreAndRerender('afterSetAvatar');
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -419,20 +466,26 @@ class Profile extends Block {
                 type: 'SET_PROFILE',
                 profile: this.data,
             });
+        } else if (action === 'afterSetAvatar') {
+            store.dispatch({
+                type: 'SET_AVATAR',
+                avatar: this.data.avatar,
+            });
         }
-        // this.profileMode = 'default';
         this.initTitles();
         this.initControls();
         this.initComponents();
     }
 
     componentDidUpdate(): boolean {
-        const { profile } = this.props;
+        const { profile, user } = this.props;
 
-        if (profile) {
+        if (profile && user.avatar) {
+            const avatar = this.getUserAvatar(user.avatar);
+            this.avatarURL = avatar;
+            console.log(' this.avatarURL', this.avatarURL);
+
             this.data = profile;
-            // console.log('profile');
-            // console.log(profile);
 
             this.emailElem.setProps({ text: profile.email });
             this.loginElem.setProps({ text: profile.login });
@@ -450,17 +503,15 @@ class Profile extends Block {
         return `<div class="profile {{ className }}">
                     <div class="profile-header">
                         <div class="profile-header__image">
-                            <img src="/images/default_profile.png"alt="Ваш аватар" class="profile-header__image-pic">
+                            <img src="/images/default_profile.png" alt="Ваш аватар" class="profile-header__image-pic">
                         </div>
-                        <span class="profile-header__title">
-                            {{{profileTitle}}}
-                        </span>
+                        {{{profileTitle}}}
                     </div>
                     <div class="profile-main">
-                        <div class="profile__row profile__row_spaced profile__row_bordered">
-                            {{{avatarTitle}}}
-                            {{{avatar}}}
-                        </div>
+                        <form class="profile__row profile__row_spaced profile__row_bordered">
+                            {{{avatarInput}}}
+                            {{{avatarLink}}}
+                        </form>
                         <div class="profile__row profile__row_spaced profile__row_bordered">
                             {{{emailTitle}}}
                             {{{email}}}

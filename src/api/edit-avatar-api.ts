@@ -1,31 +1,16 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const profileApiInstance = new HttpTransport();
+const editAvatarApiInstance = new HttpTransport();
 
-type TChangeProfileRequest = {
-    email: string;
-    login: string;
-    first_name: string;
-    second_name: string;
-    display_name: string;
-    phone: string;
-};
-
-// type TChangeProfileObjectResponse = {
-//     reason?: string;
-//     [key: string]: any;
-// };
-
-// type TChangeProfileResponse = string | TChangeProfileObjectResponse;
 type TChangeProfileResponse = string;
 
-export default class ProfileApi extends BaseAPI {
-    request(dataParam: TChangeProfileRequest): Promise<TChangeProfileResponse> {
-        return profileApiInstance
-            .put('/user/profile', {
+export default class EditAvatarApi extends BaseAPI {
+    request(dataParam: FormData): Promise<TChangeProfileResponse> {
+        return editAvatarApiInstance
+            .put('/user/profile/avatar', {
                 data: dataParam,
-                headers: { 'Content-Type': 'application/json' },
+                // headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;

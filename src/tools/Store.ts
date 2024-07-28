@@ -78,6 +78,9 @@ const reducer: TReducer<IState> = (state, action) => {
             email,
         };
         return newState;
+    } else if (action.type === 'SET_AVATAR') {
+        newState.user.avatar = action.avatar;
+        return newState;
     } else {
         return state;
     }

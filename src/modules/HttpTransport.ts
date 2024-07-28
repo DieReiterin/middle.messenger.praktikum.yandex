@@ -4,7 +4,8 @@ interface IOptions {
     timeout?: number;
     method?: string;
     headers?: Record<string, any>;
-    data?: Record<string, any>;
+    data?: Record<string, any> | FormData;
+    responseType?: XMLHttpRequestResponseType;
     [key: string]: any;
 }
 
@@ -66,38 +67,46 @@ export default class HttpTransport {
         options: IOptions,
         timeout = 5000,
     ): Promise<XMLHttpRequest> => {
-        const { headers = {}, method, data } = options;
+        const { headers = {}, method, data, responseType } = options;
 
         return new Promise(function (resolve, reject) {
-            if (!method) {
-                reject('No method');
-                return;
-            }
             const xhr = new XMLHttpRequest();
-            const isGet = method === METHODS.GET;
 
             const fullUrl = `${config.BASE_URL}${url}`;
 
-            if (isGet && !!data) {
+            if (method === METHODS.GET && !!data) {
                 xhr.open(method, `${fullUrl}${queryStringify(data)}`);
             } else {
-                xhr.open(method, fullUrl);
+                xhr.open(method as string, fullUrl);
             }
-            Object.keys(headers).forEach((key) => {
-                xhr.setRequestHeader(key, headers[key]);
-            });
+
             xhr.withCredentials = true;
+            xhr.timeout = timeout;
+            if (responseType) {
+                xhr.responseType = responseType;
+            }
             xhr.onload = function () {
                 resolve(xhr);
             };
             xhr.onabort = reject;
             xhr.onerror = reject;
-            xhr.timeout = timeout;
             xhr.ontimeout = reject;
-            if (isGet || !data) {
+
+            if (!(data instanceof FormData)) {
+                Object.keys(headers).forEach((key) => {
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+            }
+
+            if (method === METHODS.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(JSON.stringify(data));
+                if (data instanceof FormData) {
+                    xhr.send(data);
+                } else {
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.send(JSON.stringify(data));
+                }
             }
         });
     };

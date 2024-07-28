@@ -1,5 +1,6 @@
-import ProfileAPI from '@/api/profile-api';
-import EditPasswordAPI from '@/api/edit-password-api';
+import ProfileApi from '@/api/profile-api';
+import EditPasswordApi from '@/api/edit-password-api';
+import EditAvatarApi from '@/api/edit-avatar-api';
 import validate from '@/tools/validate';
 
 interface IProfileFormModel {
@@ -17,8 +18,9 @@ interface IPasswordFormModel {
     repeat_password: string;
 }
 
-const profileAPI = new ProfileAPI();
-const editPasswordAPI = new EditPasswordAPI();
+const profileApi = new ProfileApi();
+const editPasswordApi = new EditPasswordApi();
+const editAvatarApi = new EditAvatarApi();
 
 export default class ProfileController {
     public async editProfile(requestData: IProfileFormModel) {
@@ -62,7 +64,7 @@ export default class ProfileController {
             }
             console.log('requestData');
             console.log(requestData);
-            const response = await profileAPI.request(requestData);
+            const response = await profileApi.request(requestData);
             console.log('response');
             console.log(response);
 
@@ -119,7 +121,29 @@ export default class ProfileController {
             };
             console.log('requestData');
             console.log(preppedData);
-            const response = await editPasswordAPI.request(preppedData);
+            const response = await editPasswordApi.request(preppedData);
+            console.log('response');
+            console.log(response);
+
+            // if (response !== 'OK') {
+            //     const responseData = JSON.parse(response);
+            //     if ('reason' in responseData) {
+            //         // console.log('Server error reason: ' + responseData.reason);
+            //         throw new Error('editPassword Server error');
+            //     }
+            //     // console.log('parsedResponse');
+            //     // console.log(responseData);
+            // }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async editAvatar(data: FormData) {
+        try {
+            console.log('requestData');
+            console.log(data);
+            const response = await editAvatarApi.request(data);
             console.log('response');
             console.log(response);
 

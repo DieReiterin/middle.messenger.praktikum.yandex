@@ -24,6 +24,8 @@
             "@/api/profile-api": ["src/api/profile-api.ts"],
             "@/api/edit-password-api": ["src/api/edit-password-api.ts"],
             "@/api/logout-api": ["src/api/logout-api.ts"],
+            "@/api/edit-avatar-api": ["src/api/edit-avatar-api.ts"],
+            "@/api/get-static-api": ["src/api/get-static-api.ts"],
             "@/controllers/user-login": ["src/controllers/user-login.ts"],
             "@/controllers/user-signup": ["src/controllers/user-signup.ts"],
             "@/controllers/chats": ["src/controllers/chats.ts"],

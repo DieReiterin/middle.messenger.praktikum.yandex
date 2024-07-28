@@ -1,7 +1,7 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const editPasswordAPIInstance = new HttpTransport();
+const editPasswordApiInstance = new HttpTransport();
 
 type TEditPasswordRequest = {
     oldPassword: string;
@@ -9,9 +9,9 @@ type TEditPasswordRequest = {
 };
 type TEditPasswordResponse = string;
 
-export default class EditPasswordAPI extends BaseAPI {
+export default class EditPasswordApi extends BaseAPI {
     request(dataParam: TEditPasswordRequest): Promise<TEditPasswordResponse> {
-        return editPasswordAPIInstance
+        return editPasswordApiInstance
             .put('/user/password', {
                 data: dataParam,
                 headers: { 'Content-Type': 'application/json' },

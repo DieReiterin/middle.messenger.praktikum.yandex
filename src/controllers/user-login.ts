@@ -1,6 +1,7 @@
 import LoginApi from '@/api/login-api';
-import LogoutAPI from '@/api/logout-api';
+import LogoutApi from '@/api/logout-api';
 import GetUserInfoApi from '@/api/get-user-info-api';
+import GetStaticApi from '@/api/get-static-api';
 import validate from '@/tools/validate';
 import store from '@/tools/Store';
 
@@ -10,8 +11,9 @@ interface ILoginFormModel {
 }
 
 const loginApi = new LoginApi();
-const logoutAPI = new LogoutAPI();
+const logoutApi = new LogoutApi();
 const getUserInfoApi = new GetUserInfoApi();
+const getStaticApi = new GetStaticApi();
 
 export default class UserLoginController {
     public async login(data: ILoginFormModel) {
@@ -42,7 +44,7 @@ export default class UserLoginController {
 
     public async logout() {
         try {
-            const response = await logoutAPI.request();
+            const response = await logoutApi.request();
             console.log('response: ', response);
 
             if (response !== 'OK') {
@@ -68,6 +70,28 @@ export default class UserLoginController {
                     data: parsedResponse,
                 });
             }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getStatic(path: string) {
+        try {
+            const response = await getStaticApi.request(path);
+
+            if (typeof response !== 'object' || !(response instanceof Blob)) {
+                throw new Error('server getStatic failed');
+            }
+
+            const fileURL = URL.createObjectURL(response);
+            // console.log('File URL:', fileURL);
+
+            return fileURL;
+
+            // store.dispatch({
+            //     type: 'SET_USER_DATA',
+            //     data: parsedResponse,
+            // });
         } catch (error) {
             throw error;
         }
