@@ -1,6 +1,12 @@
 import GetChatsApi from '@/api/get-chats-api';
+import CreateChatApi from '@/api/create-chat-api';
 
 const getChatsApi = new GetChatsApi();
+const createChatApi = new CreateChatApi();
+
+type TCreateChatRequest = {
+    title: string;
+};
 
 export default class ChatController {
     public async getChats() {
@@ -10,13 +16,26 @@ export default class ChatController {
 
             const response = await getChatsApi.request();
 
-            if (typeof response === 'object' && 'reason' in response) {
-                console.log('Server error reason: ' + response.reason);
-                return;
-            }
-            console.log('response: ', response);
+            // const parsedResponse = JSON.parse(response);
 
-            // console.log('Loading complete');
+            return response;
+            // console.log('response: ', response);
+        } catch (error) {
+            console.log('Chat Controller failed:', error);
+        }
+    }
+
+    public async createChat(data: TCreateChatRequest) {
+        try {
+            // console.log('Loading...');
+            // console.log('ChatController called');
+
+            const response = await createChatApi.request(data);
+
+            // const parsedResponse = JSON.parse(response);
+
+            return response;
+            // console.log('response: ', response);
         } catch (error) {
             console.log('Chat Controller failed:', error);
         }

@@ -33,9 +33,11 @@
     &__text {
         display: flex;
         flex-direction: column;
+        width: 100%;
         padding-left: 10px;
 
         &-name {
+            width: 50%;
             margin-bottom: 5px;
 
             font-weight: 600;
@@ -45,12 +47,28 @@
         }
 
         &-message {
-            width: 190px;
+            width: 100%;
 
             font-weight: 500;
             font-size: 12px;
             line-height: 125%;
             color: $color-accent-soft;
+        }
+    }
+
+    &_empty-item & {
+        &__avatar,
+        &__text-name {
+            display: none;
+        }
+        &__text {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            padding: 0;
         }
     }
 }

@@ -8,30 +8,25 @@ const chatController = new ChatController();
 
 export default class ChatList extends Block {
     private contentElems: ChatItem[] = [
+        // new ChatItem({
+        //     className: '',
+        //     avatar: favicon,
+        //     name: 'Егор',
+        //     message: 'Изображение',
+        //     unread: '2',
+        //     onClick: () => {
+        //         this.clickChat();
+        //     },
+        // }),
         new ChatItem({
-            className: 'chat-page__chat-list',
-            avatar: favicon,
-            name: 'Изображение',
-            message: 'Изображение',
-            unread: '2',
-            onClick: () => {
-                this.clickChat();
-            },
-        }),
-        new ChatItem({
-            className: 'chat-page__chat-list',
-            avatar: favicon,
-            name: 'Егор',
-            message: 'Изображение',
-            unread: '2',
-            onClick: () => {
-                this.clickChat();
-            },
+            className: 'chat-item_empty-item',
+            message: 'Загрузка...',
         }),
     ];
     private data = {
         newChatTitle: '',
     };
+    private status = 'loading';
 
     constructor(props: IProps = {}) {
         super({
@@ -40,7 +35,7 @@ export default class ChatList extends Block {
 
         this.initControls();
         this.initContent();
-        this.fetchChats();
+        this.requestGetChats();
     }
 
     initControls(type: string = 'default') {
@@ -74,42 +69,60 @@ export default class ChatList extends Block {
                 createChatBtn: new Button({
                     className: 'chat-list__btn',
                     text: 'Создать чат',
-                    onClick: () => this.addChat(),
+                    onClick: () => this.requestCreateChat(),
                 }),
             });
         }
     }
 
-    initContent(type: string = 'syncContentElemToProps', newItem?: ChatItem) {
+    initContent(type: string = 'syncContentElemToProps', item?: ChatItem) {
         if (type === 'syncContentElemToProps') {
             this.setProps({
                 content: this.contentElems,
             });
-        } else if (type === 'addChatItem' && newItem) {
-            const newContent = [...this.contentElems, newItem];
+        } else if (type === 'clearList' && item) {
+            const newContent = [item];
             this.contentElems = newContent;
+            this.status = 'clearList';
             this.initContent();
         }
+        // else if (type === 'addChatItem' && item) {
+        //     let newContent = null;
+        //     if (this.status === 'clearList') {
+        //         newContent = [item];
+        //         this.status = 'chatsLoaded';
+        //     } else {
+        //         newContent = [...this.contentElems, item];
+        //     }
+        // this.contentElems = newContent;
+        // this.initContent();
+        // }
     }
 
-    addChat() {
-        if (this.data.newChatTitle === '') return;
-
-        this.initControls();
-
-        const newChat = new ChatItem({
-            className: 'chat-page__chat-list',
-            avatar: favicon,
-            name: this.data.newChatTitle,
-            message: 'Изображение',
-            unread: '2',
-            onClick: () => {
-                this.clickChat();
-            },
+    clearList() {
+        const emptyItem = new ChatItem({
+            className: 'chat-item_empty-item',
+            message: 'Нет чатов',
         });
-        this.initContent('addChatItem', newChat);
-        this.data.newChatTitle = '';
+        this.initContent('clearList', emptyItem);
     }
+
+    // addChat(item: { id: string }) {
+    //     const newChat = new ChatItem({
+    //         className: 'chat-page__chat-list',
+    //         avatar: favicon,
+    //         name: this.data.newChatTitle,
+    //         message: 'Изображение',
+    //         unread: '2',
+    //         onClick: () => {
+    //             this.clickChat();
+    //         },
+    //         id: item.id,
+    //     });
+    //     this.initControls();
+    //     this.initContent('addChatItem', newChat);
+    //     this.data.newChatTitle = '';
+    // }
 
     clickChat() {
         if (this.props.onClickChat) {
@@ -117,29 +130,48 @@ export default class ChatList extends Block {
         }
     }
 
-    async fetchChats() {
-        console.log('fetchChats method called');
+    async requestGetChats() {
+        console.log('requestGetChats method called');
 
         try {
-            await chatController.getChats();
-            // const response = await chatController.getChats();
+            // await chatController.getChats();
+            const response = await chatController.getChats();
 
-            // this.setProps({
-            //     content: response.map(chat => new ChatItem({
-            //         className: 'chat-page__chat-list',
-            //         avatar: chat.avatar || favicon,
-            //         name: chat.title,
-            //         message: chat.last_message?.content || '',
-            //         unread: String(chat.unread_count),
-            //     }))
-            // });
+            if (response && (response as Array<any>).length === 0) {
+                this.clearList();
+            } else if (response) {
+                console.log('response', response);
+                // const newContent = response.map(chat => new ChatItem({
+                //     className: 'chat-page__chat-list',
+                //     avatar: chat.avatar || favicon,
+                //     name: chat.title,
+                //     message: chat.last_message?.content || '',
+                //     unread: String(chat.unread_count),
+                // }))
+                // this.contentElems = newContent;
+                // this.initContent();
+            }
         } catch (error) {
             console.log('Failed to fetch chats:', error);
         }
     }
 
+    async requestCreateChat() {
+        if (this.data.newChatTitle === '') return;
+        console.log('requestCreateChat method called');
+        try {
+            const request = {
+                title: this.data.newChatTitle,
+            };
+            const response = await chatController.createChat(request);
+            console.log('response', response);
+        } catch (error) {
+            console.log('requestCreateChat failed:', error);
+        }
+    }
+
     // componentDidUpdate(): boolean {
-    //     this.fetchChats();
+    //     this.requestGetChats();
     //     return true;
     // }
 

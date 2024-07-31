@@ -1,7 +1,7 @@
 import HttpTransport from '@/modules/HttpTransport';
 import { BaseAPI } from '@/modules/http/base-api';
 
-const chatApiInstance = new HttpTransport();
+const getChatsApiInstance = new HttpTransport();
 
 // type TChatRequest = {
 //     login: string;
@@ -40,11 +40,10 @@ export default class GetChatsApi extends BaseAPI {
     // }
 
     request(): Promise<TChatResponse> {
-        return chatApiInstance.get('/chats').then((xhr) => {
+        return getChatsApiInstance.get('/chats').then((xhr) => {
             const rawResponse = (xhr as XMLHttpRequest).responseText;
-            // if (typeof rawResponse === 'string') {
-            return rawResponse;
-            // }
+            const parsedResponse = JSON.parse(rawResponse);
+            return parsedResponse;
             // const response = JSON.parse(rawResponse) as TChatResponse;
             // return response;
         });

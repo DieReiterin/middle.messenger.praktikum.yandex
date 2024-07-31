@@ -5,6 +5,7 @@ import {
     InputFile,
     Link,
     Button,
+    Image,
 } from '@/components/index';
 import './profile.scss';
 import store from '@/tools/Store';
@@ -16,6 +17,10 @@ const profileController = new ProfileController();
 const userLoginController = new UserLoginController();
 
 class Profile extends Block {
+    private profileImageElem: Image = new Image({
+        className: 'profile-header__image',
+        type: 'default',
+    });
     private profileTitleElem: Subtitle = new Subtitle({
         text: 'profile.title',
         className: 'profile__row-text subtitle_grey',
@@ -76,7 +81,7 @@ class Profile extends Block {
         repeat_password: '',
     };
     private avatarFile: File | null = null;
-    private avatarURL: string | null = null;
+    // private avatarURL: string | null = null;
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -150,9 +155,8 @@ class Profile extends Block {
         if (type === 'default') {
             this.setProps({
                 avatarLink: new Link({
-                    text: 'Поменять аватар',
-                    className: 'profile-content__link',
-                    onClick: () => this.editAvatar(),
+                    text: 'Поменять',
+                    className: 'profile-content__link link_hidden',
                 }),
                 editData: new Link({
                     className: 'profile-content__link',
@@ -228,6 +232,7 @@ class Profile extends Block {
     initComponents(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
+                profileImage: this.profileImageElem,
                 profileTitle: this.profileTitleElem,
                 avatarInput: this.avatarInputElem,
 
@@ -355,7 +360,8 @@ class Profile extends Block {
                     // accept: 'image/png, image/jpeg',
                     onChange: (file: File) => {
                         this.avatarFile = file;
-                        this.data.avatar = '/' + file.name;
+                        // this.data.avatar = '/' + file.name;
+                        this.initControls('onEditAvatar');
                     },
                 }),
             });
@@ -372,7 +378,6 @@ class Profile extends Block {
         this.initComponents('onEditPassword');
     }
     editAvatar() {
-        this.initControls('onEditAvatar');
         this.initComponents('onEditAvatar');
     }
 
@@ -384,15 +389,24 @@ class Profile extends Block {
             console.error('getUserInfo failed:', error);
         }
     }
-    async getUserAvatar(path: string) {
-        // console.log('getUserAvatar method called');
+    async loadUserAvatar(path: string) {
+        // console.log('loadUserAvatar method called');
 
         try {
             const result = await userLoginController.getStatic(path);
-            // console.log('getUserAvatar result', result);
-            return result;
+            console.log('loadUserAvatar result', result);
+            // return result;
+            this.profileImageElem.setProps({
+                src: result,
+                onClick: () => this.editAvatar(),
+                type: '',
+            });
+            // store.dispatch({
+            //     type: 'SET_AVATAR',
+            //     avatar: '/' + path,
+            // });
         } catch (error) {
-            console.error('getUserAvatar failed:', error);
+            console.error('loadUserAvatar failed:', error);
         }
     }
 
@@ -467,10 +481,12 @@ class Profile extends Block {
                 profile: this.data,
             });
         } else if (action === 'afterSetAvatar') {
-            store.dispatch({
-                type: 'SET_AVATAR',
-                avatar: this.data.avatar,
-            });
+            this.getUserInfo();
+            // this.loadUserAvatar(this.props.user.avatar);
+            // store.dispatch({
+            //     type: 'SET_AVATAR',
+            //     avatar: this.data.avatar,
+            // });
         }
         this.initTitles();
         this.initControls();
@@ -481,9 +497,10 @@ class Profile extends Block {
         const { profile, user } = this.props;
 
         if (profile && user.avatar) {
-            const avatar = this.getUserAvatar(user.avatar);
-            this.avatarURL = avatar;
-            console.log(' this.avatarURL', this.avatarURL);
+            this.loadUserAvatar(user.avatar);
+            // const avatar = this.loadUserAvatar(user.avatar);
+            // this.avatarURL = avatar;
+            // console.log(' this.avatarURL', this.avatarURL);
 
             this.data = profile;
 
@@ -500,11 +517,12 @@ class Profile extends Block {
     }
 
     override render() {
+        // <div class="profile-header__image">
+        //                     <img src="/images/default_profile.png" alt="Ваш аватар" class="profile-header__image-pic">
+        //                 </div>
         return `<div class="profile {{ className }}">
                     <div class="profile-header">
-                        <div class="profile-header__image">
-                            <img src="/images/default_profile.png" alt="Ваш аватар" class="profile-header__image-pic">
-                        </div>
+                        {{{profileImage}}}
                         {{{profileTitle}}}
                     </div>
                     <div class="profile-main">
