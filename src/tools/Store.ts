@@ -42,14 +42,14 @@ const reducer: TReducer<IState> = (state, action) => {
 
     if (action.type === 'SET_USER_DATA') {
         const {
-            id,
             avatar,
-            email,
-            login,
-            first_name,
-            second_name,
             display_name,
+            email,
+            first_name,
+            id,
+            login,
             phone,
+            second_name,
         } = action.data;
 
         newState.user = {

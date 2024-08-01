@@ -19,6 +19,7 @@
         align-items: center;
         justify-content: space-between;
 
+        box-sizing: border-box;
         width: 80vw;
         height: 70px;
         padding: 0 20px;
@@ -67,46 +68,12 @@
         // min-height: calc(100vh - 70px);
         // // transform: translateY(90px);
         margin-top: 70px;
-        margin-bottom: 90px;
+        margin-bottom: 80px;
         padding: 10px 20px 0;
         background-color: transparent;
     }
 
-    &__msg {
-        min-width: 40px;
-        max-width: 400px;
-        padding: 15px;
-        margin-bottom: 20px;
-
-        border-radius: 12px;
-        font-size: 14px;
-
-        &_partner {
-            background-color: $color-bg-secondary;
-
-            border-top-left-radius: 0;
-        }
-
-        &_my {
-            background-color: $color-bg-msg;
-
-            border-bottom-right-radius: 0;
-            margin-left: auto;
-        }
-
-        &_pictured {
-            max-width: 315px;
-
-            padding: 0;
-        }
-
-        &-pic {
-            border-radius: inherit;
-        }
-    }
-
     &__footer {
-        box-sizing: border-box;
         position: fixed;
         bottom: 0;
         z-index: 3000;
@@ -114,9 +81,10 @@
         display: flex;
         align-items: center;
 
+        box-sizing: border-box;
         width: 80vw;
-        height: 90px;
-        padding: 20px;
+        height: 80px;
+        padding: 0 20px;
         background-color: $color-bg-primary;
         border-top: 1px solid $color-border;
     }

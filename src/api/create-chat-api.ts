@@ -23,7 +23,6 @@ export default class CreateChatApi extends BaseAPI {
         return createChatApiInstance
             .post('/chats', {
                 data: requestData,
-                headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;

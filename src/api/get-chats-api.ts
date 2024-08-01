@@ -8,10 +8,6 @@ const getChatsApiInstance = new HttpTransport();
 //     password: string;
 // };
 
-type TErrorResponse = {
-    reason: string;
-};
-
 interface IChat {
     id: number;
     title: string;
@@ -32,7 +28,7 @@ interface IChat {
     };
 }
 
-type TChatResponse = TErrorResponse | IChat[] | string;
+type TChatResponse = IChat[] | string;
 
 export default class GetChatsApi extends BaseAPI {
     // create() {

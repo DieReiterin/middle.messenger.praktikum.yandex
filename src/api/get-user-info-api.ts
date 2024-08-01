@@ -23,14 +23,9 @@ type TResponse = string;
 export default class GetUserInfoApi extends BaseAPI {
     request(): Promise<TResponse> {
         return getUserInfoApiInstance.get('/auth/user').then((xhr) => {
-            const response = (xhr as XMLHttpRequest).responseText;
-            // const rawResponse = (xhr as XMLHttpRequest).responseText;
-            // if (typeof rawResponse === 'string') {
-            //     console.log('rawResponse returned');
-            //     return rawResponse;
-            // }
-            // const response = JSON.parse(rawResponse) as TResponse;
-            return response;
+            const rawResponse = (xhr as XMLHttpRequest).responseText;
+            // const parsedResponse = JSON.parse(rawResponse);
+            return rawResponse;
         });
     }
 }

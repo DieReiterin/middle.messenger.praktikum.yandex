@@ -36,6 +36,7 @@
     }
 
     &__search {
+        position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -54,6 +55,18 @@
             line-height: 100%;
             color: $color-text;
         }
+
+        // &::after {
+        //     position: absolute;
+        //     left: 0;
+        //     top: 0;
+        //     content: '';
+
+        //     width: 100%;
+        //     height: 100%;
+        //     border-radius: inherit;
+        //     background-color: rgba($color: $bunker, $alpha: 0.8);
+        // }
     }
 
     &__center {

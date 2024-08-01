@@ -76,6 +76,12 @@
             "@/components/chat-list/ChatList": [
                 "src/components/chat-list/ChatList.ts"
             ],
+            "@/components/chat-message/ChatMessage": [
+                "src/components/chat-message/ChatMessage.ts"
+            ],
+            "@/components/chat-stub/ChatStub": [
+                "src/components/chat-stub/ChatStub.ts"
+            ],
             "@/components/footer/Footer": ["src/components/footer/Footer.ts"],
             "@/components/icon-button/IconButton": [
                 "src/components/icon-button/IconButton.ts"

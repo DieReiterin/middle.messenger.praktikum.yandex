@@ -25,7 +25,6 @@ export default class ProfileApi extends BaseAPI {
         return profileApiInstance
             .put('/user/profile', {
                 data: dataParam,
-                headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;

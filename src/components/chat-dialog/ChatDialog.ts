@@ -1,9 +1,26 @@
 import Block, { IProps } from '@/tools/Block';
 import './chat-dialog.scss';
-import { IconButton, Textarea } from '@/components/index';
+import { IconButton, Textarea, ChatMessage } from '@/components/index';
 import validate from '@/tools/validate';
 
 export default class ChatDialog extends Block {
+    // private contentElems: ChatMessage[] = [
+    //     new ChatMessage({
+    //         className: 'chat-message_partner',
+    //         content:
+    //             'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
+    //     }),
+    //     new ChatMessage({
+    //         className: 'chat-message_partner chat-message_pictured',
+    //         content:
+    //             // '<img src="/images/camera.jpg" alt="camera" class="chat-message__picture">',
+    //             '<img src="/images/bg-dialog.jpg" alt="camera" class="chat-message__picture">',
+    //     }),
+    //     new ChatMessage({
+    //         className: 'chat-message_my',
+    //         content: 'Круто!',
+    //     }),
+    // ];
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -24,10 +41,19 @@ export default class ChatDialog extends Block {
                 },
             }),
         });
+        // this.initContent();
     }
-    data = {
+    private data = {
         message: '',
     };
+
+    // initContent(type: string = 'syncContentToProps') {
+    //     if (type === 'syncContentToProps') {
+    //         this.setProps({
+    //             content: this.contentElems,
+    //         });
+    //     }
+    // }
     submitForm() {
         if (this.validateField()) {
             console.log(this.data);
@@ -108,26 +134,7 @@ export default class ChatDialog extends Block {
                         </div>
                     </div>
                     <div class="chat-dialog__reel" id="chatReel"> 
-                            <div class="chat-dialog__msg chat-dialog__msg_partner">
-                                Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
-                                Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-                            </div>
-                            <div class="chat-dialog__msg chat-dialog__msg_partner chat-dialog__msg_pictured">
-                                <img src="/images/camera.jpg" alt="camera" class="chat-dialog__msg-pic">
-                            </div>
-                            <div class="chat-dialog__msg chat-dialog__msg_my">
-                                Круто!
-                            </div> 
-                            <div class="chat-dialog__msg chat-dialog__msg_partner">
-                                Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой.
-                                Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.
-                            </div>
-                            <div class="chat-dialog__msg chat-dialog__msg_partner chat-dialog__msg_pictured">
-                                <img src="/images/camera.jpg" alt="camera" class="chat-dialog__msg-pic">
-                            </div>
-                            <div class="chat-dialog__msg chat-dialog__msg_my">
-                                Круто!
-                            </div> 
+                            {{{messages}}}
                     </div>
                     <form class="chat-dialog__footer">  
                         <img src="/icons/paper-clip.svg" alt="paper-clip" class="chat-dialog__attach">

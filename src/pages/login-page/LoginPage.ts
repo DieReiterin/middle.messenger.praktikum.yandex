@@ -50,7 +50,6 @@ class LoginPage extends Block {
             }),
         });
     }
-
     async handleLogin() {
         console.log('handleLogin method called');
 

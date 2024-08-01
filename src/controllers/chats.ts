@@ -21,7 +21,7 @@ export default class ChatController {
             return response;
             // console.log('response: ', response);
         } catch (error) {
-            console.log('Chat Controller failed:', error);
+            throw error;
         }
     }
 
@@ -37,7 +37,7 @@ export default class ChatController {
             return response;
             // console.log('response: ', response);
         } catch (error) {
-            console.log('Chat Controller failed:', error);
+            throw error;
         }
     }
 }

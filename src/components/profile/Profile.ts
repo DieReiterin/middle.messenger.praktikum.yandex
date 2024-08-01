@@ -86,14 +86,16 @@ class Profile extends Block {
         super({
             ...props,
         });
+        this.initPage();
+    }
+    initPage() {
         this.getUserInfo();
+        console.log('this.props', this.props);
 
         this.initTitles();
         this.initControls();
         this.initComponents();
-        // console.log('store.getState(): ', store.getState());
     }
-
     initTitles(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
@@ -382,19 +384,27 @@ class Profile extends Block {
     }
 
     async getUserInfo() {
-        // console.log('getUserInfo method called');
+        console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
+            // console.log(this.props);
+
+            // this.updateStoreAndRerender();
         } catch (error) {
             console.error('getUserInfo failed:', error);
         }
     }
-    async loadUserAvatar(path: string) {
+    async loadUserAvatar(path: string | null) {
+        if (path === null) {
+            this.profileImageElem.setProps({
+                onClick: () => this.editAvatar(),
+            });
+            return;
+        }
         // console.log('loadUserAvatar method called');
-
         try {
             const result = await userLoginController.getStatic(path);
-            console.log('loadUserAvatar result', result);
+            // console.log('loadUserAvatar result', result);
             // return result;
             this.profileImageElem.setProps({
                 src: result,
@@ -468,6 +478,8 @@ class Profile extends Block {
         console.log('requestLogout method called');
         try {
             await userLoginController.logout();
+            window.router.go('/');
+            window.location.reload();
         } catch (error) {
             console.error(error);
         }
@@ -495,24 +507,23 @@ class Profile extends Block {
 
     componentDidUpdate(): boolean {
         const { profile, user } = this.props;
-
-        if (profile && user.avatar) {
-            this.loadUserAvatar(user.avatar);
-            // const avatar = this.loadUserAvatar(user.avatar);
-            // this.avatarURL = avatar;
-            // console.log(' this.avatarURL', this.avatarURL);
-
-            this.data = profile;
-
-            this.emailElem.setProps({ text: profile.email });
-            this.loginElem.setProps({ text: profile.login });
-            this.firstNameElem.setProps({ text: profile.first_name });
-            this.secondNameElem.setProps({ text: profile.second_name });
-            this.displayNameElem.setProps({ text: profile.display_name });
-            this.phoneElem.setProps({ text: profile.phone });
-
-            this.profileTitleElem.setProps({ text: profile.display_name });
+        if (!(profile && user)) {
+            return true;
         }
+        if (profile.login.length === 0 || user.id.length === 0) {
+            return true;
+        }
+        this.loadUserAvatar(user.avatar);
+        this.data = profile;
+
+        this.emailElem.setProps({ text: profile.email });
+        this.loginElem.setProps({ text: profile.login });
+        this.firstNameElem.setProps({ text: profile.first_name });
+        this.secondNameElem.setProps({ text: profile.second_name });
+        this.displayNameElem.setProps({ text: profile.display_name });
+        this.phoneElem.setProps({ text: profile.phone });
+
+        this.profileTitleElem.setProps({ text: profile.display_name });
         return true;
     }
 

@@ -22,7 +22,6 @@ export default class SignupApi extends BaseAPI {
         return signupApiInstance
             .post('/auth/signup', {
                 data: user,
-                headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const response = JSON.parse(
@@ -30,7 +29,5 @@ export default class SignupApi extends BaseAPI {
                 ) as TSignupResponse;
                 return response;
             });
-        // .post('/login', user)
-        // .then(({ user_id }) => user_id);
     }
 }

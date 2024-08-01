@@ -45,12 +45,11 @@ export default class UserLoginController {
     public async logout() {
         try {
             const response = await logoutApi.request();
-            console.log('response: ', response);
+            // console.log('response: ', response);
 
             if (response !== 'OK') {
                 throw new Error(response);
             }
-            window.router.go('/');
         } catch (error) {
             throw error;
         }
@@ -60,7 +59,7 @@ export default class UserLoginController {
         try {
             const response = await getUserInfoApi.request();
             const parsedResponse = JSON.parse(response);
-            // console.log('parsedResponse: ', parsedResponse);
+            console.log('parsedResponse: ', parsedResponse);
 
             if (!('id' in parsedResponse)) {
                 throw new Error('server getInfo failed');

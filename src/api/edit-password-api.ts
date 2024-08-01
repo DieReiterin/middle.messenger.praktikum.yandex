@@ -14,7 +14,6 @@ export default class EditPasswordApi extends BaseAPI {
         return editPasswordApiInstance
             .put('/user/password', {
                 data: dataParam,
-                headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 return (xhr as XMLHttpRequest).responseText;

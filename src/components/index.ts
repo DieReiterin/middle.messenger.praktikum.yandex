@@ -2,6 +2,8 @@ export { default as Button } from '@/components/button/Button';
 export { default as ChatDialog } from '@/components/chat-dialog/ChatDialog';
 export { default as ChatItem } from '@/components/chat-item/ChatItem';
 export { default as ChatList } from '@/components/chat-list/ChatList';
+export { default as ChatMessage } from '@/components/chat-message/ChatMessage';
+export { default as ChatStub } from '@/components/chat-stub/ChatStub';
 export { default as Footer } from '@/components/footer/Footer';
 export { default as IconButton } from '@/components/icon-button/IconButton';
 export { default as Image } from '@/components/image/Image';

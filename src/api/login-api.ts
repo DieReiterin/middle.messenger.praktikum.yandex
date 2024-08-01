@@ -20,7 +20,6 @@ export default class LoginApi extends BaseAPI {
         return loginApiInstance
             .post('/auth/signin', {
                 data: user,
-                headers: { 'Content-Type': 'application/json' },
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
