@@ -5,18 +5,42 @@
     justify-content: space-between;
 
     width: 400px;
-    height: 100px;
+    height: 130px;
     margin: auto;
     padding: 20px;
 
     border-radius: 5px;
     background-color: $color-bg-secondary;
 
-    &__subtitle {
-        font-size: 18px;
+    &__top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+    }
+
+    &__title {
+        margin-bottom: 10px;
+
+        font-size: 20px;
         font-weight: 500;
     }
+
+    &__subtitle {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    &__bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+    }
+
     &__btn {
-        width: 40%;
+        width: 60%;
     }
 }

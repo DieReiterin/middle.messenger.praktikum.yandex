@@ -27,6 +27,8 @@
             "@/api/edit-avatar-api": ["src/api/edit-avatar-api.ts"],
             "@/api/get-static-api": ["src/api/get-static-api.ts"],
             "@/api/create-chat-api": ["src/api/create-chat-api.ts"],
+            "@/api/get-chat-users-api": ["src/api/get-chat-users-api.ts"],
+            "@/api/add-chat-user-api": ["src/api/add-chat-user-api.ts"],
             "@/controllers/user-login": ["src/controllers/user-login.ts"],
             "@/controllers/user-signup": ["src/controllers/user-signup.ts"],
             "@/controllers/chats": ["src/controllers/chats.ts"],

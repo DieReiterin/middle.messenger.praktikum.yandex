@@ -127,7 +127,7 @@ export default class ChatDialog extends Block {
                     <div class="chat-dialog__header">
                         <div class="chat-dialog__header-left">
                             <img class="chat-dialog__user-avatar" alt="Аватар друга" src="/icons/favicon.png">
-                            <div class="chat-dialog__user-name">Вадим</div>
+                            <div class="chat-dialog__user-name">{{{chatName}}}</div>
                         </div>
                         <div class="chat-dialog__header-right">
                             <img src="/icons/options.svg" alt="options" class="chat-dialog__settings">

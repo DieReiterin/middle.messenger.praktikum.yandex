@@ -123,9 +123,9 @@ export default class ChatList extends Block {
     //     this.data.newChatTitle = '';
     // }
 
-    clickChat() {
+    clickChat(chatId: number) {
         if (this.props.onClickChat) {
-            this.props.onClickChat();
+            this.props.onClickChat(chatId);
         }
     }
 
@@ -133,13 +133,12 @@ export default class ChatList extends Block {
         console.log('requestGetChats method called');
 
         try {
-            // await chatController.getChats();
             const response = await chatController.getChats();
 
             if (response && (response as Array<any>).length === 0) {
                 this.clearList();
             } else if (response) {
-                console.log('response', response);
+                console.log('requestGetChats response', response);
 
                 type TLastMessage = null | {
                     user: {
@@ -170,9 +169,11 @@ export default class ChatList extends Block {
                             avatar: favicon,
                             name: chat.title,
                             // message: chat.last_message?.content || '',
-                            message: '',
+                            message: chat.last_message
+                                ? 'есть сообщения'
+                                : 'нет сообщений',
                             onClick: () => {
-                                this.clickChat();
+                                this.clickChat(chat.id);
                             },
                             // unread: String(chat.unread_count),
                         }),
