@@ -138,7 +138,7 @@ export default class ChatList extends Block {
             if (response && (response as Array<any>).length === 0) {
                 this.clearList();
             } else if (response) {
-                console.log('requestGetChats response', response);
+                // console.log('requestGetChats response', response);
 
                 type TLastMessage = null | {
                     user: {
@@ -164,7 +164,7 @@ export default class ChatList extends Block {
                 const newContent = (response as IChat[]).map(
                     (chat) =>
                         new ChatItem({
-                            className: 'chat-page__chat-list',
+                            className: 'chat-list__chat-item',
                             // avatar: chat.avatar || favicon,
                             avatar: favicon,
                             name: chat.title,

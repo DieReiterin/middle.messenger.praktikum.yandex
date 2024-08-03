@@ -4,8 +4,8 @@ import { BaseAPI } from '@/modules/http/base-api';
 const addChatUserApiInstance = new HttpTransport();
 
 type TRequest = {
-    userIdParam: number;
-    chatIdParam: number;
+    userIdParam: string;
+    chatIdParam: string;
 };
 type TResponse = string;
 

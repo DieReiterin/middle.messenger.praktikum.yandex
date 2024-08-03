@@ -4,8 +4,12 @@
     width: 100%;
     min-height: 100vh;
 
-    &__stub_small {
+    &__alert_type-dialog {
         margin: auto;
+        font-size: 16px;
+    }
+    &__alert_type-reel {
+        margin-top: 40vh;
         font-size: 16px;
     }
 }

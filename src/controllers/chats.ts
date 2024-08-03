@@ -2,18 +2,20 @@ import GetChatsApi from '@/api/get-chats-api';
 import CreateChatApi from '@/api/create-chat-api';
 import GetChatUsersApi from '@/api/get-chat-users-api';
 import AddChatUserApi from '@/api/add-chat-user-api';
+import GetChatTokenApi from '@/api/get-chat-token-api';
 
 const getChatsApi = new GetChatsApi();
 const createChatApi = new CreateChatApi();
 const getChatUsersApi = new GetChatUsersApi();
 const addChatUserApi = new AddChatUserApi();
+const getChatTokenApi = new GetChatTokenApi();
 
 type TCreateChatRequest = {
     title: string;
 };
 type TAddChatUserRequest = {
-    userIdParam: number;
-    chatIdParam: number;
+    userIdParam: string;
+    chatIdParam: string;
 };
 
 export default class ChatController {
@@ -64,6 +66,17 @@ export default class ChatController {
         try {
             // console.log('addChatUser Controller called');
             const response = await addChatUserApi.request(dataParam);
+            return response;
+            // console.log('response: ', response);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async getChatToken(chatId: string) {
+        try {
+            // console.log('getChatUsers Controller called');
+            const response = await getChatTokenApi.request(chatId);
             return response;
             // console.log('response: ', response);
         } catch (error) {

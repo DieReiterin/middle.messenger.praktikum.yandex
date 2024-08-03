@@ -59,7 +59,7 @@ export default class UserLoginController {
         try {
             const response = await getUserInfoApi.request();
             const parsedResponse = JSON.parse(response);
-            console.log('parsedResponse: ', parsedResponse);
+            // console.log('parsedResponse: ', parsedResponse);
 
             if (!('id' in parsedResponse)) {
                 throw new Error('server getInfo failed');
