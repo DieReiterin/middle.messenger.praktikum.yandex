@@ -238,6 +238,13 @@ export default class Block {
         }
         this._element = newElement as HTMLElement;
         this._parentElement = this._element.parentElement;
+
+        // if (this._parentElement) {
+        //     console.log('parentElement saved by render');
+        // } else {
+        //     console.log('parentElement FAILED to save by render');
+        // }
+
         this._addEvents();
         this.addAttributes();
     }
@@ -283,6 +290,15 @@ export default class Block {
 
         if (content && this._parentElement) {
             this._parentElement.appendChild(content);
+        } else if (content) {
+            const pageElement = document.getElementById('app');
+            if (pageElement) {
+                pageElement.appendChild(content);
+            } else {
+                console.log('NO <div id="app"> TO MOUNT ON');
+            }
+        } else {
+            console.log('NO CONTENT TO SHOW');
         }
     }
 

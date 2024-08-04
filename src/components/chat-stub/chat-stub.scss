@@ -5,7 +5,7 @@
     justify-content: space-between;
 
     width: 400px;
-    height: 130px;
+    min-height: 130px;
     margin: auto;
     padding: 20px;
 
@@ -30,6 +30,14 @@
     &__subtitle {
         font-size: 14px;
         font-weight: 500;
+
+        margin-bottom: 20px;
+    }
+    &__subtitle2 {
+        font-size: 12px;
+        font-weight: 500;
+
+        margin-bottom: 20px;
     }
 
     &__bottom {

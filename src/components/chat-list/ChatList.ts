@@ -1,12 +1,23 @@
 import Block, { IProps } from '@/tools/Block';
-import { ChatItem, Link, InputField, Button } from '@/components/index';
+import {
+    ChatItem,
+    Link,
+    InputField,
+    Button,
+    Subtitle,
+} from '@/components/index';
 import './chat-list.scss';
 import favicon from '/icons/favicon.png';
+import connect from '@/tools/connect';
 import ChatController from '@/controllers/chats';
 
 const chatController = new ChatController();
 
-export default class ChatList extends Block {
+class ChatList extends Block {
+    private usernameElem: Subtitle = new Subtitle({
+        className: 'chat-list__username-text',
+        text: 'profile.display_name',
+    });
     private chatItems: ChatItem[] = [
         // new ChatItem({
         //     className: '',
@@ -35,6 +46,9 @@ export default class ChatList extends Block {
         this.initControls();
         this.initContent();
         this.requestGetChats();
+        this.setProps({
+            username: this.usernameElem,
+        });
     }
 
     initControls(type: string = 'default') {
@@ -194,18 +208,28 @@ export default class ChatList extends Block {
             const request = {
                 title: this.data.newChatTitle,
             };
-            const response = await chatController.createChat(request);
-            console.log('response', response);
+            await chatController.createChat(request);
+            // const response = await chatController.createChat(request);
+            // console.log('response', response);
+            this.data.newChatTitle = '';
+            this.initControls();
             this.requestGetChats();
         } catch (error) {
             console.log('requestCreateChat failed:', error);
         }
     }
 
-    // componentDidUpdate(): boolean {
-    //     this.requestGetChats();
-    //     return true;
-    // }
+    componentDidUpdate(): boolean {
+        const { profile, user } = this.props;
+        if (!(profile && user)) {
+            return true;
+        }
+        this.usernameElem.setProps({
+            text: profile.display_name,
+        });
+        // this.requestGetChats();
+        return true;
+    }
 
     render() {
         return `<aside class="chat-list {{ className }}">
@@ -213,10 +237,8 @@ export default class ChatList extends Block {
                         <div class="chat-list__profile">
                             {{{profileLink}}}
                         </div>
-                        <div class="search chat-list__search">
-                            <p class="chat-list__search-text">
-                                Поиск
-                            </p>
+                        <div class="search chat-list__username">
+                            {{{ username }}}
                         </div>
                     </div>
                     <div class="chat-list__center">            
@@ -229,3 +251,5 @@ export default class ChatList extends Block {
                 </aside>`;
     }
 }
+
+export default connect(ChatList);

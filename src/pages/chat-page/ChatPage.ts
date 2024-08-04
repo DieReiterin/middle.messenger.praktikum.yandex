@@ -33,14 +33,14 @@ class ChatPage extends Block {
     //     }),
     // ];
     private chatMessages: ChatMessage[] = [];
-    // chatMessagesCount: number = 0;
     private currentDialogElem: ChatDialog = new ChatDialog({
         className: 'chat-page__chat-dialog',
+        chatName: 'display_name',
+        onSendMessage: (val: string) => this.sendMessage(val),
         messages: new PageTitle({
             className: 'chat-page__alert_type-reel',
             text: 'alertText',
         }),
-        chatName: 'display_name',
     });
     private data = {
         currentChatId: '',
@@ -55,6 +55,9 @@ class ChatPage extends Block {
             list: new ChatList({
                 className: 'chat-page__chat-list',
                 onClickChat: (chatId: number) => {
+                    this.chatMessages = [];
+                    this.data.currentChatToken = '';
+                    this.socket = null;
                     this.data.currentChatId = String(chatId);
                     this.requestGetChatUsers();
                 },
@@ -66,6 +69,43 @@ class ChatPage extends Block {
         });
         this.getUserInfo();
         this.setChatDialogAlert('Выберите чат чтобы отправить сообщение');
+    }
+    getCurrentTime() {
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        return ` - ${hours}:${minutes}`;
+    }
+    scrollToBottom() {
+        const chatReel = document.getElementById('chatReel');
+        if (chatReel) {
+            setTimeout(() => {
+                chatReel.scrollTop = chatReel.scrollHeight;
+            }, 0);
+        }
+    }
+    setChatDialogAlert(alertText: string) {
+        this.setProps({
+            dialog: new PageTitle({
+                className: 'chat-page__alert_type-dialog',
+                text: alertText,
+            }),
+        });
+    }
+    setChatReelAlert(alertText: string) {
+        console.log('set alert ' + alertText);
+
+        this.currentDialogElem.setProps({
+            messages: new PageTitle({
+                className: 'chat-page__alert_type-reel',
+                text: alertText,
+            }),
+        });
+
+        this.setProps({
+            dialog: this.currentDialogElem,
+        });
+        console.log('currentDialogElem by alert');
     }
 
     async getUserInfo() {
@@ -79,27 +119,6 @@ class ChatPage extends Block {
             console.error('getUserInfo failed:', error);
         }
     }
-
-    setChatDialogAlert(alertText: string) {
-        this.setProps({
-            dialog: new PageTitle({
-                className: 'chat-page__alert_type-dialog',
-                text: alertText,
-            }),
-        });
-    }
-    setChatReelAlert(alertText: string) {
-        this.currentDialogElem.setProps({
-            messages: new PageTitle({
-                className: 'chat-page__alert_type-reel',
-                text: alertText,
-            }),
-        });
-        this.setProps({
-            dialog: this.currentDialogElem,
-        });
-    }
-
     async requestGetChatUsers() {
         console.log('requestGetChatUsers method called');
 
@@ -109,7 +128,7 @@ class ChatPage extends Block {
             const response = await chatController.getChatUsers(
                 this.data.currentChatId,
             );
-            console.log('getChatUsers response', response);
+            // console.log('getChatUsers response', response);
 
             if (response && (response as Array<any>).length < 2) {
                 this.setProps({
@@ -141,6 +160,10 @@ class ChatPage extends Block {
                 // });
                 this.currentDialogElem.setProps({
                     chatName: dialogMeta.display_name,
+                    // messages: new PageTitle({
+                    //     className: 'chat-page__alert_type-reel',
+                    //     text: 'Получение токена чата...',
+                    // }),
                 });
                 // this.setProps({
                 //     dialog: new ChatDialog({
@@ -149,14 +172,14 @@ class ChatPage extends Block {
                 //         chatName: dialogMeta.display_name,
                 //     }),
                 // });
-                this.setChatReelAlert('Получение токена чата...');
-                this.requestGetChatToken();
+                setTimeout(() => {
+                    this.requestGetChatToken();
+                }, 2000);
             }
         } catch (error) {
             // this.setChatDialogAlert('Ошибка загрузки пользователей');
         }
     }
-
     async requestAddChatUser(newUserId: string) {
         console.log('requestAddChatUser method called');
 
@@ -172,20 +195,19 @@ class ChatPage extends Block {
             if (response !== 'OK') {
                 throw new Error();
             }
-
+            this.chatMessages = [];
             this.requestGetChatUsers();
         } catch (error) {
             this.setChatDialogAlert('Ошибка добавления пользователя');
         }
     }
-
     async requestGetChatToken() {
         console.log('requestGetChatToken method called');
         try {
             const response = await chatController.getChatToken(
                 this.data.currentChatId,
             );
-            console.log('requestGetChatToken response', response);
+            // console.log('requestGetChatToken response', response);
 
             if (!response.token) {
                 throw new Error();
@@ -216,59 +238,27 @@ class ChatPage extends Block {
 
         this.socket.addEventListener('open', () => {
             console.log('Соединение установлено');
-
-            // socket.send(
-            //     JSON.stringify({
-            //         content: 'Моё первое сообщение миру!',
-            //         type: 'message',
-            //     }),
-            // );
             this.startPing();
             this.setChatReelAlert('Загрузка сообщений...');
             this.load20Messages();
         });
         this.socket.addEventListener('close', (event: CloseEvent) => {
             if (event.wasClean) {
-                console.log('Соединение закрыто чисто');
+                console.log('Соединение закрыто чисто' + this.getCurrentTime());
             } else {
-                console.log('Обрыв соединения');
+                console.log('Обрыв соединения' + this.getCurrentTime());
             }
-            console.log(`Код: ${event.code} | Причина: ${event.reason}`);
+            console.log(`Код: ${event.code} | event: ${event}`);
             this.stopPing();
         });
         this.socket.addEventListener('message', (event) => {
-            const parsedData = JSON.parse(event.data);
-            if (Array.isArray(parsedData)) {
-                console.log('Получены данные - arr');
-                if (parsedData.length > 0) {
-                    console.log('saving ' + parsedData.length + ' messages');
-
-                    this.saveIncomingMessages(parsedData);
-                    this.load20Messages(this.chatMessages.length);
-                } else {
-                    console.log(
-                        'rendering ' + this.chatMessages.length + ' messages',
-                    );
-                    this.renderMessages();
-                }
-            } else if (parsedData.type === 'pong') {
-                console.log('pong');
-            } else {
-                console.log('Получены данные', event.data);
-            }
+            // console.log('Получены данные', event.data);
+            this.handleSocketMessage(event.data);
         });
         this.socket.addEventListener('error', (event) => {
             console.log('Ошибка', event);
             this.stopPing();
         });
-    }
-    scrollToBottom() {
-        const chatReel = document.getElementById('chatReel');
-        if (chatReel) {
-            setTimeout(() => {
-                chatReel.scrollTop = chatReel.scrollHeight;
-            }, 0);
-        }
     }
     startPing() {
         this.stopPing();
@@ -282,8 +272,8 @@ class ChatPage extends Block {
                     type: 'ping',
                 }),
             );
-            console.log('ping');
-        }, 50000);
+            console.log('ping' + this.getCurrentTime());
+        }, 30000);
     }
     stopPing() {
         if (this.pingInterval) {
@@ -291,19 +281,64 @@ class ChatPage extends Block {
             this.pingInterval = null;
         }
     }
+    handleSocketMessage(eventData: string) {
+        const parsedData = JSON.parse(eventData);
+
+        if (Array.isArray(parsedData)) {
+            if (parsedData.length === 0 && this.chatMessages.length === 0) {
+                this.chatMessages = [];
+                this.renderMessages();
+                console.log('История сообщений пуста');
+            } else {
+                // console.log('Получен массив', event.data);
+                if (parsedData.length > 0) {
+                    console.log('Получен массив');
+                } else {
+                    console.log('Получен пустой массив');
+                }
+                this.handleMessagesArray(parsedData);
+            }
+        } else if (parsedData.type === 'message') {
+            console.log('Получено сообщение');
+            this.handleMessage(parsedData);
+        } else if (parsedData.type === 'pong') {
+            console.log('pong');
+        } else {
+            // console.log('Получены другие данные', event.data);
+            console.log('Получены другие данные');
+        }
+    }
+    handleMessage(msg: Record<string, any>) {
+        const messageWrapper = [msg];
+        this.saveIncomingMessages(messageWrapper, 'single');
+        this.renderMessages();
+    }
+    handleMessagesArray(arr: Array<any>) {
+        console.log('handleMessagesArray method called');
+        if (arr.length > 0) {
+            console.log('saving ' + arr.length + ' messages');
+
+            this.saveIncomingMessages(arr);
+            this.load20Messages(this.chatMessages.length);
+        } else {
+            console.log('rendering ' + this.chatMessages.length + ' messages');
+            this.renderMessages();
+        }
+    }
     load20Messages(from: number = 0) {
         if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
-            console.log('startPing if expression failed');
-            return;
+            console.log('load20Messages if expression failed');
+        } else {
+            console.log('load20Messages method called');
+            this.socket.send(
+                JSON.stringify({
+                    content: String(from),
+                    type: 'get old',
+                }),
+            );
         }
-        this.socket.send(
-            JSON.stringify({
-                content: String(from),
-                type: 'get old',
-            }),
-        );
     }
-    saveIncomingMessages(arr: Array<any>) {
+    saveIncomingMessages(arr: Array<any>, type: string = 'array') {
         interface IMessage {
             id: string;
             user_id: number;
@@ -324,20 +359,41 @@ class ChatPage extends Block {
                     content: message.content,
                 }),
         );
-        for (let incomingMsg of incomingMessages) {
-            this.chatMessages.push(incomingMsg);
+        if (type === 'single') {
+            this.chatMessages.push(incomingMessages[0]);
+        } else {
+            for (let incomingMsg of incomingMessages) {
+                this.chatMessages.unshift(incomingMsg);
+            }
+            this.setChatReelAlert(
+                'Загружено сообщений: ' + this.chatMessages.length,
+            );
         }
-        this.setChatReelAlert(
-            'Загружено сообщений: ' + this.chatMessages.length,
-        );
     }
     renderMessages() {
-        this.currentDialogElem.setProps({
-            messages: this.chatMessages,
-        });
-        this.setProps({
-            dialog: this.currentDialogElem,
-        });
+        if (this.chatMessages.length === 0) {
+            this.setChatReelAlert('История сообщений пуста');
+        } else {
+            this.currentDialogElem.setProps({
+                messages: this.chatMessages,
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
+            console.log('currentDialogElem by renderMessages');
+        }
+    }
+    sendMessage(text: string) {
+        if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
+            console.log('sendMessage if expression failed');
+            return;
+        }
+        this.socket.send(
+            JSON.stringify({
+                content: text,
+                type: 'message',
+            }),
+        );
     }
 
     componentDidUpdate(): boolean {

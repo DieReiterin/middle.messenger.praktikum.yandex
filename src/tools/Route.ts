@@ -43,12 +43,18 @@ export default class Route {
     }
 
     render(): void {
+        // if (!this._block) {
+        //     this._block = new this._blockClass();
+        //     renderDom(this._props.rootQuery, this._block);
+        //     return;
+        // }
+
+        // this._block.show();
         if (!this._block) {
             this._block = new this._blockClass();
             renderDom(this._props.rootQuery, this._block);
-            return;
+        } else {
+            this._block.show();
         }
-
-        this._block.show();
     }
 }

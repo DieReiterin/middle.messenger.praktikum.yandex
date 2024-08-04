@@ -1,4 +1,5 @@
 import Block from '@/tools/Block';
+
 export function renderDom(query: string, block: Block) {
     const root = document.querySelector(query);
     if (!root) {

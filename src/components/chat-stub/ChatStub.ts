@@ -1,26 +1,41 @@
 import Block, { IProps } from '@/tools/Block';
-import { Subtitle, Button } from '@/components/index';
+import { Subtitle, Button, InputField } from '@/components/index';
 import './chat-stub.scss';
 
 export default class ChatStub extends Block {
-    private Testovich3Id = '1628';
+    private userId: string = '';
     constructor(props: IProps = {}) {
         super({
             ...props,
             title: new Subtitle({
                 className: 'chat-stub__title',
-                text: 'В этом чате только вы один...',
+                text: 'В этом чате вы пока одиноки...',
             }),
             subtitle: new Subtitle({
                 className: 'chat-stub__subtitle',
                 text: 'Выберите пользователя для общения',
             }),
+            input: new InputField({
+                className: 'login-page__input',
+                label: 'Идентификатор',
+                placeholder: 'введите id',
+                name: 'user_id',
+                id: 'user_id',
+                onInput: (val: string) => {
+                    this.userId = val;
+                },
+            }),
+            subtitle2: new Subtitle({
+                className: 'chat-stub__subtitle2',
+                text: 'Например, id 1628 (логин Testovich3, пароль Testovich3)',
+            }),
             btn: new Button({
                 className: 'chat-stub__btn',
-                text: 'Выбрать Testovich3',
+                text: 'Добавить пользователя',
                 onClick: () => {
                     if (this.props.onClick) {
-                        this.props.onClick(this.Testovich3Id);
+                        if (!this.userId) return;
+                        this.props.onClick(this.userId);
                     }
                 },
             }),
@@ -32,6 +47,8 @@ export default class ChatStub extends Block {
                     <div class="chat-stub__top">
                         {{{ title }}}
                         {{{ subtitle }}}                    
+                        {{{ input }}}                    
+                        {{{ subtitle2 }}}                    
                     </div>
                     <div class="chat-stub__bottom">
                         {{{ btn }}}
