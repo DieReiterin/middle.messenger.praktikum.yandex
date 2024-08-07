@@ -7,7 +7,11 @@ type TEditPasswordRequest = {
     oldPassword: string;
     newPassword: string;
 };
-type TEditPasswordResponse = string;
+
+type TErrorResponse = {
+    reason: string;
+};
+type TEditPasswordResponse = string | TErrorResponse;
 
 export default class EditPasswordApi extends BaseAPI {
     request(dataParam: TEditPasswordRequest): Promise<TEditPasswordResponse> {
@@ -16,7 +20,12 @@ export default class EditPasswordApi extends BaseAPI {
                 data: dataParam,
             })
             .then((xhr) => {
-                return (xhr as XMLHttpRequest).responseText;
+                const rawResponse = (xhr as XMLHttpRequest).responseText;
+                if (rawResponse === 'OK') {
+                    return rawResponse;
+                } else {
+                    return JSON.parse(rawResponse);
+                }
             });
     }
 }

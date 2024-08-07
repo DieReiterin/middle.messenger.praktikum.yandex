@@ -6,6 +6,7 @@ import {
     Link,
     Button,
     Image,
+    PageTitle,
 } from '@/components/index';
 import './profile.scss';
 import store from '@/tools/Store';
@@ -17,6 +18,12 @@ const profileController = new ProfileController();
 const userLoginController = new UserLoginController();
 
 class Profile extends Block {
+    private alertElem: PageTitle = new PageTitle({
+        className: 'profile__alert profile__alert_hidden',
+        // className: 'profile__alert',
+        text: 'alertText',
+    });
+
     private profileImageElem: Image = new Image({
         className: 'profile-header__image',
         type: 'default',
@@ -90,7 +97,7 @@ class Profile extends Block {
     }
     initPage() {
         this.getUserInfo();
-        console.log('this.props', this.props);
+        // console.log('this.props', this.props);
 
         this.initTitles();
         this.initControls();
@@ -234,6 +241,8 @@ class Profile extends Block {
     initComponents(type: string = 'default') {
         if (type === 'default') {
             this.setProps({
+                alert: this.alertElem,
+
                 profileImage: this.profileImageElem,
                 profileTitle: this.profileTitleElem,
                 avatarInput: this.avatarInputElem,
@@ -370,16 +379,40 @@ class Profile extends Block {
         }
     }
 
+    showAlert(alertText: string) {
+        if (!alertText) {
+            return;
+        }
+        this.alertElem.setProps({
+            className: 'profile__alert',
+            text: alertText,
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+    hideAlert() {
+        this.alertElem.setProps({
+            className: 'profile__alert profile__alert_hidden',
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+
     editProfile() {
+        this.hideAlert();
         this.initControls('onEditProfile');
         this.initComponents('onEditProfile');
     }
     editPassword() {
+        this.hideAlert();
         this.initTitles('onEditPassword');
         this.initControls('onEditPassword');
         this.initComponents('onEditPassword');
     }
     editAvatar() {
+        this.hideAlert();
         this.initComponents('onEditAvatar');
     }
 
@@ -416,7 +449,7 @@ class Profile extends Block {
             //     avatar: '/' + path,
             // });
         } catch (error) {
-            console.error('loadUserAvatar failed:', error);
+            this.showAlert('Не получилось загрузить ваш аватар');
         }
     }
 
@@ -430,9 +463,10 @@ class Profile extends Block {
 
         try {
             await profileController.editAvatar(formData);
+            this.showAlert('Новый аватар сохранен');
             this.updateStoreAndRerender('afterSetAvatar');
         } catch (error) {
-            console.error(error);
+            this.showAlert('Не получилось сменить аватар');
         }
     }
 
@@ -442,7 +476,7 @@ class Profile extends Block {
         const { email, login, first_name, second_name, display_name, phone } =
             this.data;
         try {
-            await profileController.editProfile({
+            const response = await profileController.editProfile({
                 email,
                 login,
                 first_name,
@@ -450,11 +484,17 @@ class Profile extends Block {
                 display_name,
                 phone,
             });
-            this.updateStoreAndRerender('afterSetProfile');
+
+            if (typeof response === 'string') {
+                this.showAlert(response);
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                this.showAlert(response.reason);
+            } else {
+                this.showAlert('Данные сохранены');
+                this.updateStoreAndRerender('afterSetProfile');
+            }
         } catch (error) {
             console.error(error);
-        } finally {
-            // console.log(this.props.profile);
         }
     }
 
@@ -463,12 +503,20 @@ class Profile extends Block {
 
         const { old_password, new_password, repeat_password } = this.data;
         try {
-            await profileController.editPassword({
+            const response = await profileController.editPassword({
                 old_password,
                 new_password,
                 repeat_password,
             });
-            this.updateStoreAndRerender('afterSetPassword');
+
+            if (response === 'OK') {
+                this.updateStoreAndRerender('afterSetPassword');
+                this.showAlert('Пароль изменен');
+            } else if (typeof response === 'string' && response !== 'OK') {
+                this.showAlert(response);
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                this.showAlert(response.reason);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -577,6 +625,7 @@ class Profile extends Block {
                             {{{repeatPasswordTitle}}}
                             {{{repeatPassword}}}
                         </div>
+                        {{{alert}}}
                     </div>
                     <div class="profile-footer">
                         <div class="profile__row profile__row_align-left profile__row_bordered">

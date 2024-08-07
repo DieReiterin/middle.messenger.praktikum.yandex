@@ -64,7 +64,15 @@
 
     &-main {
         min-height: 50px;
-        margin-bottom: 20px;
+    }
+
+    &__alert {
+        font-size: 14px;
+        color: $color-error;
+
+        &_hidden {
+            color: transparent;
+        }
     }
 
     &-footer {

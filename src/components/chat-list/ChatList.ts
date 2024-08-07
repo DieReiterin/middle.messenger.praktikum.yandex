@@ -234,6 +234,17 @@ class ChatList extends Block {
         }
     }
 
+    // componentDidMount(): void {
+    //     this.requestGetChats();
+    // }
+    // show() {
+    //     console.log('SUPER SHOW');
+
+    //     // super.show();
+    //     // console.log('SUPER requestGetChats');
+    //     // this.requestGetChats();
+    // }
+
     componentDidUpdate(): boolean {
         const { profile, user } = this.props;
         if (!(profile && user)) {
@@ -247,6 +258,7 @@ class ChatList extends Block {
     }
 
     render() {
+        // this.requestGetChats();
         return `<aside class="chat-list {{ className }}">
                     <div class="chat-list__top">
                         <div class="chat-list__profile">

@@ -67,6 +67,7 @@ class ChatPage extends Block {
             //     text: 'История сообщений пуста',
             // }),
         });
+        // window.chatPageInstance = this; /////////////
         this.getUserInfo();
         this.setChatDialogAlert('Выберите чат чтобы отправить сообщение');
     }
@@ -324,6 +325,20 @@ class ChatPage extends Block {
         }
     }
     handleSocketMessage(eventData: string) {
+        if (eventData === 'WS token is not valid') {
+            this.currentDialogElem.setProps({
+                messages: [
+                    new PageTitle({
+                        className: 'chat-page__alert_type-reel',
+                        text: 'Имеющийся токен невалиден',
+                    }),
+                ],
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
+            return;
+        }
         const parsedData = JSON.parse(eventData);
 
         if (Array.isArray(parsedData)) {
@@ -462,6 +477,31 @@ class ChatPage extends Block {
         this.scrollToBottom();
         return true;
     }
+
+    // clearChatData() {
+    //     //////////
+    //     this.chatMessages = [];
+    //     this.data.currentChatId = '';
+    //     this.data.currentChatToken = '';
+    //     this.socket = null;
+    //     this.setProps({
+    //         list: new ChatList({
+    //             className: 'chat-page__chat-list',
+    //             onClickChat: (chatId: number) => {
+    //                 this.chatMessages = [];
+    //                 this.data.currentChatToken = '';
+    //                 this.socket = null;
+    //                 this.data.currentChatId = String(chatId);
+    //                 this.requestGetChatUsers();
+    //             },
+    //         }),
+    //         dialog: new PageTitle({
+    //             className: 'chat-page__alert_type-dialog',
+    //             text: 'Выберите чат чтобы отправить сообщение',
+    //         }),
+    //     });
+    // }
+
     override render() {
         return `<div class="chat-page">
                     {{{list}}}

@@ -53,43 +53,14 @@ export default class ProfileController {
             ];
 
             if (!statuses.every((status) => status === 'ok')) {
-                console.log('email validation: ' + validateEmail);
-                console.log('login validation: ' + validateLogin);
-                console.log('first_name validation: ' + validateFirstName);
-                console.log('second_name validation: ' + validateSecondName);
-                console.log('display_name validation: ' + validateDisplayName);
-                console.log('phone validation: ' + validatePhone);
-                throw new Error('editProfile validation failed');
-                // return;
+                return 'Поля не прошли валидацию';
+            } else {
+                const response = await profileApi.request(requestData);
+                console.log('response', response);
+
+                return response;
             }
-            console.log('requestData');
-            console.log(requestData);
-            const response = await profileApi.request(requestData);
-            console.log('response');
-            console.log(response);
-
-            const responseData = JSON.parse(response);
-
-            // console.log(responseData);
-
-            // if (typeof response === 'string') {
-            //     console.log('string response');
-            //     console.log(response);
-            // }
-
-            // if (typeof response === 'object') {
-            //     console.log('object response');
-            //     console.log(response);
-            // }
-
-            if ('reason' in responseData) {
-                console.log('Server error reason: ' + responseData.reason);
-                // return;
-                throw new Error('editProfile Server error');
-            }
-            // return response;
         } catch (error) {
-            // console.log('Profile controller failed:', error);
             throw error;
         }
     }
@@ -102,28 +73,30 @@ export default class ProfileController {
             //     console.log('incorrect current password');
             //     throw new Error('editPassword validation failed');
             // }
-            if (data.old_password === data.new_password) {
-                console.log('new password cannot be equal to current one');
-                throw new Error('editPassword validation failed');
-            }
             if (validateNewPassword !== 'ok') {
                 console.log('new password validation: ' + validateNewPassword);
-                throw new Error('editPassword validation failed');
+                return 'Ошибка в новом пароле: ' + validateNewPassword;
+            }
+            if (data.old_password === data.new_password) {
+                // console.log('new password cannot be equal to current one');
+                return 'Новый пароль должен отличаться от старого';
             }
             if (data.repeat_password !== data.new_password) {
                 console.log('incorrect repeat password');
-                throw new Error('editPassword validation failed');
+                return 'Повторите пароль корректно';
             }
 
             const preppedData = {
                 oldPassword: data.old_password,
                 newPassword: data.new_password,
             };
-            console.log('requestData');
-            console.log(preppedData);
+            // console.log('requestData');
+            // console.log(preppedData);
             const response = await editPasswordApi.request(preppedData);
-            console.log('response');
-            console.log(response);
+            // console.log('response');
+            // console.log(response);
+
+            return response;
 
             // if (response !== 'OK') {
             //     const responseData = JSON.parse(response);
@@ -141,11 +114,13 @@ export default class ProfileController {
 
     public async editAvatar(data: FormData) {
         try {
-            console.log('requestData');
-            console.log(data);
+            // console.log('requestData');
+            // console.log(data);
             const response = await editAvatarApi.request(data);
-            console.log('response');
-            console.log(response);
+            // console.log('response');
+            // console.log(response);
+
+            return response;
 
             // if (response !== 'OK') {
             //     const responseData = JSON.parse(response);
