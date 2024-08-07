@@ -13,7 +13,7 @@ interface IStore<S> {
 interface IState {
     [key: string]: any;
 }
-let state: IState = {
+const state: IState = {
     user: {
         id: '',
         avatar: '',
@@ -30,8 +30,8 @@ let state: IState = {
 
 const deepCopy = <T>(obj: T) => JSON.parse(JSON.stringify(obj));
 
-const reducer: TReducer<IState> = (state, action) => {
-    let newState = deepCopy(state);
+const reducer: TReducer<IState> = (stateParam, action) => {
+    const newState = deepCopy(stateParam);
 
     if (action.type === 'SET_USER_DATA') {
         const {
@@ -75,11 +75,14 @@ const reducer: TReducer<IState> = (state, action) => {
         newState.user.avatar = action.avatar;
         return newState;
     } else {
-        return state;
+        return stateParam;
     }
 };
 
-const createStore = <S>(reducer: TReducer<S>, initialState: S): IStore<S> => {
+const createStore = <S>(
+    reducerFunc: TReducer<S>,
+    initialState: S,
+): IStore<S> => {
     const subscribers: TSubscriber<S>[] = [];
     let currentState = initialState;
 
@@ -90,12 +93,12 @@ const createStore = <S>(reducer: TReducer<S>, initialState: S): IStore<S> => {
             fn(currentState);
         },
         dispatch: (action: TAction) => {
-            currentState = reducer(currentState, action);
+            currentState = reducerFunc(currentState, action);
             subscribers.forEach((fn) => fn(currentState));
         },
     };
 };
 
-let store = Object.freeze(createStore(reducer, state));
+const store = Object.freeze(createStore(reducer, state));
 
 export default store;

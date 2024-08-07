@@ -12,15 +12,18 @@
         border-bottom-right-radius: 0;
         background-color: $color-bg-msg;
     }
+
     &_partner {
         margin-left: 0;
         border-top-left-radius: 0;
         background-color: $color-bg-secondary;
     }
+
     &_pictured {
         max-width: 315px;
         padding: 0;
     }
+
     &__picture {
         border-radius: inherit;
         width: 100%;

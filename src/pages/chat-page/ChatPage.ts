@@ -232,9 +232,9 @@ class ChatPage extends Block {
         });
         this.socket.addEventListener('close', (event: CloseEvent) => {
             if (event.wasClean) {
-                console.log('Соединение закрыто чисто' + this.getCurrentTime());
+                console.log(`Соединение закрыто чисто${this.getCurrentTime()}`);
             } else {
-                console.log('Обрыв соединения' + this.getCurrentTime());
+                console.log(`Обрыв соединения${this.getCurrentTime()}`);
             }
             this.setSocket();
         });
@@ -258,7 +258,7 @@ class ChatPage extends Block {
                     type: 'ping',
                 }),
             );
-            console.log('ping' + this.getCurrentTime());
+            console.log(`ping${this.getCurrentTime()}`);
         }, 30000);
     }
     stopPing() {
@@ -314,12 +314,12 @@ class ChatPage extends Block {
     handleMessagesArray(arr: Array<any>) {
         console.log('handleMessagesArray method called');
         if (arr.length > 0) {
-            console.log('saving ' + arr.length + ' messages');
+            console.log(`saving ${arr.length} messages`);
 
             this.saveIncomingMessages(arr);
             this.load20Messages(this.chatMessages.length);
         } else {
-            console.log('rendering ' + this.chatMessages.length + ' messages');
+            console.log(`rendering ${this.chatMessages.length} messages`);
             this.renderMessages();
         }
     }
@@ -360,7 +360,7 @@ class ChatPage extends Block {
         if (type === 'single') {
             this.chatMessages.push(incomingMessages[0]);
         } else {
-            for (let incomingMsg of incomingMessages) {
+            for (const incomingMsg of incomingMessages) {
                 this.chatMessages.unshift(incomingMsg);
             }
 
@@ -368,8 +368,7 @@ class ChatPage extends Block {
                 messages: [
                     new PageTitle({
                         className: 'chat-page__alert_type-reel',
-                        text:
-                            'Загружено сообщений: ' + this.chatMessages.length,
+                        text: `Загружено сообщений: ${this.chatMessages.length}`,
                     }),
                 ],
             });

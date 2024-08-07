@@ -67,7 +67,7 @@ export default class ProfileController {
         try {
             const validateNewPassword = validate('password', data.new_password);
             if (validateNewPassword !== 'ok') {
-                return 'Ошибка в новом пароле: ' + validateNewPassword;
+                return `Ошибка в новом пароле: ${validateNewPassword}`;
             }
             if (data.old_password === data.new_password) {
                 return 'Новый пароль должен отличаться от старого';

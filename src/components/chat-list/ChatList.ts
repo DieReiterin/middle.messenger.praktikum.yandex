@@ -101,7 +101,7 @@ class ChatList extends Block {
 
     clickChat(chatIdParam: number) {
         if (this.chatItems.length === 0) return;
-        for (let chat of this.chatItems) {
+        for (const chat of this.chatItems) {
             if (chat.getChatId() === chatIdParam) {
                 chat.setProps({
                     className: 'chat-list__chat-item chat-item_selected',

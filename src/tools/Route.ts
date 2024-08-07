@@ -1,5 +1,5 @@
 import Block from '@/tools/Block';
-import { renderDom } from '@/utils/renderDom';
+import renderDom from '@/utils/renderDom';
 
 interface IRouteProps {
     rootQuery: string;

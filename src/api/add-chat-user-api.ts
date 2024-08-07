@@ -16,7 +16,7 @@ export default class AddChatUserApi {
         };
 
         return addChatUserApiInstance
-            .put(`/chats/users`, { data: preparedData })
+            .put('/chats/users', { data: preparedData })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
                 return rawResponse;

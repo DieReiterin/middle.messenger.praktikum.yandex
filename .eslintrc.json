@@ -36,6 +36,13 @@
         "import/no-absolute-path": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-this-alias": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "default-param-last": "off",
+        "no-restricted-syntax": "off",
+        "camelcase": "off",
+        "no-useless-catch": "off",
+        "radix": "off",
+        "no-constructor-return": "off",
+        "consistent-return": "off"
     }
 }

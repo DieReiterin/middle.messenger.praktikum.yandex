@@ -157,7 +157,6 @@ class SignupPage extends Block {
                 this.showAlert(response);
             } else if (typeof response !== 'string' && 'reason' in response) {
                 this.showAlert(response.reason);
-                return;
             }
         } catch (error) {
             console.error('SignupPage Signup failed:', error);

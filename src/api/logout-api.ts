@@ -1,4 +1,5 @@
 import HttpTransport from '@/modules/HttpTransport';
+
 const logoutApiInstance = new HttpTransport();
 
 type TLogoutResponse = string;
