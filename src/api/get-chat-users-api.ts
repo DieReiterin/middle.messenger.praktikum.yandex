@@ -3,11 +3,6 @@ import { BaseAPI } from '@/modules/http/base-api';
 
 const getChatUsersApiInstance = new HttpTransport();
 
-// type TChatRequest = {
-//     login: string;
-//     password: string;
-// };
-
 type TResponse = {
     [key: string]: any;
 };

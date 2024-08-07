@@ -20,7 +20,6 @@ export default class AddChatUserApi extends BaseAPI {
             .put(`/chats/users`, { data: preparedData })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
-                // const parsedResponse = JSON.parse(rawResponse);
                 return rawResponse;
             });
     }

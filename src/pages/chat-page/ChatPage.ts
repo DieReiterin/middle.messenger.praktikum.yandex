@@ -15,23 +15,6 @@ const userLoginController = new UserLoginController();
 const chatController = new ChatController();
 
 class ChatPage extends Block {
-    // private chatMessages: ChatMessage[] = [
-    //     new ChatMessage({
-    //         className: 'chat-message_partner',
-    //         content:
-    //             'Привет! Смотри, тут всплыл интересный кусок лунной космической истории — НАСА в какой-то момент попросила Хассельблад адаптировать модель SWC для полетов на Луну. Сейчас мы все знаем что астронавты летали с моделью 500 EL — и к слову говоря, все тушки этих камер все еще находятся на поверхности Луны, так как астронавты с собой забрали только кассеты с пленкой. Хассельблад в итоге адаптировал SWC для космоса, но что-то пошло не так и на ракету они так никогда и не попали. Всего их было произведено 25 штук, одну из них недавно продали на аукционе за 45000 евро.',
-    //     }),
-    //     new ChatMessage({
-    //         className: 'chat-message_partner chat-message_pictured',
-    //         content:
-    //             // '<img src="/images/camera.jpg" alt="camera" class="chat-message__picture">',
-    //             '<img src="/images/bg-dialog.jpg" alt="camera" class="chat-message__picture">',
-    //     }),
-    //     new ChatMessage({
-    //         className: 'chat-message_my',
-    //         content: 'Круто!',
-    //     }),
-    // ];
     private chatMessages: ChatMessage[] = [];
     private currentDialogElem: ChatDialog = new ChatDialog({
         className: 'chat-page__chat-dialog',
@@ -62,12 +45,7 @@ class ChatPage extends Block {
                     this.requestGetChatUsers();
                 },
             }),
-            // dialog: new PageTitle({
-            //     className: 'chat-page__alert_type-dialog',
-            //     text: 'История сообщений пуста',
-            // }),
         });
-        // window.chatPageInstance = this; /////////////
         this.getUserInfo();
         this.setChatDialogAlert('Выберите чат чтобы отправить сообщение');
     }
@@ -93,41 +71,11 @@ class ChatPage extends Block {
             }),
         });
     }
-    // setChatReelAlert(alertText: string) {
-    //     // console.log('set alert ' + alertText);
-    //     // console.log('chatMessages' + this.chatMessages);
-
-    //     this.currentDialogElem.setProps({
-    //         messages: [
-    //             new PageTitle({
-    //                 className: 'chat-page__alert_type-reel',
-    //                 text: alertText,
-    //             }),
-    //         ],
-    //     });
-    //     // this.currentDialogElem = new ChatDialog({
-    //     //     className: 'chat-page__chat-dialog',
-    //     //     chatName: 'display_name',
-    //     //     onSendMessage: (val: string) => this.sendMessage(val),
-    //     //     messages: new PageTitle({
-    //     //         className: 'chat-page__alert_type-reel',
-    //     //         text: 'alertText',
-    //     //     }),
-    //     // })
-
-    //     this.setProps({
-    //         dialog: this.currentDialogElem,
-    //     });
-    //     // console.log('currentDialogElem by alert');
-    // }
 
     async getUserInfo() {
         console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
-            // console.log(this.props);
-
-            // this.updateStoreAndRerender();
         } catch (error) {
             console.error('getUserInfo failed:', error);
         }
@@ -141,7 +89,6 @@ class ChatPage extends Block {
             const response = await chatController.getChatUsers(
                 this.data.currentChatId,
             );
-            // console.log('getChatUsers response', response);
 
             if (response && (response as Array<any>).length < 2) {
                 this.setProps({
@@ -215,7 +162,6 @@ class ChatPage extends Block {
             const response = await chatController.getChatToken(
                 this.data.currentChatId,
             );
-            // console.log('requestGetChatToken response', response);
 
             if (!response.token) {
                 throw new Error();
@@ -290,12 +236,9 @@ class ChatPage extends Block {
             } else {
                 console.log('Обрыв соединения' + this.getCurrentTime());
             }
-            // console.log(`Код: ${event.code} | event: ${event}`);
-            // this.stopPing();
             this.setSocket();
         });
         this.socket.addEventListener('message', (event) => {
-            // console.log('Получены данные', event.data);
             this.handleSocketMessage(event.data);
         });
         this.socket.addEventListener('error', (event) => {
@@ -347,7 +290,6 @@ class ChatPage extends Block {
                 this.renderMessages();
                 console.log('История сообщений пуста');
             } else {
-                // console.log('Получен массив', event.data);
                 if (parsedData.length > 0) {
                     console.log('Получен массив');
                 } else {
@@ -361,7 +303,6 @@ class ChatPage extends Block {
         } else if (parsedData.type === 'pong') {
             console.log('pong');
         } else {
-            // console.log('Получены другие данные', event.data);
             console.log('Получены другие данные');
         }
     }
@@ -477,30 +418,6 @@ class ChatPage extends Block {
         this.scrollToBottom();
         return true;
     }
-
-    // clearChatData() {
-    //     //////////
-    //     this.chatMessages = [];
-    //     this.data.currentChatId = '';
-    //     this.data.currentChatToken = '';
-    //     this.socket = null;
-    //     this.setProps({
-    //         list: new ChatList({
-    //             className: 'chat-page__chat-list',
-    //             onClickChat: (chatId: number) => {
-    //                 this.chatMessages = [];
-    //                 this.data.currentChatToken = '';
-    //                 this.socket = null;
-    //                 this.data.currentChatId = String(chatId);
-    //                 this.requestGetChatUsers();
-    //             },
-    //         }),
-    //         dialog: new PageTitle({
-    //             className: 'chat-page__alert_type-dialog',
-    //             text: 'Выберите чат чтобы отправить сообщение',
-    //         }),
-    //     });
-    // }
 
     override render() {
         return `<div class="chat-page">

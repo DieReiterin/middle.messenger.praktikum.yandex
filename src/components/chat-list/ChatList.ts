@@ -19,17 +19,6 @@ class ChatList extends Block {
         text: 'profile.display_name',
     });
     private chatItems: ChatItem[] = [
-        // new ChatItem({
-        //     className: '',
-        // chatId: -1,
-        //     avatar: favicon,
-        //     name: 'Егор',
-        //     message: 'Изображение',
-        //     unread: '2',
-        //     onClick: () => {
-        //         this.clickChat();
-        //     },
-        // }),
         new ChatItem({
             className: 'chat-item_empty-item',
             message: 'Загрузка...',
@@ -100,17 +89,6 @@ class ChatList extends Block {
             this.data.status = 'clearList';
             this.initContent();
         }
-        // else if (type === 'addChatItem' && item) {
-        //     let newContent = null;
-        //     if (this.data.status === 'clearList') {
-        //         newContent = [item];
-        //         this.data.status = 'chatsLoaded';
-        //     } else {
-        //         newContent = [...this.chatItems, item];
-        //     }
-        // this.chatItems = newContent;
-        // this.initContent();
-        // }
     }
 
     clearList(alertText: string = 'Нет чатов') {
@@ -120,23 +98,6 @@ class ChatList extends Block {
         });
         this.initContent('clearList', emptyItem);
     }
-
-    // addChat(item: { id: string }) {
-    //     const newChat = new ChatItem({
-    //         className: 'chat-page__chat-list',
-    //         avatar: favicon,
-    //         name: this.data.newChatTitle,
-    //         message: 'Изображение',
-    //         unread: '2',
-    //         onClick: () => {
-    //             this.clickChat();
-    //         },
-    //         id: item.id,
-    //     });
-    //     this.initControls();
-    //     this.initContent('addChatItem', newChat);
-    //     this.data.newChatTitle = '';
-    // }
 
     clickChat(chatIdParam: number) {
         if (this.chatItems.length === 0) return;
@@ -150,7 +111,6 @@ class ChatList extends Block {
                     className: 'chat-list__chat-item',
                 });
             }
-            // console.log('');
         }
         if (this.props.onClickChat) {
             this.props.onClickChat(chatIdParam);
@@ -166,8 +126,6 @@ class ChatList extends Block {
             if (response && (response as Array<any>).length === 0) {
                 this.clearList();
             } else if (response) {
-                // console.log('requestGetChats response', response);
-
                 type TLastMessage = null | {
                     user: {
                         first_name: string;
@@ -194,17 +152,14 @@ class ChatList extends Block {
                         new ChatItem({
                             className: 'chat-list__chat-item',
                             chatId: chat.id,
-                            // avatar: chat.avatar || favicon,
                             avatar: favicon,
                             name: chat.title,
-                            // message: chat.last_message?.content || '',
                             message: chat.last_message
                                 ? 'есть сообщения'
                                 : 'нет сообщений',
                             onClick: () => {
                                 this.clickChat(chat.id);
                             },
-                            // unread: String(chat.unread_count),
                         }),
                 );
                 this.chatItems = newContent;
@@ -224,8 +179,6 @@ class ChatList extends Block {
                 title: this.data.newChatTitle,
             };
             await chatController.createChat(request);
-            // const response = await chatController.createChat(request);
-            // console.log('response', response);
             this.data.newChatTitle = '';
             this.initControls();
             this.requestGetChats();
@@ -233,17 +186,6 @@ class ChatList extends Block {
             console.log('requestCreateChat failed:', error);
         }
     }
-
-    // componentDidMount(): void {
-    //     this.requestGetChats();
-    // }
-    // show() {
-    //     console.log('SUPER SHOW');
-
-    //     // super.show();
-    //     // console.log('SUPER requestGetChats');
-    //     // this.requestGetChats();
-    // }
 
     componentDidUpdate(): boolean {
         const { profile, user } = this.props;
@@ -253,12 +195,10 @@ class ChatList extends Block {
         this.usernameElem.setProps({
             text: profile.display_name,
         });
-        // this.requestGetChats();
         return true;
     }
 
     render() {
-        // this.requestGetChats();
         return `<aside class="chat-list {{ className }}">
                     <div class="chat-list__top">
                         <div class="chat-list__profile">

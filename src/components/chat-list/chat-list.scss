@@ -7,7 +7,6 @@
     flex-direction: column;
 
     width: 20vw;
-    // width: 200px;
     height: 100vh;
 
     &__top {
@@ -22,7 +21,6 @@
 
         box-sizing: border-box;
         width: 20vw;
-        // width: 200px;
         height: 90px;
         padding: 15px 10px 15px;
 
@@ -55,18 +53,6 @@
             line-height: 100%;
             color: $color-text;
         }
-
-        // &::after {
-        //     position: absolute;
-        //     left: 0;
-        //     top: 0;
-        //     content: '';
-
-        //     width: 100%;
-        //     height: 100%;
-        //     border-radius: inherit;
-        //     background-color: rgba($color: $bunker, $alpha: 0.8);
-        // }
     }
 
     &__center {
@@ -74,7 +60,6 @@
 
         box-sizing: border-box;
         min-height: calc(100vh - 90px);
-        // transform: translateY(90px);
         margin-top: 90px;
 
         background-color: $color-bg-secondary;
@@ -87,7 +72,6 @@
 
         box-sizing: border-box;
         width: 20vw;
-        // width: 200px;
         padding: 10px;
     }
 

@@ -9,7 +9,6 @@ export default class InputFile extends Block {
                 change: (e: Event) => {
                     const input = e.target as HTMLInputElement;
                     if (input.files && input.files[0]) {
-                        // this.props.onChange?.(input.files[0]);
                         this.selectFile(input.files[0]);
                     }
                 },

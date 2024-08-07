@@ -3,11 +3,6 @@ import { BaseAPI } from '@/modules/http/base-api';
 
 const getChatsApiInstance = new HttpTransport();
 
-// type TChatRequest = {
-//     login: string;
-//     password: string;
-// };
-
 interface IChat {
     id: number;
     title: string;
@@ -31,17 +26,11 @@ interface IChat {
 type TChatResponse = IChat[] | string;
 
 export default class GetChatsApi extends BaseAPI {
-    // create() {
-    //     return chatAPIInstance.post('api/v1/chats', { title: 'string' });
-    // }
-
     request(): Promise<TChatResponse> {
         return getChatsApiInstance.get('/chats').then((xhr) => {
             const rawResponse = (xhr as XMLHttpRequest).responseText;
             const parsedResponse = JSON.parse(rawResponse);
             return parsedResponse;
-            // const response = JSON.parse(rawResponse) as TChatResponse;
-            // return response;
         });
     }
 }

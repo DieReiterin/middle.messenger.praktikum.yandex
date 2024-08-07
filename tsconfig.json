@@ -39,9 +39,11 @@
 
             "@/modules/HttpTransport": ["src/modules/HttpTransport.ts"],
             "@/modules/http/base-api": ["src/modules/http/base-api.ts"],
+
             "@/utils/isEqual": ["src/utils/isEqual.ts"],
             "@/utils/renderDom": ["src/utils/renderDom.ts"],
             "@/utils/set": ["src/utils/set.ts"],
+
             "@/tools/Block": ["src/tools/Block.ts"],
             "@/tools/connect": ["src/tools/connect.ts"],
             "@/tools/EventBus": ["src/tools/EventBus.ts"],
@@ -50,13 +52,7 @@
             "@/tools/Router": ["src/tools/Router.ts"],
             "@/tools/Store": ["src/tools/Store.ts"],
             "@/tools/validate": ["src/tools/validate.ts"],
-            "@/layouts/index": ["src/layouts/index.ts"],
-            "@/layouts/layout-default/LayoutDefault": [
-                "src/layouts/layout-default/LayoutDefault.ts"
-            ],
-            "@/layouts/layout-navigated/LayoutNavigated": [
-                "src/layouts/layout-navigated/LayoutNavigated.ts"
-            ],
+
             "@/pages/index": ["src/pages/index.ts"],
             "@/pages/chat-page/ChatPage": ["src/pages/chat-page/ChatPage.ts"],
             "@/pages/error-page/ErrorPage": [
@@ -89,7 +85,6 @@
             "@/components/chat-stub/ChatStub": [
                 "src/components/chat-stub/ChatStub.ts"
             ],
-            "@/components/footer/Footer": ["src/components/footer/Footer.ts"],
             "@/components/icon-button/IconButton": [
                 "src/components/icon-button/IconButton.ts"
             ],

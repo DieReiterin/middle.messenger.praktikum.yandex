@@ -52,51 +52,6 @@ export default class ChatDialog extends Block {
             textField: this.textFieldElem,
         });
     }
-    // validateField() {
-    //     const validationResult = validate('message', this.data.message);
-    //     if (validationResult && validationResult !== 'ok') {//Результат плохой
-    //         this.setProps({
-    //             sendBtn: new IconButton({
-    //                 className: 'chat-dialog__send',
-    //                 src: '/icons/arrow.svg',
-    //                 alt: 'Отправить',
-    //                 onClick: () => this.submitForm(),
-    //             }),
-    //             textField: new Textarea({
-    //                 className: 'chat-dialog__text-field',
-    //                 name: 'message',
-    //                 id: 'message',
-    //                 placeholder: validationResult,
-    //                 text: '',
-    //                 onInput: (val: string) => {
-    //                     this.data.message = val;
-    //                 },
-    //             }),
-    //         });
-    //         return false;
-    //     } else if (validationResult && validationResult === 'ok') {//Результат хороший
-    //         this.setProps({
-    //             sendBtn: new IconButton({
-    //                 className: 'chat-dialog__send',
-    //                 src: '/icons/arrow.svg',
-    //                 alt: 'Отправить',
-    //                 onClick: () => this.submitForm(),
-    //             }),
-    //             textField: new Textarea({
-    //                 className: 'chat-dialog__text-field',
-    //                 name: 'message',
-    //                 id: 'message',
-    //                 placeholder: 'Сообщение...',
-    //                 text: this.data.message,
-    //                 onInput: (val: string) => {
-    //                     this.data.message = val;
-    //                 },
-    //             }),
-    //         });
-    //         return true;
-    //     }//Результат пустой
-    //     return true;
-    // }
     render() {
         return `<div class="chat-dialog {{ className }}">
                     <div class="chat-dialog__header">

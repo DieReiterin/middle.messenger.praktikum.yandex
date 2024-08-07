@@ -28,17 +28,10 @@ let state: IState = {
     },
 };
 
-// let setTextAction: TAction = {
-//     type: 'SET_TEXT',
-//     buttonText: '',
-// };
-
 const deepCopy = <T>(obj: T) => JSON.parse(JSON.stringify(obj));
 
 const reducer: TReducer<IState> = (state, action) => {
     let newState = deepCopy(state);
-    // console.log('state before action', state);
-    // console.log('newState before action', newState);
 
     if (action.type === 'SET_USER_DATA') {
         const {

@@ -30,13 +30,7 @@ export default class LoginApi extends BaseAPI {
                     return rawResponse;
                 } else {
                     return JSON.parse(rawResponse);
-                    // const response = JSON.parse(
-                    //     rawResponse,
-                    // ) as TLoginObjectResponse;
-                    // return response;
                 }
             });
-        // .post('/login', user)
-        // .then(({ user_id }) => user_id);
     }
 }

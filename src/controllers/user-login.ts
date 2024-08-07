@@ -18,10 +18,6 @@ const getStaticApi = new GetStaticApi();
 export default class UserLoginController {
     public async login(data: ILoginFormModel) {
         try {
-            // Запускаем крутилку
-            // console.log('Loading...');
-            // console.log('UserLoginController called');
-
             const validateLogin = validate('login', data.login);
             const validatePassword = validate('password', data.password);
 
@@ -32,11 +28,6 @@ export default class UserLoginController {
             const response = await loginApi.request(data);
 
             return response;
-            // console.log('response: ', response);
-
-            // if (response !== 'OK' && typeof response !== 'string') {
-            //     throw new Error(response.reason);
-            // }
         } catch (error) {
             throw error;
         }
@@ -45,8 +36,6 @@ export default class UserLoginController {
     public async logout() {
         try {
             const response = await logoutApi.request();
-            // console.log('response: ', response);
-
             if (response !== 'OK') {
                 throw new Error(response);
             }
@@ -59,8 +48,6 @@ export default class UserLoginController {
         try {
             const response = await getUserInfoApi.request();
             const parsedResponse = JSON.parse(response);
-            // console.log('parsedResponse: ', parsedResponse);
-
             if (!('id' in parsedResponse)) {
                 throw new Error('server getInfo failed');
             } else {
@@ -83,14 +70,7 @@ export default class UserLoginController {
             }
 
             const fileURL = URL.createObjectURL(response);
-            // console.log('File URL:', fileURL);
-
             return fileURL;
-
-            // store.dispatch({
-            //     type: 'SET_USER_DATA',
-            //     data: parsedResponse,
-            // });
         } catch (error) {
             throw error;
         }

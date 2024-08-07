@@ -169,14 +169,12 @@ export default class Block {
             return;
         }
         const { children, props, lists } =
-            this._getChildrenPropsAndProps(nextProps); //
-        Object.assign(this.children, children); //
-        Object.assign(this.lists, lists); //
-        Object.assign(this.props, props); //
+            this._getChildrenPropsAndProps(nextProps);
+        Object.assign(this.children, children);
+        Object.assign(this.lists, lists);
+        Object.assign(this.props, props);
 
-        // Object.assign(this.props, nextProps);
-
-        this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps); //
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
     };
 
     public get element(): HTMLElement | null {
@@ -238,12 +236,6 @@ export default class Block {
         }
         this._element = newElement as HTMLElement;
         this._parentElement = this._element.parentElement;
-
-        // if (this._parentElement) {
-        //     console.log('parentElement saved by render');
-        // } else {
-        //     console.log('parentElement FAILED to save by render');
-        // }
 
         this._addEvents();
         this.addAttributes();

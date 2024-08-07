@@ -20,7 +20,6 @@ const userLoginController = new UserLoginController();
 class Profile extends Block {
     private alertElem: PageTitle = new PageTitle({
         className: 'profile__alert profile__alert_hidden',
-        // className: 'profile__alert',
         text: 'alertText',
     });
 
@@ -88,7 +87,6 @@ class Profile extends Block {
         repeat_password: '',
     };
     private avatarFile: File | null = null;
-    // private avatarURL: string | null = null;
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -97,8 +95,6 @@ class Profile extends Block {
     }
     initPage() {
         this.getUserInfo();
-        // console.log('this.props', this.props);
-
         this.initTitles();
         this.initControls();
         this.initComponents();
@@ -231,7 +227,6 @@ class Profile extends Block {
             this.setProps({
                 avatarLink: new Link({
                     text: 'Поменять',
-                    // className: 'profile-header__title profile-content__link',
                     className: 'profile-content__link link_red',
                     onClick: () => this.requestChangeAvatar(),
                 }),
@@ -368,10 +363,8 @@ class Profile extends Block {
                     name: 'avatar',
                     id: 'avatar',
                     accept: 'image/*',
-                    // accept: 'image/png, image/jpeg',
                     onChange: (file: File) => {
                         this.avatarFile = file;
-                        // this.data.avatar = '/' + file.name;
                         this.initControls('onEditAvatar');
                     },
                 }),
@@ -420,9 +413,6 @@ class Profile extends Block {
         console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
-            // console.log(this.props);
-
-            // this.updateStoreAndRerender();
         } catch (error) {
             console.error('getUserInfo failed:', error);
         }
@@ -434,20 +424,13 @@ class Profile extends Block {
             });
             return;
         }
-        // console.log('loadUserAvatar method called');
         try {
             const result = await userLoginController.getStatic(path);
-            // console.log('loadUserAvatar result', result);
-            // return result;
             this.profileImageElem.setProps({
                 src: result,
                 onClick: () => this.editAvatar(),
                 type: '',
             });
-            // store.dispatch({
-            //     type: 'SET_AVATAR',
-            //     avatar: '/' + path,
-            // });
         } catch (error) {
             this.showAlert('Не получилось загрузить ваш аватар');
         }
@@ -534,7 +517,6 @@ class Profile extends Block {
     }
 
     updateStoreAndRerender(action: string = 'unset') {
-        // console.log('updateStoreAndRerender');
         if (action === 'afterSetProfile') {
             store.dispatch({
                 type: 'SET_PROFILE',
@@ -542,11 +524,6 @@ class Profile extends Block {
             });
         } else if (action === 'afterSetAvatar') {
             this.getUserInfo();
-            // this.loadUserAvatar(this.props.user.avatar);
-            // store.dispatch({
-            //     type: 'SET_AVATAR',
-            //     avatar: this.data.avatar,
-            // });
         }
         this.initTitles();
         this.initControls();
@@ -576,9 +553,6 @@ class Profile extends Block {
     }
 
     override render() {
-        // <div class="profile-header__image">
-        //                     <img src="/images/default_profile.png" alt="Ваш аватар" class="profile-header__image-pic">
-        //                 </div>
         return `<div class="profile {{ className }}">
                     <div class="profile-header">
                         {{{profileImage}}}
@@ -646,10 +620,5 @@ class Profile extends Block {
                 </div>`;
     }
 }
-// const withProfile = connect((state) => ({
-//     profile: { ...state.profile },
-// }));
-
-// export default withProfile(Profile);
 
 export default connect(Profile);

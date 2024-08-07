@@ -30,15 +30,7 @@ export default class ProfileApi extends BaseAPI {
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
-                // if (typeof rawResponse === 'string') {
-                //     console.log('api returned string response');
                 return JSON.parse(rawResponse);
-                // }
-                // console.log('api returned parsed object response');
-                // const response = JSON.parse(
-                //     rawResponse,
-                // ) as TChangeProfileObjectResponse;
-                // return response;
             });
     }
 }

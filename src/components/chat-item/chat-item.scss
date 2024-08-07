@@ -76,12 +76,10 @@
     }
 
     &_selected {
-        // background-color: $color-chat-item-selected;
         background-color: inherit;
         border-right: 5px solid $color-accent-soft;
         &:hover {
             cursor: default;
-            // background-color: $color-chat-item-selected;
             background-color: inherit;
         }
     }
@@ -89,7 +87,6 @@
     &_selected & {
         &__line {
             background-color: inherit;
-            // background-color: $color-chat-item-selected;
         }
     }
 }

@@ -15,8 +15,6 @@ const signupApi = new SignupApi();
 export default class UserSignupController {
     public async signup(data: SignupFormModel) {
         try {
-            // console.log('UserSignupController called');
-
             const validateEmail = validate('email', data.email);
             const validateLogin = validate('login', data.login);
             const validateFirstName = validate('first_name', data.first_name);

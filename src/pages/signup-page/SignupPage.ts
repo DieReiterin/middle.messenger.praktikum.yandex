@@ -1,7 +1,6 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './signup-page.scss';
-// import store from '@/tools/Store';
 import connect from '@/tools/connect';
 import UserSignupController from '@/controllers/user-signup';
 
@@ -139,8 +138,6 @@ class SignupPage extends Block {
     }
 
     async handleSignup() {
-        // console.log('handleSignup method called');
-
         const { email, login, first_name, second_name, phone, password } =
             this.data;
         try {

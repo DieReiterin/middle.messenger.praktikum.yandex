@@ -22,13 +22,9 @@ export default function connect(
             super(...args);
 
             store.subscribe(() => {
-                // this.setProps({ ...store.getState() });
                 this.setProps(mapStateToPropsFn(store.getState()));
-                // console.log('this.props');
-                // console.log(this.props);
             });
             this.dispatch = store.dispatch;
-            // console.log(this);
         }
         dispatch(action: TAction) {
             store.dispatch(action);

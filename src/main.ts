@@ -10,8 +10,6 @@ import {
     ErrorPage,
 } from '@/pages/index';
 
-// let connectedLoginPage = connect(LoginPage);
-
 const router = new Router('#app');
 
 router

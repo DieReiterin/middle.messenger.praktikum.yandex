@@ -1,7 +1,6 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
-// import store from '@/tools/Store';
 import connect from '@/tools/connect';
 import UserLoginController from '@/controllers/user-login';
 
@@ -51,7 +50,6 @@ class LoginPage extends Block {
                 className: 'login-page__link',
                 text: 'Регистрация',
                 onClick: () => window.router.go('/sign-up'),
-                // text: store.getState().buttonText,
             }),
         });
         this.setProps({

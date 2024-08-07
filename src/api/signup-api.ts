@@ -34,10 +34,6 @@ export default class SignupApi extends BaseAPI {
                     return rawResponse;
                 } else {
                     return JSON.parse(rawResponse);
-                    // const response = JSON.parse(
-                    //     rawResponse,
-                    // ) as TLoginObjectResponse;
-                    // return response;
                 }
             });
     }

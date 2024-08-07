@@ -25,8 +25,6 @@ const editAvatarApi = new EditAvatarApi();
 export default class ProfileController {
     public async editProfile(requestData: IProfileFormModel) {
         try {
-            // console.log('UserLoginController called');
-
             const validateEmail = validate('email', requestData.email);
             const validateLogin = validate('login', requestData.login);
             const validateFirstName = validate(
@@ -68,21 +66,13 @@ export default class ProfileController {
     public async editPassword(data: IPasswordFormModel) {
         try {
             const validateNewPassword = validate('password', data.new_password);
-
-            // if (data.old_password !== data.password) {
-            //     console.log('incorrect current password');
-            //     throw new Error('editPassword validation failed');
-            // }
             if (validateNewPassword !== 'ok') {
-                console.log('new password validation: ' + validateNewPassword);
                 return 'Ошибка в новом пароле: ' + validateNewPassword;
             }
             if (data.old_password === data.new_password) {
-                // console.log('new password cannot be equal to current one');
                 return 'Новый пароль должен отличаться от старого';
             }
             if (data.repeat_password !== data.new_password) {
-                console.log('incorrect repeat password');
                 return 'Повторите пароль корректно';
             }
 
@@ -90,23 +80,8 @@ export default class ProfileController {
                 oldPassword: data.old_password,
                 newPassword: data.new_password,
             };
-            // console.log('requestData');
-            // console.log(preppedData);
             const response = await editPasswordApi.request(preppedData);
-            // console.log('response');
-            // console.log(response);
-
             return response;
-
-            // if (response !== 'OK') {
-            //     const responseData = JSON.parse(response);
-            //     if ('reason' in responseData) {
-            //         // console.log('Server error reason: ' + responseData.reason);
-            //         throw new Error('editPassword Server error');
-            //     }
-            //     // console.log('parsedResponse');
-            //     // console.log(responseData);
-            // }
         } catch (error) {
             throw error;
         }
@@ -114,23 +89,8 @@ export default class ProfileController {
 
     public async editAvatar(data: FormData) {
         try {
-            // console.log('requestData');
-            // console.log(data);
             const response = await editAvatarApi.request(data);
-            // console.log('response');
-            // console.log(response);
-
             return response;
-
-            // if (response !== 'OK') {
-            //     const responseData = JSON.parse(response);
-            //     if ('reason' in responseData) {
-            //         // console.log('Server error reason: ' + responseData.reason);
-            //         throw new Error('editPassword Server error');
-            //     }
-            //     // console.log('parsedResponse');
-            //     // console.log(responseData);
-            // }
         } catch (error) {
             throw error;
         }
