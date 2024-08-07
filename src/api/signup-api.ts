@@ -12,10 +12,15 @@ type TSignupRequest = {
     password: string;
 };
 
-type TSignupResponse = {
-    user_id?: number;
-    reason?: string;
+type TUserIdResponse = {
+    user_id: number;
 };
+
+type TErrorResponse = {
+    reason: string;
+};
+
+type TSignupResponse = string | TUserIdResponse | TErrorResponse;
 
 export default class SignupApi extends BaseAPI {
     request(user: TSignupRequest): Promise<TSignupResponse> {
@@ -24,10 +29,16 @@ export default class SignupApi extends BaseAPI {
                 data: user,
             })
             .then((xhr) => {
-                const response = JSON.parse(
-                    (xhr as XMLHttpRequest).responseText,
-                ) as TSignupResponse;
-                return response;
+                const rawResponse = (xhr as XMLHttpRequest).responseText;
+                if (rawResponse === 'OK') {
+                    return rawResponse;
+                } else {
+                    return JSON.parse(rawResponse);
+                    // const response = JSON.parse(
+                    //     rawResponse,
+                    // ) as TLoginObjectResponse;
+                    // return response;
+                }
             });
     }
 }

@@ -8,15 +8,19 @@ import UserSignupController from '@/controllers/user-signup';
 const userSignupController = new UserSignupController();
 
 class SignupPage extends Block {
+    private alertElem: PageTitle = new PageTitle({
+        className: 'signup-page__alert signup-page__alert_hidden',
+        text: 'alertText',
+    });
     constructor(props: IProps = {}) {
         super({
             ...props,
             title: new PageTitle({
-                className: 'signin-page__title',
+                className: 'signup-page__title',
                 text: 'Регистрация',
             }),
             input1: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Почта',
                 placeholder: 'введите адрес',
                 name: 'email',
@@ -26,7 +30,7 @@ class SignupPage extends Block {
                 },
             }),
             input2: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Логин',
                 placeholder: 'введите логин',
                 name: 'login',
@@ -36,7 +40,7 @@ class SignupPage extends Block {
                 },
             }),
             input3: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Имя',
                 placeholder: 'введите имя',
                 name: 'first_name',
@@ -46,7 +50,7 @@ class SignupPage extends Block {
                 },
             }),
             input4: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Фамилия',
                 placeholder: 'введите фамилию',
                 name: 'second_name',
@@ -56,7 +60,7 @@ class SignupPage extends Block {
                 },
             }),
             input5: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Телефон',
                 placeholder: 'введите номер',
                 name: 'phone',
@@ -66,7 +70,7 @@ class SignupPage extends Block {
                 },
             }),
             input6: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Пароль',
                 placeholder: 'введите пароль',
                 name: 'password',
@@ -76,7 +80,7 @@ class SignupPage extends Block {
                 },
             }),
             input7: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Пароль (ещё раз)',
                 placeholder: 'повторите пароль',
                 name: 'password-repeat',
@@ -85,18 +89,22 @@ class SignupPage extends Block {
                     this.data['password-repeat'] = val;
                 },
             }),
+            alert: null,
             btn: new Button({
-                className: 'signin-page__submit-btn',
+                className: 'signup-page__submit-btn',
                 text: 'Создать аккаунт',
                 onClick: () => {
                     this.handleSignup();
                 },
             }),
             link: new Link({
-                className: 'signin-page__link',
+                className: 'signup-page__link',
                 text: 'Вход',
                 onClick: () => window.router.go('/'),
             }),
+        });
+        this.setProps({
+            alert: this.alertElem,
         });
     }
     data = {
@@ -109,13 +117,34 @@ class SignupPage extends Block {
         'password-repeat': '',
     };
 
+    showAlert(alertText: string) {
+        if (!alertText) {
+            return;
+        }
+        this.alertElem.setProps({
+            className: 'signup-page__alert',
+            text: alertText,
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+    hideAlert() {
+        this.alertElem.setProps({
+            className: 'signup-page__alert signup-page__alert_hidden',
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+
     async handleSignup() {
-        console.log('handleSignup method called');
+        // console.log('handleSignup method called');
 
         const { email, login, first_name, second_name, phone, password } =
             this.data;
         try {
-            await userSignupController.signup({
+            const response = await userSignupController.signup({
                 email,
                 login,
                 first_name,
@@ -123,14 +152,24 @@ class SignupPage extends Block {
                 phone,
                 password,
             });
+            if (!response) return;
+
+            if (response === 'OK') {
+                window.router.go('/messenger');
+            } else if (typeof response === 'string') {
+                this.showAlert(response);
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                this.showAlert(response.reason);
+                return;
+            }
         } catch (error) {
             console.error('SignupPage Signup failed:', error);
         }
     }
 
     override render() {
-        return `<form class="signin-page">
-                    <div class="signin-page__main">
+        return `<form class="signup-page">
+                    <div class="signup-page__main">
                         {{{title}}}
                         {{{input1}}}             
                         {{{input2}}}  
@@ -139,8 +178,9 @@ class SignupPage extends Block {
                         {{{input5}}}  
                         {{{input6}}}  
                         {{{input7}}}  
+                        {{{alert}}}   
                     </div>
-                    <div class="signin-page__footer">
+                    <div class="signup-page__footer">
                         {{{btn}}}    
                         {{{link}}}           
                     </div>

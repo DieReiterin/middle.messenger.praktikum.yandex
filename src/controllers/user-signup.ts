@@ -11,14 +11,11 @@ interface SignupFormModel {
 }
 
 const signupApi = new SignupApi();
-// const userLoginValidator = validateLoginFields(validateRules);
 
 export default class UserSignupController {
     public async signup(data: SignupFormModel) {
         try {
-            // Запускаем крутилку
-            // console.log('Loading...');
-            console.log('UserSignupController called');
+            // console.log('UserSignupController called');
 
             const validateEmail = validate('email', data.email);
             const validateLogin = validate('login', data.login);
@@ -30,41 +27,24 @@ export default class UserSignupController {
             const validatePhone = validate('phone', data.phone);
             const validatePassword = validate('password', data.password);
 
-            if (
-                validateEmail !== 'ok' ||
-                validateLogin !== 'ok' ||
-                validateFirstName !== 'ok' ||
-                validateSecondName !== 'ok' ||
-                validatePhone !== 'ok' ||
-                validatePassword !== 'ok'
-            ) {
-                console.log('email validation: ' + validateEmail);
-                console.log('login validation: ' + validateLogin);
-                console.log('first_name validation: ' + validateFirstName);
-                console.log('second_name validation: ' + validateSecondName);
-                console.log('phone validation: ' + validatePhone);
-                console.log('password validation: ' + validatePassword);
-                return;
+            const statuses = [
+                validateEmail,
+                validateLogin,
+                validateFirstName,
+                validateSecondName,
+                validatePhone,
+                validatePassword,
+            ];
+
+            if (!statuses.every((status) => status === 'ok')) {
+                return 'Поля не прошли валидацию';
             }
 
-            // const response = loginApi.request(prepareDataToRequest(data));
             const response = await signupApi.request(data);
 
-            if (response.reason) {
-                console.log('Server error reason: ' + response.reason);
-                return;
-            }
-            console.log('response: ', response);
-
-            window.router.go('/messenger');
-
-            console.log('Loading complete');
-
-            // RouteManagement.go('/chats');
-
-            // Останавливаем крутилку
+            return response;
         } catch (error) {
-            console.log('Controller Login failed:', error);
+            throw error;
         }
     }
 }

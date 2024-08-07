@@ -92,21 +92,33 @@ class ChatPage extends Block {
             }),
         });
     }
-    setChatReelAlert(alertText: string) {
-        console.log('set alert ' + alertText);
+    // setChatReelAlert(alertText: string) {
+    //     // console.log('set alert ' + alertText);
+    //     // console.log('chatMessages' + this.chatMessages);
 
-        this.currentDialogElem.setProps({
-            messages: new PageTitle({
-                className: 'chat-page__alert_type-reel',
-                text: alertText,
-            }),
-        });
+    //     this.currentDialogElem.setProps({
+    //         messages: [
+    //             new PageTitle({
+    //                 className: 'chat-page__alert_type-reel',
+    //                 text: alertText,
+    //             }),
+    //         ],
+    //     });
+    //     // this.currentDialogElem = new ChatDialog({
+    //     //     className: 'chat-page__chat-dialog',
+    //     //     chatName: 'display_name',
+    //     //     onSendMessage: (val: string) => this.sendMessage(val),
+    //     //     messages: new PageTitle({
+    //     //         className: 'chat-page__alert_type-reel',
+    //     //         text: 'alertText',
+    //     //     }),
+    //     // })
 
-        this.setProps({
-            dialog: this.currentDialogElem,
-        });
-        console.log('currentDialogElem by alert');
-    }
+    //     this.setProps({
+    //         dialog: this.currentDialogElem,
+    //     });
+    //     // console.log('currentDialogElem by alert');
+    // }
 
     async getUserInfo() {
         console.log('getUserInfo method called');
@@ -155,29 +167,24 @@ class ChatPage extends Block {
                     (user: TUserMeta) => user.id !== this.data.myUserId,
                 );
                 const dialogMeta = filteredUsersArr[0];
-                // this.setProps({
-                //     dialog: this.currentDialogElem,
-                // });
+
                 this.currentDialogElem.setProps({
                     chatName: dialogMeta.display_name,
-                    // messages: new PageTitle({
-                    //     className: 'chat-page__alert_type-reel',
-                    //     text: 'Получение токена чата...',
-                    // }),
+                    messages: [
+                        new PageTitle({
+                            className: 'chat-page__alert_type-reel',
+                            text: 'Получение токена чата...',
+                        }),
+                    ],
                 });
-                // this.setProps({
-                //     dialog: new ChatDialog({
-                //         className: 'chat-page__chat-dialog',
-                //         messages: [],
-                //         chatName: dialogMeta.display_name,
-                //     }),
-                // });
-                setTimeout(() => {
-                    this.requestGetChatToken();
-                }, 2000);
+                this.setProps({
+                    dialog: this.currentDialogElem,
+                });
+
+                this.requestGetChatToken();
             }
         } catch (error) {
-            // this.setChatDialogAlert('Ошибка загрузки пользователей');
+            this.setChatDialogAlert('Ошибка загрузки пользователей');
         }
     }
     async requestAddChatUser(newUserId: string) {
@@ -213,11 +220,33 @@ class ChatPage extends Block {
                 throw new Error();
             } else {
                 this.data.currentChatToken = response.token;
-                this.setChatReelAlert('Создание сокета...');
+
+                this.currentDialogElem.setProps({
+                    messages: [
+                        new PageTitle({
+                            className: 'chat-page__alert_type-reel',
+                            text: 'Создание сокета...',
+                        }),
+                    ],
+                });
+                this.setProps({
+                    dialog: this.currentDialogElem,
+                });
+
                 this.setSocket();
             }
         } catch (error) {
-            this.setChatReelAlert('Ошибка загрузки токена чата');
+            this.currentDialogElem.setProps({
+                messages: [
+                    new PageTitle({
+                        className: 'chat-page__alert_type-reel',
+                        text: 'Ошибка загрузки токена чата',
+                    }),
+                ],
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
         }
     }
 
@@ -238,8 +267,20 @@ class ChatPage extends Block {
 
         this.socket.addEventListener('open', () => {
             console.log('Соединение установлено');
+
+            this.currentDialogElem.setProps({
+                messages: [
+                    new PageTitle({
+                        className: 'chat-page__alert_type-reel',
+                        text: 'Загрузка сообщений...',
+                    }),
+                ],
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
+
             this.startPing();
-            this.setChatReelAlert('Загрузка сообщений...');
             this.load20Messages();
         });
         this.socket.addEventListener('close', (event: CloseEvent) => {
@@ -248,8 +289,9 @@ class ChatPage extends Block {
             } else {
                 console.log('Обрыв соединения' + this.getCurrentTime());
             }
-            console.log(`Код: ${event.code} | event: ${event}`);
-            this.stopPing();
+            // console.log(`Код: ${event.code} | event: ${event}`);
+            // this.stopPing();
+            this.setSocket();
         });
         this.socket.addEventListener('message', (event) => {
             // console.log('Получены данные', event.data);
@@ -365,14 +407,34 @@ class ChatPage extends Block {
             for (let incomingMsg of incomingMessages) {
                 this.chatMessages.unshift(incomingMsg);
             }
-            this.setChatReelAlert(
-                'Загружено сообщений: ' + this.chatMessages.length,
-            );
+
+            this.currentDialogElem.setProps({
+                messages: [
+                    new PageTitle({
+                        className: 'chat-page__alert_type-reel',
+                        text:
+                            'Загружено сообщений: ' + this.chatMessages.length,
+                    }),
+                ],
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
         }
     }
     renderMessages() {
         if (this.chatMessages.length === 0) {
-            this.setChatReelAlert('История сообщений пуста');
+            this.currentDialogElem.setProps({
+                messages: [
+                    new PageTitle({
+                        className: 'chat-page__alert_type-reel',
+                        text: 'История сообщений пуста',
+                    }),
+                ],
+            });
+            this.setProps({
+                dialog: this.currentDialogElem,
+            });
         } else {
             this.currentDialogElem.setProps({
                 messages: this.chatMessages,

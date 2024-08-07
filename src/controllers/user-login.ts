@@ -26,17 +26,17 @@ export default class UserLoginController {
             const validatePassword = validate('password', data.password);
 
             if (validateLogin !== 'ok' || validatePassword !== 'ok') {
-                console.log('login validation: ' + validateLogin);
-                console.log('password validation: ' + validatePassword);
-                throw new Error('editPassword validation failed');
+                return 'Поля не прошли валидацию';
             }
 
             const response = await loginApi.request(data);
-            console.log('response: ', response);
 
-            if (response !== 'OK') {
-                throw new Error('server login failed');
-            }
+            return response;
+            // console.log('response: ', response);
+
+            // if (response !== 'OK' && typeof response !== 'string') {
+            //     throw new Error(response.reason);
+            // }
         } catch (error) {
             throw error;
         }

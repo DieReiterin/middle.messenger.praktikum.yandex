@@ -21,6 +21,7 @@ class ChatList extends Block {
     private chatItems: ChatItem[] = [
         // new ChatItem({
         //     className: '',
+        // chatId: -1,
         //     avatar: favicon,
         //     name: 'Егор',
         //     message: 'Изображение',
@@ -137,9 +138,22 @@ class ChatList extends Block {
     //     this.data.newChatTitle = '';
     // }
 
-    clickChat(chatId: number) {
+    clickChat(chatIdParam: number) {
+        if (this.chatItems.length === 0) return;
+        for (let chat of this.chatItems) {
+            if (chat.getChatId() === chatIdParam) {
+                chat.setProps({
+                    className: 'chat-list__chat-item chat-item_selected',
+                });
+            } else {
+                chat.setProps({
+                    className: 'chat-list__chat-item',
+                });
+            }
+            // console.log('');
+        }
         if (this.props.onClickChat) {
-            this.props.onClickChat(chatId);
+            this.props.onClickChat(chatIdParam);
         }
     }
 
@@ -179,6 +193,7 @@ class ChatList extends Block {
                     (chat) =>
                         new ChatItem({
                             className: 'chat-list__chat-item',
+                            chatId: chat.id,
                             // avatar: chat.avatar || favicon,
                             avatar: favicon,
                             name: chat.title,

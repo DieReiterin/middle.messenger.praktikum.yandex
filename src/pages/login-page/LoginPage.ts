@@ -8,6 +8,10 @@ import UserLoginController from '@/controllers/user-login';
 const userLoginController = new UserLoginController();
 
 class LoginPage extends Block {
+    private alertElem: PageTitle = new PageTitle({
+        className: 'login-page__alert login-page__alert_hidden',
+        text: 'alertText',
+    });
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -35,6 +39,7 @@ class LoginPage extends Block {
                     this.data.password = val;
                 },
             }),
+            alert: null,
             btn: new Button({
                 className: 'login-page__submit-btn',
                 text: 'Войти',
@@ -49,17 +54,52 @@ class LoginPage extends Block {
                 // text: store.getState().buttonText,
             }),
         });
+        this.setProps({
+            alert: this.alertElem,
+        });
     }
+
+    showAlert(alertText: string) {
+        if (!alertText) {
+            return;
+        }
+        this.alertElem.setProps({
+            className: 'login-page__alert',
+            text: alertText,
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+    hideAlert() {
+        this.alertElem.setProps({
+            className: 'login-page__alert login-page__alert_hidden',
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+
     async handleLogin() {
         console.log('handleLogin method called');
 
         const { login, password } = this.data;
         try {
-            await userLoginController.login({ login, password });
-            this.getUserInfo();
-            window.router.go('/messenger');
+            const response = await userLoginController.login({
+                login,
+                password,
+            });
+
+            if (response === 'OK') {
+                this.getUserInfo();
+                window.router.go('/messenger');
+            } else if (typeof response === 'string') {
+                this.showAlert(response);
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                this.showAlert(response.reason);
+            }
         } catch (error) {
-            console.error('handleLogin method failed:', error);
+            throw error;
         }
     }
 
@@ -85,6 +125,7 @@ class LoginPage extends Block {
                             {{{title}}} 
                             {{{input1}}}  
                             {{{input2}}}                          
+                            {{{alert}}}                          
                         </div>
                         <div class="login-page__footer">
                             {{{btn}}}    

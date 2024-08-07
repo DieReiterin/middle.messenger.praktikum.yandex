@@ -1,4 +1,4 @@
-.signin-page {
+.signup-page {
     box-sizing: border-box;
 
     width: 340px;
@@ -14,9 +14,20 @@
 
     &__main {
         min-height: 200px;
-        margin-bottom: 50px;
+        margin-bottom: 20px;
 
         font-weight: 600;
+    }
+
+    &__alert {
+        margin-top: 20px;
+
+        font-size: 14px;
+        color: $color-error;
+
+        &_hidden {
+            color: transparent;
+        }
     }
 
     &__footer {

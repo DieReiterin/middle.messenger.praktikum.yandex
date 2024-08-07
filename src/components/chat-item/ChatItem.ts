@@ -19,6 +19,10 @@ export default class ChatItem extends Block {
         }
     }
 
+    getChatId(): number {
+        return this.props.chatId;
+    }
+
     render() {
         return `<div class="chat-item {{ className }}">
                     <div class="chat-item__line"></div>
