@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const profileApiInstance = new HttpTransport();
 
@@ -22,7 +21,7 @@ type TErrorResponse = {
 
 type TChangeProfileResponse = string | TCorrectResponse | TErrorResponse;
 
-export default class ProfileApi extends BaseAPI {
+export default class ProfileApi {
     request(dataParam: TChangeProfileRequest): Promise<TChangeProfileResponse> {
         return profileApiInstance
             .put('/user/profile', {

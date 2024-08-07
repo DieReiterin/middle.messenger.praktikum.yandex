@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const getChatTokenApiInstance = new HttpTransport();
 
@@ -8,7 +7,7 @@ type TCorrectResponse = {
 };
 type TResponse = TCorrectResponse;
 
-export default class GetChatTokenApi extends BaseAPI {
+export default class GetChatTokenApi {
     request(chatId: string): Promise<TResponse> {
         return getChatTokenApiInstance
             .post(`/chats/token/${chatId}`)

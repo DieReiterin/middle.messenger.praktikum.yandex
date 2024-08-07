@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const createChatApiInstance = new HttpTransport();
 
@@ -7,7 +6,7 @@ type TCreateChatRequest = {
     title: string;
 };
 
-export default class CreateChatApi extends BaseAPI {
+export default class CreateChatApi {
     request(requestData: TCreateChatRequest): Promise<string> {
         return createChatApiInstance
             .post('/chats', {

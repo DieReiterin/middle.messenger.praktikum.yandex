@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const loginApiInstance = new HttpTransport();
 
@@ -18,7 +17,7 @@ type TErrorResponse = {
 
 type TLoginResponse = string | TUserIdResponse | TErrorResponse;
 
-export default class LoginApi extends BaseAPI {
+export default class LoginApi {
     request(user: TLoginRequest): Promise<TLoginResponse> {
         return loginApiInstance
             .post('/auth/signin', {

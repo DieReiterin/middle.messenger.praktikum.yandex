@@ -1,11 +1,10 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const getStaticApiInstance = new HttpTransport();
 
 type TResponse = Blob | string;
 
-export default class GetStaticApi extends BaseAPI {
+export default class GetStaticApi {
     request(path: string): Promise<TResponse> {
         return getStaticApiInstance
             .get(`/resources${path}`, { responseType: 'blob' })

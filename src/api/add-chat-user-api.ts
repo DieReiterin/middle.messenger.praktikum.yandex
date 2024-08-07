@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const addChatUserApiInstance = new HttpTransport();
 
@@ -9,7 +8,7 @@ type TRequest = {
 };
 type TResponse = string;
 
-export default class AddChatUserApi extends BaseAPI {
+export default class AddChatUserApi {
     request(dataParam: TRequest): Promise<TResponse> {
         const preparedData = {
             users: [dataParam.userIdParam],

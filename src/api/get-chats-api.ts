@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const getChatsApiInstance = new HttpTransport();
 
@@ -25,7 +24,7 @@ interface IChat {
 
 type TChatResponse = IChat[] | string;
 
-export default class GetChatsApi extends BaseAPI {
+export default class GetChatsApi {
     request(): Promise<TChatResponse> {
         return getChatsApiInstance.get('/chats').then((xhr) => {
             const rawResponse = (xhr as XMLHttpRequest).responseText;

@@ -1,11 +1,10 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const editAvatarApiInstance = new HttpTransport();
 
 type TChangeProfileResponse = string;
 
-export default class EditAvatarApi extends BaseAPI {
+export default class EditAvatarApi {
     request(dataParam: FormData): Promise<TChangeProfileResponse> {
         return editAvatarApiInstance
             .put('/user/profile/avatar', {

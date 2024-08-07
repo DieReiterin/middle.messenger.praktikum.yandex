@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const editPasswordApiInstance = new HttpTransport();
 
@@ -13,7 +12,7 @@ type TErrorResponse = {
 };
 type TEditPasswordResponse = string | TErrorResponse;
 
-export default class EditPasswordApi extends BaseAPI {
+export default class EditPasswordApi {
     request(dataParam: TEditPasswordRequest): Promise<TEditPasswordResponse> {
         return editPasswordApiInstance
             .put('/user/password', {

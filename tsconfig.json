@@ -38,11 +38,8 @@
             "@/controllers/user-signup": ["src/controllers/user-signup.ts"],
 
             "@/modules/HttpTransport": ["src/modules/HttpTransport.ts"],
-            "@/modules/http/base-api": ["src/modules/http/base-api.ts"],
 
-            "@/utils/isEqual": ["src/utils/isEqual.ts"],
             "@/utils/renderDom": ["src/utils/renderDom.ts"],
-            "@/utils/set": ["src/utils/set.ts"],
 
             "@/tools/Block": ["src/tools/Block.ts"],
             "@/tools/connect": ["src/tools/connect.ts"],

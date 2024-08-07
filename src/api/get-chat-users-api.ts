@@ -1,5 +1,4 @@
 import HttpTransport from '@/modules/HttpTransport';
-import { BaseAPI } from '@/modules/http/base-api';
 
 const getChatUsersApiInstance = new HttpTransport();
 
@@ -7,7 +6,7 @@ type TResponse = {
     [key: string]: any;
 };
 
-export default class GetChatUsersApi extends BaseAPI {
+export default class GetChatUsersApi {
     request(chatId: string): Promise<TResponse> {
         return getChatUsersApiInstance
             .get(`/chats/${chatId}/users`)
