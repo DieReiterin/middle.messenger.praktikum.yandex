@@ -79,8 +79,6 @@ class LoginPage extends Block {
     }
 
     async handleLogin() {
-        console.log('handleLogin method called');
-
         const { login, password } = this.data;
         try {
             const response = await userLoginController.login({
@@ -102,8 +100,6 @@ class LoginPage extends Block {
     }
 
     async getUserInfo() {
-        console.log('getUserInfo method called');
-
         try {
             await userLoginController.getInfo();
         } catch (error) {

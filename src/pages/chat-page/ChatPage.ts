@@ -73,7 +73,6 @@ class ChatPage extends Block {
     }
 
     async getUserInfo() {
-        console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
         } catch (error) {
@@ -81,8 +80,6 @@ class ChatPage extends Block {
         }
     }
     async requestGetChatUsers() {
-        console.log('requestGetChatUsers method called');
-
         try {
             this.setChatDialogAlert('Загрузка пользователей...');
 
@@ -136,8 +133,6 @@ class ChatPage extends Block {
         }
     }
     async requestAddChatUser(newUserId: string) {
-        console.log('requestAddChatUser method called');
-
         try {
             this.setChatDialogAlert('Добавление пользователя...');
             const data = {
@@ -146,7 +141,6 @@ class ChatPage extends Block {
             };
 
             const response = await chatController.addChatUser(data);
-            console.log('response', response);
             if (response !== 'OK') {
                 throw new Error();
             }
@@ -157,7 +151,6 @@ class ChatPage extends Block {
         }
     }
     async requestGetChatToken() {
-        console.log('requestGetChatToken method called');
         try {
             const response = await chatController.getChatToken(
                 this.data.currentChatId,
@@ -198,7 +191,6 @@ class ChatPage extends Block {
     }
 
     setSocket() {
-        console.log('setSocket method called');
         const { myUserId, currentChatId, currentChatToken } = this.data;
 
         if (!myUserId || !currentChatId || !currentChatToken) {
@@ -213,8 +205,6 @@ class ChatPage extends Block {
         );
 
         this.socket.addEventListener('open', () => {
-            console.log('Соединение установлено');
-
             this.currentDialogElem.setProps({
                 messages: [
                     new PageTitle({
@@ -230,19 +220,13 @@ class ChatPage extends Block {
             this.startPing();
             this.load20Messages();
         });
-        this.socket.addEventListener('close', (event: CloseEvent) => {
-            if (event.wasClean) {
-                console.log(`Соединение закрыто чисто${this.getCurrentTime()}`);
-            } else {
-                console.log(`Обрыв соединения${this.getCurrentTime()}`);
-            }
+        this.socket.addEventListener('close', () => {
             this.setSocket();
         });
         this.socket.addEventListener('message', (event) => {
             this.handleSocketMessage(event.data);
         });
-        this.socket.addEventListener('error', (event) => {
-            console.log('Ошибка', event);
+        this.socket.addEventListener('error', () => {
             this.stopPing();
         });
     }
@@ -250,7 +234,6 @@ class ChatPage extends Block {
         this.stopPing();
         this.pingInterval = setInterval(() => {
             if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
-                console.log('startPing if expression failed');
                 return;
             }
             this.socket.send(
@@ -258,7 +241,6 @@ class ChatPage extends Block {
                     type: 'ping',
                 }),
             );
-            console.log(`ping${this.getCurrentTime()}`);
         }, 30000);
     }
     stopPing() {
@@ -288,22 +270,11 @@ class ChatPage extends Block {
             if (parsedData.length === 0 && this.chatMessages.length === 0) {
                 this.chatMessages = [];
                 this.renderMessages();
-                console.log('История сообщений пуста');
             } else {
-                if (parsedData.length > 0) {
-                    console.log('Получен массив');
-                } else {
-                    console.log('Получен пустой массив');
-                }
                 this.handleMessagesArray(parsedData);
             }
         } else if (parsedData.type === 'message') {
-            console.log('Получено сообщение');
             this.handleMessage(parsedData);
-        } else if (parsedData.type === 'pong') {
-            console.log('pong');
-        } else {
-            console.log('Получены другие данные');
         }
     }
     handleMessage(msg: Record<string, any>) {
@@ -312,22 +283,17 @@ class ChatPage extends Block {
         this.renderMessages();
     }
     handleMessagesArray(arr: Array<any>) {
-        console.log('handleMessagesArray method called');
         if (arr.length > 0) {
-            console.log(`saving ${arr.length} messages`);
-
             this.saveIncomingMessages(arr);
             this.load20Messages(this.chatMessages.length);
         } else {
-            console.log(`rendering ${this.chatMessages.length} messages`);
             this.renderMessages();
         }
     }
     load20Messages(from: number = 0) {
         if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
-            console.log('load20Messages if expression failed');
+            return;
         } else {
-            console.log('load20Messages method called');
             this.socket.send(
                 JSON.stringify({
                     content: String(from),
@@ -397,12 +363,10 @@ class ChatPage extends Block {
             this.setProps({
                 dialog: this.currentDialogElem,
             });
-            console.log('currentDialogElem by renderMessages');
         }
     }
     sendMessage(text: string) {
         if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
-            console.log('sendMessage if expression failed');
             return;
         }
         this.socket.send(

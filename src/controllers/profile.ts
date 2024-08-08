@@ -54,8 +54,6 @@ export default class ProfileController {
                 return 'Поля не прошли валидацию';
             } else {
                 const response = await profileApi.request(requestData);
-                console.log('response', response);
-
                 return response;
             }
         } catch (error) {

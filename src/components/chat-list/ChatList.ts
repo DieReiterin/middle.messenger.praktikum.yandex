@@ -118,8 +118,6 @@ class ChatList extends Block {
     }
 
     async requestGetChats() {
-        console.log('requestGetChats method called');
-
         try {
             const response = await chatController.getChats();
 
@@ -166,14 +164,12 @@ class ChatList extends Block {
                 this.initContent();
             }
         } catch (error) {
-            console.log('requestGetChats failed: ', error);
             this.clearList('Ошибка загрузки чатов');
         }
     }
 
     async requestCreateChat() {
         if (this.data.newChatTitle === '') return;
-        console.log('requestCreateChat method called');
         try {
             const request = {
                 title: this.data.newChatTitle,
@@ -182,9 +178,7 @@ class ChatList extends Block {
             this.data.newChatTitle = '';
             this.initControls();
             this.requestGetChats();
-        } catch (error) {
-            console.log('requestCreateChat failed:', error);
-        }
+        } catch (error) {}
     }
 
     componentDidUpdate(): boolean {

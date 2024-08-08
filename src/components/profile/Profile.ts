@@ -410,7 +410,6 @@ class Profile extends Block {
     }
 
     async getUserInfo() {
-        console.log('getUserInfo method called');
         try {
             await userLoginController.getInfo();
         } catch (error) {
@@ -439,11 +438,8 @@ class Profile extends Block {
     async requestChangeAvatar() {
         const avatar = this.avatarFile;
         if (!avatar) return;
-        console.log('requestChangeAvatar method called');
-
         const formData = new FormData();
         formData.append('avatar', avatar);
-
         try {
             await profileController.editAvatar(formData);
             this.showAlert('Новый аватар сохранен');
@@ -454,8 +450,6 @@ class Profile extends Block {
     }
 
     async requestChangeProfile() {
-        console.log('requestChangeProfile method called');
-
         const { email, login, first_name, second_name, display_name, phone } =
             this.data;
         try {
@@ -482,8 +476,6 @@ class Profile extends Block {
     }
 
     async requestChangePassword() {
-        console.log('requestChangePassword method called');
-
         const { old_password, new_password, repeat_password } = this.data;
         try {
             const response = await profileController.editPassword({
@@ -506,7 +498,6 @@ class Profile extends Block {
     }
 
     async requestLogout() {
-        console.log('requestLogout method called');
         try {
             await userLoginController.logout();
             window.router.go('/');

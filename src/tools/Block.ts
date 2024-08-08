@@ -286,11 +286,7 @@ export default class Block {
             const pageElement = document.getElementById('app');
             if (pageElement) {
                 pageElement.appendChild(content);
-            } else {
-                console.log('NO <div id="app"> TO MOUNT ON');
             }
-        } else {
-            console.log('NO CONTENT TO SHOW');
         }
     }
 
