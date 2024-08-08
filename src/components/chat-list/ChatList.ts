@@ -174,11 +174,17 @@ class ChatList extends Block {
             const request = {
                 title: this.data.newChatTitle,
             };
-            await chatController.createChat(request);
-            this.data.newChatTitle = '';
-            this.initControls();
-            this.requestGetChats();
-        } catch (error) {}
+            const response = await chatController.createChat(request);
+            if ('reason' in response) {
+                throw new Error();
+            } else {
+                this.data.newChatTitle = '';
+                this.initControls();
+                this.requestGetChats();
+            }
+        } catch (error) {
+            this.clearList('Не получилось добавить чат');
+        }
     }
 
     componentDidUpdate(): boolean {

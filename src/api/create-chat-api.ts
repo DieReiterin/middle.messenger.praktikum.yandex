@@ -6,8 +6,16 @@ type TCreateChatRequest = {
     title: string;
 };
 
+type TCorrectResponse = {
+    id: string;
+};
+type TErrorResponse = {
+    reason: string;
+};
+type TCreateChatResponse = TCorrectResponse | TErrorResponse;
+
 export default class CreateChatApi {
-    request(requestData: TCreateChatRequest): Promise<string> {
+    request(requestData: TCreateChatRequest): Promise<TCreateChatResponse> {
         return createChatApiInstance
             .post('/chats', {
                 data: requestData,
