@@ -12,14 +12,14 @@ type TSignupRequest = {
 };
 
 type TUserIdResponse = {
-    user_id: number;
+    id: number;
 };
 
 type TErrorResponse = {
     reason: string;
 };
 
-type TSignupResponse = string | TUserIdResponse | TErrorResponse;
+type TSignupResponse = TUserIdResponse | TErrorResponse;
 
 export default class SignupApi {
     request(user: TSignupRequest): Promise<TSignupResponse> {
@@ -29,11 +29,7 @@ export default class SignupApi {
             })
             .then((xhr) => {
                 const rawResponse = (xhr as XMLHttpRequest).responseText;
-                if (rawResponse === 'OK') {
-                    return rawResponse;
-                } else {
-                    return JSON.parse(rawResponse);
-                }
+                return JSON.parse(rawResponse);
             });
     }
 }

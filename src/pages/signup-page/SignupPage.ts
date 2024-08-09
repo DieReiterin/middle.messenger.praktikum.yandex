@@ -151,12 +151,16 @@ class SignupPage extends Block {
             });
             if (!response) return;
 
-            if (response === 'OK') {
+            if (typeof response !== 'string' && 'id' in response) {
                 window.router.go('/messenger');
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                if (response.reason === 'User already in system') {
+                    window.router.go('/messenger');
+                } else {
+                    this.showAlert(response.reason);
+                }
             } else if (typeof response === 'string') {
                 this.showAlert(response);
-            } else if (typeof response !== 'string' && 'reason' in response) {
-                this.showAlert(response.reason);
             }
         } catch (error) {
             console.error('SignupPage Signup failed:', error);
