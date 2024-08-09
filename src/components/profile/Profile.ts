@@ -501,7 +501,6 @@ class Profile extends Block {
         try {
             await userLoginController.logout();
             window.router.go('/');
-            window.location.reload();
         } catch (error) {
             console.error(error);
         }

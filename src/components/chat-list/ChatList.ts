@@ -8,15 +8,14 @@ import {
 } from '@/components/index';
 import './chat-list.scss';
 import favicon from '/icons/favicon.png';
-import connect from '@/tools/connect';
 import ChatController from '@/controllers/chats';
 
 const chatController = new ChatController();
 
-class ChatList extends Block {
+export default class ChatList extends Block {
     private usernameElem: Subtitle = new Subtitle({
         className: 'chat-list__username-text',
-        text: 'profile.display_name',
+        text: 'Поиск',
     });
     private chatItems: ChatItem[] = [
         new ChatItem({
@@ -118,6 +117,8 @@ class ChatList extends Block {
     }
 
     async requestGetChats() {
+        console.log('requestGetChats');
+
         try {
             const response = await chatController.getChats();
 
@@ -187,17 +188,6 @@ class ChatList extends Block {
         }
     }
 
-    componentDidUpdate(): boolean {
-        const { profile, user } = this.props;
-        if (!(profile && user)) {
-            return true;
-        }
-        this.usernameElem.setProps({
-            text: profile.display_name,
-        });
-        return true;
-    }
-
     render() {
         return `<aside class="chat-list {{ className }}">
                     <div class="chat-list__top">
@@ -218,5 +208,3 @@ class ChatList extends Block {
                 </aside>`;
     }
 }
-
-export default connect(ChatList);

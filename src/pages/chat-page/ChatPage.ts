@@ -14,6 +14,12 @@ import ChatController from '@/controllers/chats';
 const userLoginController = new UserLoginController();
 const chatController = new ChatController();
 
+interface ChatPageProps extends IProps {
+    children: {
+        list: InstanceType<typeof ChatList>;
+    };
+}
+
 class ChatPage extends Block {
     private chatMessages: ChatMessage[] = [];
     private currentDialogElem: ChatDialog = new ChatDialog({
@@ -32,7 +38,7 @@ class ChatPage extends Block {
     };
     private socket: WebSocket | null = null;
     private pingInterval: ReturnType<typeof setInterval> | null = null;
-    constructor(props: IProps = {}) {
+    constructor(props: ChatPageProps) {
         super({
             ...props,
             list: new ChatList({
@@ -378,6 +384,17 @@ class ChatPage extends Block {
     componentDidUpdate(): boolean {
         this.scrollToBottom();
         return true;
+    }
+
+    show() {
+        const chatList = this.children.list as InstanceType<typeof ChatList>;
+        chatList.requestGetChats();
+        super.show();
+    }
+    hide() {
+        const chatList = this.children.list as InstanceType<typeof ChatList>;
+        chatList.clearList('Загрузка...');
+        super.hide();
     }
 
     override render() {
