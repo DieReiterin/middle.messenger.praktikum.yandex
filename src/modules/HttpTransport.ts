@@ -1,8 +1,12 @@
+import config from '@/config';
+
 interface IOptions {
     timeout?: number;
     method?: string;
     headers?: Record<string, any>;
-    data?: Record<string, any>;
+    data?: Record<string, any> | FormData;
+    responseType?: XMLHttpRequestResponseType;
+    [key: string]: any;
 }
 
 const METHODS: Record<string, string> = {
@@ -23,10 +27,10 @@ function queryStringify(data: Record<string, any>) {
     }, '?');
 }
 
-type HTTPMethod = (url: string, options?: IOptions) => Promise<unknown>;
+type HttpMethod = (url: string, options?: IOptions) => Promise<unknown>;
 
 export default class HttpTransport {
-    get: HTTPMethod = (url, options = {}) => {
+    get: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
@@ -34,7 +38,7 @@ export default class HttpTransport {
         );
     };
 
-    post: HTTPMethod = (url, options = {}) => {
+    post: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
@@ -42,7 +46,7 @@ export default class HttpTransport {
         );
     };
 
-    put: HTTPMethod = (url, options = {}) => {
+    put: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
@@ -50,7 +54,7 @@ export default class HttpTransport {
         );
     };
 
-    delete: HTTPMethod = (url, options = {}) => {
+    delete: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },
@@ -58,35 +62,48 @@ export default class HttpTransport {
         );
     };
 
-    request = (url: string, options: IOptions, timeout = 5000) => {
-        const { headers = {}, method, data } = options;
+    request = (
+        url: string,
+        options: IOptions,
+        timeout = 5000,
+    ): Promise<XMLHttpRequest> => {
+        const { headers = {}, method, data, responseType } = options;
 
         return new Promise(function (resolve, reject) {
-            if (!method) {
-                reject('No method');
-                return;
-            }
             const xhr = new XMLHttpRequest();
-            const isGet = method === METHODS.GET;
 
-            if (isGet && !!data) {
-                xhr.open(method, `${url}${queryStringify(data)}`);
+            const fullUrl = `${config.BASE_URL}${url}`;
+
+            if (method === METHODS.GET && !!data) {
+                xhr.open(method, `${fullUrl}${queryStringify(data)}`);
             } else {
-                xhr.open(method, url);
+                xhr.open(method as string, fullUrl);
             }
-            Object.keys(headers).forEach((key) => {
-                xhr.setRequestHeader(key, headers[key]);
-            });
+
+            xhr.withCredentials = true;
+            xhr.timeout = timeout;
+            if (responseType) {
+                xhr.responseType = responseType;
+            }
             xhr.onload = function () {
                 resolve(xhr);
             };
             xhr.onabort = reject;
             xhr.onerror = reject;
-            xhr.timeout = timeout;
             xhr.ontimeout = reject;
-            if (isGet || !data) {
+
+            if (!(data instanceof FormData)) {
+                Object.keys(headers).forEach((key) => {
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+            }
+
+            if (method === METHODS.GET || !data) {
                 xhr.send();
+            } else if (data instanceof FormData) {
+                xhr.send(data);
             } else {
+                xhr.setRequestHeader('Content-Type', 'application/json');
                 xhr.send(JSON.stringify(data));
             }
         });

@@ -1,0 +1,32 @@
+.chat-message {
+    min-width: 40px;
+    max-width: 400px;
+    padding: 15px;
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+    font-size: 14px;
+
+    &_my {
+        margin-left: auto;
+        border-bottom-right-radius: 0;
+        background-color: $color-bg-msg;
+    }
+
+    &_partner {
+        margin-left: 0;
+        border-top-left-radius: 0;
+        background-color: $color-bg-secondary;
+    }
+
+    &_pictured {
+        max-width: 315px;
+        padding: 0;
+    }
+
+    &__picture {
+        border-radius: inherit;
+        width: 100%;
+        height: 100%;
+    }
+}

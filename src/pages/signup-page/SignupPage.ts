@@ -1,18 +1,25 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
-import './signin-page.scss';
-import navigate from '@/tools/navigate';
+import './signup-page.scss';
+import connect from '@/tools/connect';
+import UserSignupController from '@/controllers/user-signup';
 
-export default class SigninPage extends Block {
+const userSignupController = new UserSignupController();
+
+class SignupPage extends Block {
+    private alertElem: PageTitle = new PageTitle({
+        className: 'signup-page__alert signup-page__alert_hidden',
+        text: 'alertText',
+    });
     constructor(props: IProps = {}) {
         super({
             ...props,
             title: new PageTitle({
-                className: 'signin-page__title',
+                className: 'signup-page__title',
                 text: 'Регистрация',
             }),
             input1: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Почта',
                 placeholder: 'введите адрес',
                 name: 'email',
@@ -22,7 +29,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input2: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Логин',
                 placeholder: 'введите логин',
                 name: 'login',
@@ -32,7 +39,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input3: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Имя',
                 placeholder: 'введите имя',
                 name: 'first_name',
@@ -42,7 +49,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input4: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Фамилия',
                 placeholder: 'введите фамилию',
                 name: 'second_name',
@@ -52,7 +59,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input5: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Телефон',
                 placeholder: 'введите номер',
                 name: 'phone',
@@ -62,7 +69,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input6: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Пароль',
                 placeholder: 'введите пароль',
                 name: 'password',
@@ -72,7 +79,7 @@ export default class SigninPage extends Block {
                 },
             }),
             input7: new InputField({
-                className: 'signin-page__input',
+                className: 'signup-page__input',
                 label: 'Пароль (ещё раз)',
                 placeholder: 'повторите пароль',
                 name: 'password-repeat',
@@ -81,16 +88,22 @@ export default class SigninPage extends Block {
                     this.data['password-repeat'] = val;
                 },
             }),
+            alert: null,
             btn: new Button({
-                className: 'signin-page__submit-btn',
+                className: 'signup-page__submit-btn',
                 text: 'Создать аккаунт',
-                onClick: () => this.submitForm(),
+                onClick: () => {
+                    this.handleSignup();
+                },
             }),
             link: new Link({
-                className: 'signin-page__link',
+                className: 'signup-page__link',
                 text: 'Вход',
-                onClick: () => navigate('page', 'login'),
+                onClick: () => window.router.go('/'),
             }),
+        });
+        this.setProps({
+            alert: this.alertElem,
         });
     }
     data = {
@@ -102,30 +115,61 @@ export default class SigninPage extends Block {
         password: '',
         'password-repeat': '',
     };
-    submitForm() {
-        const input1: unknown = this.children.input1;
-        const input2: unknown = this.children.input2;
-        const input3: unknown = this.children.input3;
-        const input4: unknown = this.children.input4;
-        const input5: unknown = this.children.input5;
-        const input6: unknown = this.children.input6;
-        const input7: unknown = this.children.input7;
-        if (
-            (input1 as { validateField: () => boolean }).validateField() &&
-            (input2 as { validateField: () => boolean }).validateField() &&
-            (input3 as { validateField: () => boolean }).validateField() &&
-            (input4 as { validateField: () => boolean }).validateField() &&
-            (input5 as { validateField: () => boolean }).validateField() &&
-            (input6 as { validateField: () => boolean }).validateField() &&
-            (input7 as { validateField: () => boolean }).validateField()
-        ) {
-            console.log(this.data);
-            navigate('page', 'login');
+
+    showAlert(alertText: string) {
+        if (!alertText) {
+            return;
+        }
+        this.alertElem.setProps({
+            className: 'signup-page__alert',
+            text: alertText,
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+    hideAlert() {
+        this.alertElem.setProps({
+            className: 'signup-page__alert signup-page__alert_hidden',
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+
+    async handleSignup() {
+        const { email, login, first_name, second_name, phone, password } =
+            this.data;
+        try {
+            const response = await userSignupController.signup({
+                email,
+                login,
+                first_name,
+                second_name,
+                phone,
+                password,
+            });
+            if (!response) return;
+
+            if (typeof response !== 'string' && 'id' in response) {
+                window.router.go('/messenger');
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                if (response.reason === 'User already in system') {
+                    window.router.go('/messenger');
+                } else {
+                    this.showAlert(response.reason);
+                }
+            } else if (typeof response === 'string') {
+                this.showAlert(response);
+            }
+        } catch (error) {
+            console.error('SignupPage Signup failed:', error);
         }
     }
+
     override render() {
-        return `<form class="signin-page">
-                    <div class="signin-page__main">
+        return `<form class="signup-page">
+                    <div class="signup-page__main">
                         {{{title}}}
                         {{{input1}}}             
                         {{{input2}}}  
@@ -134,11 +178,14 @@ export default class SigninPage extends Block {
                         {{{input5}}}  
                         {{{input6}}}  
                         {{{input7}}}  
+                        {{{alert}}}   
                     </div>
-                    <div class="signin-page__footer">
+                    <div class="signup-page__footer">
                         {{{btn}}}    
                         {{{link}}}           
                     </div>
                 </form>`;
     }
 }
+
+export default connect(SignupPage);

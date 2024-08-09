@@ -20,7 +20,9 @@ const latinWithDashLodash = /^[a-zA-Z0-9-_]*$/;
 const latinWithNumsDashLodashAtsignPoint = /^[a-zA-Z0-9-_@.]*$/;
 
 function validateName(val: string) {
-    if (!noNums.test(val)) {
+    if (val === '') {
+        return 'Поле не может быть пустым';
+    } else if (!noNums.test(val)) {
         return 'цифры недопустимы';
     } else if (!noSpaces.test(val)) {
         return 'пробелы недопустимы';
@@ -34,7 +36,9 @@ function validateName(val: string) {
 }
 
 function validateLogin(val: string) {
-    if (!length3to20.test(val)) {
+    if (val === '') {
+        return 'Поле не может быть пустым';
+    } else if (!length3to20.test(val)) {
         return 'от 3 до 20 символов';
     } else if (!noCyrillic.test(val)) {
         return 'только латиница';
@@ -50,7 +54,9 @@ function validateLogin(val: string) {
 }
 
 function validateEmail(val: string) {
-    if (!noCyrillic.test(val)) {
+    if (val === '') {
+        return 'Поле не может быть пустым';
+    } else if (!noCyrillic.test(val)) {
         return 'только латиница';
     } else if (!latinWithNumsDashLodashAtsignPoint.test(val)) {
         return 'из символов можно только "-", "_", "@", "."';
@@ -62,7 +68,9 @@ function validateEmail(val: string) {
 }
 
 function validatePassword(val: string) {
-    if (!length8to40.test(val)) {
+    if (val === '') {
+        return 'Поле не может быть пустым';
+    } else if (!length8to40.test(val)) {
         return 'от 8 до 40 символов';
     } else if (!hasCapital.test(val)) {
         return 'добавьте заглавную букву';
@@ -74,7 +82,9 @@ function validatePassword(val: string) {
 }
 
 function validatePhone(val: string) {
-    if (!length10to15.test(val)) {
+    if (val === '') {
+        return 'Поле не может быть пустым';
+    } else if (!length10to15.test(val)) {
         return 'от 10 до 15 символов';
     } else if (!numsWithPlus.test(val)) {
         return 'только цифры или цифры с "+"';
@@ -86,7 +96,7 @@ function validatePhone(val: string) {
 }
 
 function validateMessage(val: string) {
-    if (val.length === 0) {
+    if (val === '') {
         return 'Поле не может быть пустым';
     } else {
         return 'ok';
@@ -94,7 +104,7 @@ function validateMessage(val: string) {
 }
 
 function validatePasswordRepeat(val: string) {
-    if (val.length === 0) {
+    if (val === '') {
         return 'Поле не может быть пустым';
     } else {
         return 'ok';
@@ -102,7 +112,7 @@ function validatePasswordRepeat(val: string) {
 }
 
 function validateDisplayName(val: string) {
-    if (val.length === 0) {
+    if (val === '') {
         return 'Поле не может быть пустым';
     } else {
         return 'ok';

@@ -21,4 +21,8 @@
             cursor: default;
         }
     }
+
+    &_hidden {
+        display: none;
+    }
 }
