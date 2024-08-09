@@ -27,6 +27,10 @@ export default class UserLoginController {
 
             const response = await loginApi.request(data);
 
+            if (response === 'OK') {
+                localStorage.setItem('isAuth', 'true');
+            }
+
             return response;
         } catch (error) {
             throw error;
@@ -36,7 +40,11 @@ export default class UserLoginController {
     public async logout() {
         try {
             const response = await logoutApi.request();
-            if (response !== 'OK') {
+            console.log('logout response', response);
+
+            if (response === 'OK') {
+                localStorage.removeItem('isAuth');
+            } else {
                 throw new Error(response);
             }
         } catch (error) {

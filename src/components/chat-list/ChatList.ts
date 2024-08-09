@@ -117,8 +117,6 @@ export default class ChatList extends Block {
     }
 
     async requestGetChats() {
-        console.log('requestGetChats');
-
         try {
             const response = await chatController.getChats();
 

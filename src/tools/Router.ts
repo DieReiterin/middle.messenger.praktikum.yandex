@@ -42,8 +42,22 @@ export default class Router {
     }
 
     private _onRoute(pathname: string): void {
+        const isAuth = localStorage.getItem('isAuth');
+        const publicRoutes = ['/', '/sign-up'];
+        const privateRoutes = ['/settings', '/messenger'];
+
+        if (!isAuth && privateRoutes.includes(pathname)) {
+            this.go('/');
+            return;
+        }
+        if (isAuth && publicRoutes.includes(pathname)) {
+            this.go('/messenger');
+            return;
+        }
+
         const route = this.getRoute(pathname);
         if (!route) {
+            this.go('/error');
             return;
         }
 
