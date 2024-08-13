@@ -27,13 +27,19 @@ export default class UserLoginController {
 
             const response = await loginApi.request(data);
 
-            if (response === 'OK') {
+            const userIsAlreadyInSystem =
+                typeof response !== 'string' &&
+                'reason' in response &&
+                response.reason === 'User already in system';
+
+            if (response === 'OK' || userIsAlreadyInSystem) {
                 localStorage.setItem('isAuth', 'true');
+            } else {
+                localStorage.removeItem('isAuth');
             }
 
             return response;
         } catch (error) {
-            console.log('login controller error');
             throw error;
         }
     }
