@@ -101,7 +101,6 @@ class LoginPage extends Block {
                 }
             }
         } catch (error) {
-            console.log('login page error');
             throw error;
         }
     }
@@ -117,7 +116,6 @@ class LoginPage extends Block {
     async requestLogout() {
         try {
             await userLoginController.logout();
-            // window.router.go('/');
         } catch (error) {
             console.error(error);
         }

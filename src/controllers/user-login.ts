@@ -47,7 +47,6 @@ export default class UserLoginController {
     public async logout() {
         try {
             const response = await logoutApi.request();
-            console.log('logout response', response);
 
             if (response === 'OK') {
                 localStorage.removeItem('isAuth');

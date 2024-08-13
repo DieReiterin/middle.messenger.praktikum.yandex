@@ -9,16 +9,11 @@ export default class ChatStub extends Block {
             ...props,
             title: new Subtitle({
                 className: 'chat-stub__title',
-                // text: 'Добавить пользователя',
                 text:
                     props.type === 'deleteUser'
                         ? 'Удалить пользователя'
                         : 'Добавить пользователя',
             }),
-            // subtitle: new Subtitle({
-            //     className: 'chat-stub__subtitle',
-            //     text: 'Выберите пользователя для общения',
-            // }),
             input: new InputField({
                 className: 'login-page__input',
                 label: 'Идентификатор',
@@ -29,10 +24,6 @@ export default class ChatStub extends Block {
                     this.userId = val;
                 },
             }),
-            // subtitle2: new Subtitle({
-            //     className: 'chat-stub__subtitle2',
-            //     text: 'Например, id 1628 (логин Testovich3, пароль Testovich3)',
-            // }),
             btn: new Button({
                 className: 'chat-stub__btn',
                 text:

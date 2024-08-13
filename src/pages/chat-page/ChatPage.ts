@@ -29,7 +29,6 @@ class ChatPage extends Block {
         className: 'chat-page__chat-dialog',
         chatName: 'Название чата',
         chatUsers: new Subtitle({
-            // className: 'chat-dialog__add-user',
             text: 'пользователи чата',
         }),
         onSendMessage: (val: string) => this.sendMessage(val),
@@ -57,8 +56,6 @@ class ChatPage extends Block {
                     this.data.currentChatToken = '';
                     this.socket = null;
                     this.data.currentChatId = String(chatData.id);
-                    // console.log('chatData.id');
-                    // console.log(chatData.id);
 
                     this.data.currentChatName = String(chatData.title);
                     this.currentDialogElem.setProps({
@@ -108,8 +105,6 @@ class ChatPage extends Block {
         });
     }
     showDeleteUserForm() {
-        console.log('showDeleteUserForm');
-
         this.setProps({
             dialog: new ChatStub({
                 type: 'deleteUser',
@@ -157,7 +152,6 @@ class ChatPage extends Block {
                             className: 'chat-dialog__delete-user button_hidden',
                         }),
                         chatUsers: new Subtitle({
-                            // className: 'chat-dialog__add-user',
                             text: 'нет пользователей',
                         }),
                         messages: [
@@ -194,7 +188,6 @@ class ChatPage extends Block {
                             onClick: () => this.showDeleteUserForm(),
                         }),
                         chatUsers: new Subtitle({
-                            // className: 'chat-dialog__add-user',
                             text: usersLabel,
                         }),
                         messages: [
@@ -212,7 +205,6 @@ class ChatPage extends Block {
                 }
             }
         } catch (error) {
-            console.log('CHAT PAGE ERROR');
             this.setChatDialogAlert('Ошибка загрузки пользователей');
         }
     }
@@ -380,8 +372,6 @@ class ChatPage extends Block {
         }
     }
     handleMessage(msg: Record<string, any>) {
-        console.log('handleMessage single called');
-
         const messageWrapper = [msg];
         this.saveIncomingMessages(messageWrapper, 'single');
         this.renderMessages();
