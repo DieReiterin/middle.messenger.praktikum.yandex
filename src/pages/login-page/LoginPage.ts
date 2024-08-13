@@ -91,16 +91,26 @@ class LoginPage extends Block {
                 window.router.go('/messenger');
             } else if (typeof response === 'string') {
                 this.showAlert(response);
-            } else if (typeof response !== 'string' && 'reason' in response) {
-                if (response.reason === 'User already in system') {
-                    window.router.go('/messenger');
-                } else if (response.reason === 'Cookie is not valid') {
-                    this.requestLogout();
+            } else {
+                if (typeof response !== 'string' && 'reason' in response) {
+                    console.log('reason in response');
+                    console.log('response.reason', response.reason);
+
+                    if (response.reason === 'User already in system') {
+                        console.log('User already in system CONFIRMED');
+                        window.router.go('/messenger');
+                    } else if (response.reason === 'Cookie is not valid') {
+                        this.requestLogout();
+                    } else {
+                        this.showAlert(response.reason);
+                    }
                 } else {
-                    this.showAlert(response.reason);
+                    console.log('NO reason in response');
+                    console.log('response', response);
                 }
             }
         } catch (error) {
+            console.log('login page error');
             throw error;
         }
     }

@@ -33,6 +33,7 @@ export default class UserLoginController {
 
             return response;
         } catch (error) {
+            console.log('login controller error');
             throw error;
         }
     }
