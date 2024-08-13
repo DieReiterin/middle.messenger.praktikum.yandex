@@ -94,6 +94,8 @@ class LoginPage extends Block {
             } else if (typeof response !== 'string' && 'reason' in response) {
                 if (response.reason === 'User already in system') {
                     window.router.go('/messenger');
+                } else if (response.reason === 'Cookie is not valid') {
+                    this.requestLogout();
                 } else {
                     this.showAlert(response.reason);
                 }
@@ -108,6 +110,15 @@ class LoginPage extends Block {
             await userLoginController.getInfo();
         } catch (error) {
             console.error('LoginPage getUserInfo failed:', error);
+        }
+    }
+
+    async requestLogout() {
+        try {
+            await userLoginController.logout();
+            // window.router.go('/');
+        } catch (error) {
+            console.error(error);
         }
     }
 

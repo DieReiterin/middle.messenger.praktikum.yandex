@@ -20,6 +20,7 @@
 
             "@/api/add-chat-user-api": ["src/api/add-chat-user-api.ts"],
             "@/api/create-chat-api": ["src/api/create-chat-api.ts"],
+            "@/api/delete-chat-user-api": ["src/api/delete-chat-user-api.ts"],
             "@/api/edit-avatar-api": ["src/api/edit-avatar-api.ts"],
             "@/api/edit-password-api": ["src/api/edit-password-api.ts"],
             "@/api/get-chat-token-api": ["src/api/get-chat-token-api.ts"],

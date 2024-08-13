@@ -12,6 +12,27 @@ import ChatController from '@/controllers/chats';
 
 const chatController = new ChatController();
 
+type TLastMessage = null | {
+    user: {
+        first_name: string;
+        second_name: string;
+        avatar: string;
+        email: string;
+        login: string;
+        phone: string;
+    };
+    time: string;
+    content: string;
+};
+export interface IChat {
+    id: number;
+    title: string;
+    avatar: string;
+    unread_count: number;
+    created_by: number;
+    last_message: TLastMessage;
+}
+
 export default class ChatList extends Block {
     private usernameElem: Subtitle = new Subtitle({
         className: 'chat-list__username-text',
@@ -98,10 +119,11 @@ export default class ChatList extends Block {
         this.initContent('clearList', emptyItem);
     }
 
-    clickChat(chatIdParam: number) {
+    clickChat(chatData: IChat) {
         if (this.chatItems.length === 0) return;
+
         for (const chat of this.chatItems) {
-            if (chat.getChatId() === chatIdParam) {
+            if (chat.getChatId() === chatData.id) {
                 chat.setProps({
                     className: 'chat-list__chat-item chat-item_selected',
                 });
@@ -112,7 +134,7 @@ export default class ChatList extends Block {
             }
         }
         if (this.props.onClickChat) {
-            this.props.onClickChat(chatIdParam);
+            this.props.onClickChat(chatData);
         }
     }
 
@@ -123,27 +145,6 @@ export default class ChatList extends Block {
             if (response && (response as Array<any>).length === 0) {
                 this.clearList();
             } else if (response) {
-                type TLastMessage = null | {
-                    user: {
-                        first_name: string;
-                        second_name: string;
-                        avatar: string;
-                        email: string;
-                        login: string;
-                        phone: string;
-                    };
-                    time: string;
-                    content: string;
-                };
-                interface IChat {
-                    id: number;
-                    title: string;
-                    avatar: string;
-                    unread_count: number;
-                    created_by: number;
-                    last_message: TLastMessage;
-                }
-
                 const newContent = (response as IChat[]).map(
                     (chat) =>
                         new ChatItem({
@@ -155,7 +156,15 @@ export default class ChatList extends Block {
                                 ? 'есть сообщения'
                                 : 'нет сообщений',
                             onClick: () => {
-                                this.clickChat(chat.id);
+                                const chatData: IChat = {
+                                    id: chat.id,
+                                    title: chat.title,
+                                    avatar: chat.avatar,
+                                    unread_count: chat.unread_count,
+                                    created_by: chat.created_by,
+                                    last_message: chat.last_message,
+                                };
+                                this.clickChat(chatData);
                             },
                         }),
                 );

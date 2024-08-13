@@ -22,7 +22,7 @@
         box-sizing: border-box;
         width: 80vw;
         height: 70px;
-        padding: 0 20px;
+        padding: 0 20px 0 20px;
         background-color: $color-bg-primary;
 
         border-bottom: 1px solid $color-border;
@@ -34,11 +34,11 @@
 
         &-right {
             display: flex;
-            align-items: center;
+            // min-width: 200px;
         }
     }
 
-    &__user-avatar {
+    &__chat-avatar {
         height: 45px;
         width: 45px;
         margin-right: 20px;
@@ -48,9 +48,34 @@
         background-color: $color-bg-primary;
     }
 
-    &__user-name {
+    &__chat-text {
+        position: relative;
+    }
+
+    &__chat-name {
         font-weight: 700;
         font-size: 16px;
+    }
+
+    &__chat-users {
+        position: absolute;
+        left: 0;
+        top: 120%;
+        overflow: hidden;
+
+        width: 35vw;
+        font-size: 12px;
+    }
+
+    &__add-user,
+    &__delete-user {
+        width: 100px;
+        padding: 0 15px;
+    }
+
+    &__delete-user {
+        margin-left: 20px;
+        // margin-right: 75px;
     }
 
     &__settings {
@@ -97,19 +122,5 @@
     &__send {
         flex-shrink: 0;
         transform: rotate(180deg);
-
-        box-sizing: border-box;
-        width: 35px;
-        height: 35px;
-        padding: 5px;
-
-        border-radius: 50%;
-
-        background-color: $color-btn;
-
-        &:hover {
-            cursor: pointer;
-            background-color: $color-btn-hover;
-        }
     }
 }

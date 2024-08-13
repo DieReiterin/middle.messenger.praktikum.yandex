@@ -5,7 +5,10 @@ import {
     PageTitle,
     ChatDialog,
     ChatMessage,
+    Subtitle,
+    Button,
 } from '@/components/index';
+import { IChat } from '@/components/chat-list/ChatList';
 import './chat-page.scss';
 import connect from '@/tools/connect';
 import UserLoginController from '@/controllers/user-login';
@@ -24,30 +27,46 @@ class ChatPage extends Block {
     private chatMessages: ChatMessage[] = [];
     private currentDialogElem: ChatDialog = new ChatDialog({
         className: 'chat-page__chat-dialog',
-        chatName: 'display_name',
+        chatName: 'Название чата',
+        chatUsers: new Subtitle({
+            // className: 'chat-dialog__add-user',
+            text: 'пользователи чата',
+        }),
         onSendMessage: (val: string) => this.sendMessage(val),
+        onAddUser: () => this.showAddUserForm(),
         messages: new PageTitle({
             className: 'chat-page__alert_type-reel',
             text: 'alertText',
         }),
     });
+    private socket: WebSocket | null = null;
+    private pingInterval: ReturnType<typeof setInterval> | null = null;
     private data = {
         currentChatId: '',
+        currentChatName: '',
         currentChatToken: '',
         myUserId: '',
     };
-    private socket: WebSocket | null = null;
-    private pingInterval: ReturnType<typeof setInterval> | null = null;
     constructor(props: ChatPageProps) {
         super({
             ...props,
             list: new ChatList({
                 className: 'chat-page__chat-list',
-                onClickChat: (chatId: number) => {
+                onClickChat: (chatData: IChat) => {
                     this.chatMessages = [];
                     this.data.currentChatToken = '';
                     this.socket = null;
-                    this.data.currentChatId = String(chatId);
+                    this.data.currentChatId = String(chatData.id);
+                    // console.log('chatData.id');
+                    // console.log(chatData.id);
+
+                    this.data.currentChatName = String(chatData.title);
+                    this.currentDialogElem.setProps({
+                        chatName: this.data.currentChatName,
+                    });
+                    this.setProps({
+                        dialog: this.currentDialogElem,
+                    });
                     this.requestGetChatUsers();
                 },
             }),
@@ -78,6 +97,30 @@ class ChatPage extends Block {
         });
     }
 
+    showAddUserForm() {
+        this.setProps({
+            dialog: new ChatStub({
+                className: 'chat-page__stub_add-user',
+                onClick: (userId: string) => {
+                    this.requestAddChatUser(userId);
+                },
+            }),
+        });
+    }
+    showDeleteUserForm() {
+        console.log('showDeleteUserForm');
+
+        this.setProps({
+            dialog: new ChatStub({
+                type: 'deleteUser',
+                className: 'chat-page__stub_delete-user',
+                onClick: (userId: string) => {
+                    this.requestDeleteChatUser(userId);
+                },
+            }),
+        });
+    }
+
     async getUserInfo() {
         try {
             await userLoginController.getInfo();
@@ -93,56 +136,91 @@ class ChatPage extends Block {
                 this.data.currentChatId,
             );
 
-            if (response && (response as Array<any>).length < 2) {
-                this.setProps({
-                    dialog: new ChatStub({
-                        className: 'chat-page__stub_no-users',
-                        onClick: (newUserId: string) => {
-                            this.requestAddChatUser(newUserId);
-                        },
-                    }),
-                });
-            } else if (response) {
-                type TUserMeta = {
-                    avatar: string | null;
-                    display_name: string;
-                    first_name: string;
-                    id: string;
-                    login: string;
-                    role: string;
-                    second_name: string;
-                };
-                this.data.myUserId = this.props.user.id;
+            if (response && 'reason' in response) {
+                if (response.reason === 'No chat') {
+                    this.chatMessages = [];
+                    this.setChatDialogAlert(
+                        'Выберите чат чтобы отправить сообщение',
+                    );
 
-                const filteredUsersArr = response.filter(
-                    (user: TUserMeta) => user.id !== this.data.myUserId,
-                );
-                const dialogMeta = filteredUsersArr[0];
-
-                this.currentDialogElem.setProps({
-                    chatName: dialogMeta.display_name,
-                    messages: [
-                        new PageTitle({
-                            className: 'chat-page__alert_type-reel',
-                            text: 'Получение токена чата...',
+                    const chatList = this.children.list as InstanceType<
+                        typeof ChatList
+                    >;
+                    chatList.requestGetChats();
+                } else {
+                    this.setChatDialogAlert(response.reason);
+                }
+            } else if (response && !('reason' in response)) {
+                if (response && (response as Array<any>).length < 2) {
+                    this.currentDialogElem.setProps({
+                        deleteUserBtn: new Button({
+                            className: 'chat-dialog__delete-user button_hidden',
                         }),
-                    ],
-                });
-                this.setProps({
-                    dialog: this.currentDialogElem,
-                });
+                        chatUsers: new Subtitle({
+                            // className: 'chat-dialog__add-user',
+                            text: 'нет пользователей',
+                        }),
+                        messages: [
+                            new PageTitle({
+                                className: 'chat-page__alert_type-reel',
+                                text: 'В чате нет пользователей',
+                            }),
+                        ],
+                    });
+                    this.setProps({
+                        dialog: this.currentDialogElem,
+                    });
+                } else if (response && (response as Array<any>).length >= 2) {
+                    type TUserMeta = {
+                        avatar: string | null;
+                        display_name: string;
+                        first_name: string;
+                        id: string;
+                        login: string;
+                        role: string;
+                        second_name: string;
+                    };
+                    const loginsArray = response.map(
+                        (user: TUserMeta) => user.display_name,
+                    );
+                    const usersLabel = loginsArray.join(', ');
 
-                this.requestGetChatToken();
+                    this.data.myUserId = this.props.user.id;
+
+                    this.currentDialogElem.setProps({
+                        deleteUserBtn: new Button({
+                            className: 'chat-dialog__delete-user',
+                            text: 'Удалить пользователя',
+                            onClick: () => this.showDeleteUserForm(),
+                        }),
+                        chatUsers: new Subtitle({
+                            // className: 'chat-dialog__add-user',
+                            text: usersLabel,
+                        }),
+                        messages: [
+                            new PageTitle({
+                                className: 'chat-page__alert_type-reel',
+                                text: 'Получение токена чата...',
+                            }),
+                        ],
+                    });
+                    this.setProps({
+                        dialog: this.currentDialogElem,
+                    });
+
+                    this.requestGetChatToken();
+                }
             }
         } catch (error) {
+            console.log('CHAT PAGE ERROR');
             this.setChatDialogAlert('Ошибка загрузки пользователей');
         }
     }
-    async requestAddChatUser(newUserId: string) {
+    async requestAddChatUser(userId: string) {
         try {
             this.setChatDialogAlert('Добавление пользователя...');
             const data = {
-                userIdParam: newUserId,
+                userIdParam: userId,
                 chatIdParam: this.data.currentChatId,
             };
 
@@ -154,6 +232,24 @@ class ChatPage extends Block {
             this.requestGetChatUsers();
         } catch (error) {
             this.setChatDialogAlert('Ошибка добавления пользователя');
+        }
+    }
+    async requestDeleteChatUser(userId: string) {
+        try {
+            this.setChatDialogAlert('Удаление пользователя...');
+            const data = {
+                userIdParam: userId,
+                chatIdParam: this.data.currentChatId,
+            };
+
+            const response = await chatController.deleteChatUser(data);
+            if (response !== 'OK') {
+                throw new Error();
+            }
+            this.chatMessages = [];
+            this.requestGetChatUsers();
+        } catch (error) {
+            this.setChatDialogAlert('Ошибка удаления пользователя');
         }
     }
     async requestGetChatToken() {
@@ -284,6 +380,8 @@ class ChatPage extends Block {
         }
     }
     handleMessage(msg: Record<string, any>) {
+        console.log('handleMessage single called');
+
         const messageWrapper = [msg];
         this.saveIncomingMessages(messageWrapper, 'single');
         this.renderMessages();
@@ -385,9 +483,9 @@ class ChatPage extends Block {
         this.scrollToBottom();
         return true;
     }
-
     show() {
         const chatList = this.children.list as InstanceType<typeof ChatList>;
+        this.setChatDialogAlert('Выберите чат чтобы отправить сообщение');
         chatList.requestGetChats();
         super.show();
     }

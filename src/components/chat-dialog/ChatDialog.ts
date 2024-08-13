@@ -1,6 +1,6 @@
 import Block, { IProps } from '@/tools/Block';
 import './chat-dialog.scss';
-import { IconButton, Textarea } from '@/components/index';
+import { IconButton, Textarea, Button } from '@/components/index';
 import validate from '@/tools/validate';
 
 export default class ChatDialog extends Block {
@@ -20,19 +20,28 @@ export default class ChatDialog extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
+            addUserBtn: new Button({
+                className: 'chat-dialog__add-user',
+                text: 'Добавить пользователя',
+                onClick: () => this.clickAddUser(),
+            }),
+            textField: null,
             sendBtn: new IconButton({
                 className: 'chat-dialog__send',
                 src: '/icons/arrow.svg',
                 alt: 'Отправить',
                 onClick: () => this.clickSendBtn(),
             }),
-            textField: null,
         });
         this.setProps({
             textField: this.textFieldElem,
         });
     }
-
+    clickAddUser() {
+        if (this.props.onAddUser) {
+            this.props.onAddUser();
+        }
+    }
     clickSendBtn() {
         if (!this.data.message) {
             return;
@@ -56,11 +65,15 @@ export default class ChatDialog extends Block {
         return `<div class="chat-dialog {{ className }}">
                     <div class="chat-dialog__header">
                         <div class="chat-dialog__header-left">
-                            <img class="chat-dialog__user-avatar" alt="Аватар друга" src="/icons/favicon.png">
-                            <div class="chat-dialog__user-name">{{{chatName}}}</div>
+                            <img class="chat-dialog__chat-avatar" alt="Аватар чата" src="/icons/favicon.png">
+                            <div class="chat-dialog__chat-text">
+                                <div class="chat-dialog__chat-name">{{{chatName}}}</div>
+                                <div class="chat-dialog__chat-users">{{{chatUsers}}}</div>
+                            </div>
                         </div>
                         <div class="chat-dialog__header-right">
-                            <img src="/icons/options.svg" alt="options" class="chat-dialog__settings">
+                            {{{addUserBtn}}}
+                            {{{deleteUserBtn}}}
                         </div>
                     </div>
                     <div class="chat-dialog__reel" id="chatReel"> 
