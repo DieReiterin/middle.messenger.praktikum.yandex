@@ -358,17 +358,21 @@ class ChatPage extends Block {
             });
             return;
         }
-        const parsedData = JSON.parse(eventData);
+        try {
+            const parsedData = JSON.parse(eventData);
 
-        if (Array.isArray(parsedData)) {
-            if (parsedData.length === 0 && this.chatMessages.length === 0) {
-                this.chatMessages = [];
-                this.renderMessages();
-            } else {
-                this.handleMessagesArray(parsedData);
+            if (Array.isArray(parsedData)) {
+                if (parsedData.length === 0 && this.chatMessages.length === 0) {
+                    this.chatMessages = [];
+                    this.renderMessages();
+                } else {
+                    this.handleMessagesArray(parsedData);
+                }
+            } else if (parsedData.type === 'message') {
+                this.handleMessage(parsedData);
             }
-        } else if (parsedData.type === 'message') {
-            this.handleMessage(parsedData);
+        } catch (error) {
+            this.setChatDialogAlert('Ошибка распознавания сообщения');
         }
     }
     handleMessage(msg: Record<string, any>) {

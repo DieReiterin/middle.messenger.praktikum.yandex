@@ -7,8 +7,13 @@ type TResponse = string;
 export default class GetUserInfoApi {
     request(): Promise<TResponse> {
         return getUserInfoApiInstance.get('/auth/user').then((xhr) => {
-            const rawResponse = (xhr as XMLHttpRequest).responseText;
-            return rawResponse;
+            try {
+                const rawResponse = (xhr as XMLHttpRequest).responseText;
+                const parsedResponse = JSON.parse(rawResponse);
+                return parsedResponse;
+            } catch (error) {
+                return 'parse error';
+            }
         });
     }
 }

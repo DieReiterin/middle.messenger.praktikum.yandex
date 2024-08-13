@@ -27,9 +27,13 @@ type TChatResponse = IChat[] | string;
 export default class GetChatsApi {
     request(): Promise<TChatResponse> {
         return getChatsApiInstance.get('/chats').then((xhr) => {
-            const rawResponse = (xhr as XMLHttpRequest).responseText;
-            const parsedResponse = JSON.parse(rawResponse);
-            return parsedResponse;
+            try {
+                const rawResponse = (xhr as XMLHttpRequest).responseText;
+                const parsedResponse = JSON.parse(rawResponse);
+                return parsedResponse;
+            } catch (error) {
+                return 'parse error';
+            }
         });
     }
 }

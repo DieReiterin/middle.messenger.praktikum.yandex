@@ -61,14 +61,13 @@ export default class UserLoginController {
     public async getInfo() {
         try {
             const response = await getUserInfoApi.request();
-            const parsedResponse = JSON.parse(response);
-            if (!('id' in parsedResponse)) {
-                throw new Error('server getInfo failed');
-            } else {
+            if (typeof response !== 'string' && 'id' in response) {
                 store.dispatch({
                     type: 'SET_USER_DATA',
-                    data: parsedResponse,
+                    data: response,
                 });
+            } else {
+                throw new Error('server getInfo failed');
             }
         } catch (error) {
             throw error;

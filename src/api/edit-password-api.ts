@@ -23,7 +23,12 @@ export default class EditPasswordApi {
                 if (rawResponse === 'OK') {
                     return rawResponse;
                 } else {
-                    return JSON.parse(rawResponse);
+                    try {
+                        const parsedResponse = JSON.parse(rawResponse);
+                        return parsedResponse;
+                    } catch (error) {
+                        return 'parse error';
+                    }
                 }
             });
     }

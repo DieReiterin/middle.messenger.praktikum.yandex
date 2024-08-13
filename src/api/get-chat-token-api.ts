@@ -12,9 +12,13 @@ export default class GetChatTokenApi {
         return getChatTokenApiInstance
             .post(`/chats/token/${chatId}`)
             .then((xhr) => {
-                const rawResponse = (xhr as XMLHttpRequest).responseText;
-                const parsedResponse = JSON.parse(rawResponse);
-                return parsedResponse;
+                try {
+                    const rawResponse = (xhr as XMLHttpRequest).responseText;
+                    const parsedResponse = JSON.parse(rawResponse);
+                    return parsedResponse;
+                } catch (error) {
+                    return 'parse error';
+                }
             });
     }
 }

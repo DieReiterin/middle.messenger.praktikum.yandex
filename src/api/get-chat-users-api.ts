@@ -11,9 +11,13 @@ export default class GetChatUsersApi {
         return getChatUsersApiInstance
             .get(`/chats/${chatId}/users`)
             .then((xhr) => {
-                const rawResponse = (xhr as XMLHttpRequest).responseText;
-                const parsedResponse = JSON.parse(rawResponse);
-                return parsedResponse;
+                try {
+                    const rawResponse = (xhr as XMLHttpRequest).responseText;
+                    const parsedResponse = JSON.parse(rawResponse);
+                    return parsedResponse;
+                } catch (error) {
+                    return 'parse error';
+                }
             });
     }
 }
