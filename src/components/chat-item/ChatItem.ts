@@ -5,10 +5,26 @@ export default class ChatItem extends Block {
     constructor(props: IProps = {}) {
         super({
             ...props,
+            events: {
+                click: () => {
+                    this.clickChat();
+                },
+            },
         });
     }
+
+    clickChat() {
+        if (this.props.onClick) {
+            this.props.onClick();
+        }
+    }
+
+    getChatId(): number {
+        return this.props.chatId;
+    }
+
     render() {
-        return `<div class="chat-item">
+        return `<div class="chat-item {{ className }}">
                     <div class="chat-item__line"></div>
                     <div class="chat-item__block {{#if current}}chat-item__block_current{{/if}}">
                         {{#if avatar}}

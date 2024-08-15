@@ -11,7 +11,9 @@
         "start": "vite build && node express.mjs",
         "express": "node express.mjs",
         "lint": "eslint . --ext .js,.ts",
+        "lint-fix": "eslint . --ext .js,.ts --fix",
         "stylelint": "stylelint ./**/*.scss",
+        "stylelint-fix": "stylelint ./**/*.scss --fix",
         "type-check": "tsc --noEmit",
         "lint-type-check": "npm run type-check && npm run lint && npm run stylelint",
         "format": "prettier --write ."

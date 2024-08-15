@@ -16,18 +16,41 @@
         "strictNullChecks": true,
         "paths": {
             "@": ["src"],
+            "@/config": ["src/config.ts"],
+
+            "@/api/add-chat-user-api": ["src/api/add-chat-user-api.ts"],
+            "@/api/create-chat-api": ["src/api/create-chat-api.ts"],
+            "@/api/delete-chat-user-api": ["src/api/delete-chat-user-api.ts"],
+            "@/api/edit-avatar-api": ["src/api/edit-avatar-api.ts"],
+            "@/api/edit-password-api": ["src/api/edit-password-api.ts"],
+            "@/api/get-chat-token-api": ["src/api/get-chat-token-api.ts"],
+            "@/api/get-chat-users-api": ["src/api/get-chat-users-api.ts"],
+            "@/api/get-chats-api": ["src/api/get-chats-api.ts"],
+            "@/api/get-static-api": ["src/api/get-static-api.ts"],
+            "@/api/get-user-info-api": ["src/api/get-user-info-api.ts"],
+            "@/api/login-api": ["src/api/login-api.ts"],
+            "@/api/logout-api": ["src/api/logout-api.ts"],
+            "@/api/profile-api": ["src/api/profile-api.ts"],
+            "@/api/signup-api": ["src/api/signup-api.ts"],
+
+            "@/controllers/chats": ["src/controllers/chats.ts"],
+            "@/controllers/profile": ["src/controllers/profile.ts"],
+            "@/controllers/user-login": ["src/controllers/user-login.ts"],
+            "@/controllers/user-signup": ["src/controllers/user-signup.ts"],
+
+            "@/modules/HttpTransport": ["src/modules/HttpTransport.ts"],
+
+            "@/utils/renderDom": ["src/utils/renderDom.ts"],
+
             "@/tools/Block": ["src/tools/Block.ts"],
+            "@/tools/connect": ["src/tools/connect.ts"],
             "@/tools/EventBus": ["src/tools/EventBus.ts"],
-            "@/tools/HttpTransport": ["src/tools/HttpTransport.ts"],
             "@/tools/navigate": ["src/tools/navigate.ts"],
+            "@/tools/Route": ["src/tools/Route.ts"],
+            "@/tools/Router": ["src/tools/Router.ts"],
+            "@/tools/Store": ["src/tools/Store.ts"],
             "@/tools/validate": ["src/tools/validate.ts"],
-            "@/layouts/index": ["src/layouts/index.ts"],
-            "@/layouts/layout-default/LayoutDefault": [
-                "src/layouts/layout-default/LayoutDefault.ts"
-            ],
-            "@/layouts/layout-navigated/LayoutNavigated": [
-                "src/layouts/layout-navigated/LayoutNavigated.ts"
-            ],
+
             "@/pages/index": ["src/pages/index.ts"],
             "@/pages/chat-page/ChatPage": ["src/pages/chat-page/ChatPage.ts"],
             "@/pages/error-page/ErrorPage": [
@@ -39,9 +62,10 @@
             "@/pages/profile-page/ProfilePage": [
                 "src/pages/profile-page/ProfilePage.ts"
             ],
-            "@/pages/signin-page/SigninPage": [
-                "src/pages/signin-page/SigninPage.ts"
+            "@/pages/signup-page/SignupPage": [
+                "src/pages/signup-page/SignupPage.ts"
             ],
+
             "@/components/index": ["src/components/index.ts"],
             "@/components/button/Button": ["src/components/button/Button.ts"],
             "@/components/chat-dialog/ChatDialog": [
@@ -53,13 +77,22 @@
             "@/components/chat-list/ChatList": [
                 "src/components/chat-list/ChatList.ts"
             ],
-            "@/components/footer/Footer": ["src/components/footer/Footer.ts"],
+            "@/components/chat-message/ChatMessage": [
+                "src/components/chat-message/ChatMessage.ts"
+            ],
+            "@/components/chat-stub/ChatStub": [
+                "src/components/chat-stub/ChatStub.ts"
+            ],
             "@/components/icon-button/IconButton": [
                 "src/components/icon-button/IconButton.ts"
             ],
             "@/components/input/Input": ["src/components/input/Input.ts"],
+            "@/components/image/Image": ["src/components/image/Image.ts"],
             "@/components/input-field/InputField": [
                 "src/components/input-field/InputField.ts"
+            ],
+            "@/components/input-file/InputFile": [
+                "src/components/input-file/InputFile.ts"
             ],
             "@/components/link/Link": ["src/components/link/Link.ts"],
             "@/components/page-title/PageTitle": [
@@ -67,12 +100,6 @@
             ],
             "@/components/profile/Profile": [
                 "src/components/profile/Profile.ts"
-            ],
-            "@/components/profile-content/ProfileContent": [
-                "src/components/profile-content/ProfileContent.ts"
-            ],
-            "@/components/settings-content/SettingsContent": [
-                "src/components/settings-content/SettingsContent.ts"
             ],
             "@/components/subtitle/Subtitle": [
                 "src/components/subtitle/Subtitle.ts"

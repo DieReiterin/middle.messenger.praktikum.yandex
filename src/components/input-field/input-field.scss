@@ -21,6 +21,10 @@
         color: $color-error;
     }
 
+    &_hidden {
+        display: none;
+    }
+
     &_type-profile {
         position: relative;
 

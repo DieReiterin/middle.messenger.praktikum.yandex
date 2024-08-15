@@ -14,12 +14,14 @@
         "quotes": ["error", "single"],
         "prettier/prettier": "error",
         "semi": ["warn", "always"],
-        "no-unused-vars": "off",
         "indent": ["warn", 4],
         "max-len": ["warn", 500],
         "max-params": ["warn", 3],
-        "import/no-extraneous-dependencies": "off",
         "linebreak-style": ["warn", "unix"],
+        "no-empty": ["error", { "allowEmptyCatch": false }],
+        "no-useless-return": "error",
+        "import/no-extraneous-dependencies": "off",
+        "no-unused-vars": "off",
         "prefer-arrow-callback": "off",
         "func-names": "off",
         "react/react-in-jsx-scope": "off",
@@ -36,6 +38,13 @@
         "import/no-absolute-path": "off",
         "no-use-before-define": "off",
         "@typescript-eslint/no-this-alias": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "default-param-last": "off",
+        "no-restricted-syntax": "off",
+        "camelcase": "off",
+        "no-useless-catch": "off",
+        "radix": "off",
+        "no-constructor-return": "off",
+        "consistent-return": "off"
     }
 }

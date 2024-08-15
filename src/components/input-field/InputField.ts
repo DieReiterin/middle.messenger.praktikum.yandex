@@ -4,6 +4,7 @@ import './input-field.scss';
 import validate from '@/tools/validate';
 
 export default class InputField extends Block {
+    private value = '';
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -12,14 +13,15 @@ export default class InputField extends Block {
                 name: props.name,
                 id: props.id,
                 placeholder: props.placeholder,
-                value: '',
+                value: props.value,
                 onBlur: () => this.blurInput(),
                 onInput: (val: string) => this.enterText(val),
             }),
             error: '',
         });
+        this.value = props.value ? props.value : '';
     }
-    value = '';
+
     blurInput() {
         if (this.props.onBlur) {
             this.props.onBlur();

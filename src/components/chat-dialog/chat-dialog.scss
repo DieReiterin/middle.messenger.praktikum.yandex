@@ -1,12 +1,14 @@
 .chat-dialog {
-    position: relative;
-    box-sizing: border-box;
-    overflow: auto;
+    ::-webkit-scrollbar {
+        display: none;
+    }
 
-    width: 100%;
-    height: 100%;
-    margin-bottom: 100px;
-    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+    width: 80vw;
+    height: 100vh;
 
     &__header {
         position: fixed;
@@ -17,8 +19,10 @@
         align-items: center;
         justify-content: space-between;
 
-        width: 75vw;
+        box-sizing: border-box;
+        width: 80vw;
         height: 70px;
+        padding: 0 20px 0 20px;
         background-color: $color-bg-primary;
 
         border-bottom: 1px solid $color-border;
@@ -30,11 +34,10 @@
 
         &-right {
             display: flex;
-            align-items: center;
         }
     }
 
-    &__user-avatar {
+    &__chat-avatar {
         height: 45px;
         width: 45px;
         margin-right: 20px;
@@ -44,9 +47,33 @@
         background-color: $color-bg-primary;
     }
 
-    &__user-name {
+    &__chat-text {
+        position: relative;
+    }
+
+    &__chat-name {
         font-weight: 700;
         font-size: 16px;
+    }
+
+    &__chat-users {
+        position: absolute;
+        left: 0;
+        top: 120%;
+        overflow: hidden;
+
+        width: 35vw;
+        font-size: 12px;
+    }
+
+    &__add-user,
+    &__delete-user {
+        width: 100px;
+        padding: 0 15px;
+    }
+
+    &__delete-user {
+        margin-left: 20px;
     }
 
     &__settings {
@@ -55,56 +82,18 @@
     }
 
     &__reel {
-        position: absolute;
-        top: 125px;
-        z-index: 2;
-
-        box-sizing: border-box;
-
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: flex-start;
 
-        width: 75vw;
-        min-height: 75vh;
+        overflow-y: auto;
+        margin-top: 70px;
+        margin-bottom: 80px;
+        padding: 10px 20px 0;
         background-color: transparent;
     }
 
-    &__msg {
-        min-width: 40px;
-        max-width: 400px;
-        padding: 15px;
-        margin-bottom: 20px;
-
-        border-radius: 12px;
-        font-size: 14px;
-
-        &_partner {
-            background-color: $color-bg-secondary;
-
-            border-top-left-radius: 0;
-        }
-
-        &_my {
-            background-color: $color-bg-msg;
-
-            border-bottom-right-radius: 0;
-            margin-left: auto;
-        }
-
-        &_pictured {
-            max-width: 315px;
-
-            padding: 0;
-        }
-
-        &-pic {
-            border-radius: inherit;
-        }
-    }
-
     &__footer {
-        box-sizing: border-box;
         position: fixed;
         bottom: 0;
         z-index: 3000;
@@ -112,9 +101,10 @@
         display: flex;
         align-items: center;
 
-        width: 75vw;
-        height: 75px;
-        margin-bottom: 100px;
+        box-sizing: border-box;
+        width: 80vw;
+        height: 80px;
+        padding: 0 20px;
         background-color: $color-bg-primary;
         border-top: 1px solid $color-border;
     }
@@ -130,19 +120,5 @@
     &__send {
         flex-shrink: 0;
         transform: rotate(180deg);
-
-        box-sizing: border-box;
-        width: 35px;
-        height: 35px;
-        padding: 5px;
-
-        border-radius: 50%;
-
-        background-color: $color-btn;
-
-        &:hover {
-            cursor: pointer;
-            background-color: $color-btn-hover;
-        }
     }
 }

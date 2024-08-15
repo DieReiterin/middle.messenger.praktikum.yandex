@@ -1,2 +1,15 @@
 .icon-button {
+    box-sizing: border-box;
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+
+    border-radius: 50%;
+
+    background-color: $color-btn;
+
+    &:hover {
+        cursor: pointer;
+        background-color: $color-btn-hover;
+    }
 }

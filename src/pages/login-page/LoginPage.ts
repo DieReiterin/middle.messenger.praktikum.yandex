@@ -1,9 +1,16 @@
 import Block, { IProps } from '@/tools/Block';
 import { Button, Link, PageTitle, InputField } from '@/components/index';
 import './login-page.scss';
-import navigate from '@/tools/navigate';
+import connect from '@/tools/connect';
+import UserLoginController from '@/controllers/user-login';
 
-export default class LoginPage extends Block {
+const userLoginController = new UserLoginController();
+
+class LoginPage extends Block {
+    private alertElem: PageTitle = new PageTitle({
+        className: 'login-page__alert login-page__alert_hidden',
+        text: 'alertText',
+    });
     constructor(props: IProps = {}) {
         super({
             ...props,
@@ -31,44 +38,110 @@ export default class LoginPage extends Block {
                     this.data.password = val;
                 },
             }),
+            alert: null,
             btn: new Button({
                 className: 'login-page__submit-btn',
                 text: 'Войти',
-                onClick: () => this.submitForm(),
+                onClick: () => {
+                    this.handleLogin();
+                },
             }),
             link: new Link({
                 className: 'login-page__link',
                 text: 'Регистрация',
-                onClick: () => navigate('page', 'signin'),
+                onClick: () => window.router.go('/sign-up'),
             }),
         });
+        this.setProps({
+            alert: this.alertElem,
+        });
     }
+
+    showAlert(alertText: string) {
+        if (!alertText) {
+            return;
+        }
+        this.alertElem.setProps({
+            className: 'login-page__alert',
+            text: alertText,
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+    hideAlert() {
+        this.alertElem.setProps({
+            className: 'login-page__alert login-page__alert_hidden',
+        });
+        this.setProps({
+            alert: this.alertElem,
+        });
+    }
+
+    async handleLogin() {
+        const { login, password } = this.data;
+        try {
+            const response = await userLoginController.login({
+                login,
+                password,
+            });
+
+            if (response === 'OK') {
+                this.getUserInfo();
+                window.router.go('/messenger');
+            } else if (typeof response === 'string') {
+                this.showAlert(response);
+            } else if (typeof response !== 'string' && 'reason' in response) {
+                if (response.reason === 'User already in system') {
+                    window.router.go('/messenger');
+                } else if (response.reason === 'Cookie is not valid') {
+                    this.requestLogout();
+                } else {
+                    this.showAlert(response.reason);
+                }
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getUserInfo() {
+        try {
+            await userLoginController.getInfo();
+        } catch (error) {
+            console.error('LoginPage getUserInfo failed:', error);
+        }
+    }
+
+    async requestLogout() {
+        try {
+            await userLoginController.logout();
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     data = {
         login: '',
         password: '',
     };
-    submitForm() {
-        const input1: unknown = this.children.input1;
-        const input2: unknown = this.children.input2;
-        if (
-            (input1 as { validateField: () => boolean }).validateField() &&
-            (input2 as { validateField: () => boolean }).validateField()
-        ) {
-            console.log(this.data);
-            navigate('page', 'chats');
-        }
-    }
+
     override render() {
-        return `<form class="login-page" action="">
-                    <div class="login-page__main">
-                        {{{title}}} 
-                        {{{input1}}}  
-                        {{{input2}}}                          
-                    </div>
-                    <div class="login-page__footer">
-                        {{{btn}}}    
-                        {{{link}}}           
-                    </div>
-                </form>`;
+        return `<div class="login-page__wrapper">
+                    <form class="login-page" action="">
+                        <div class="login-page__main">
+                            {{{title}}} 
+                            {{{input1}}}  
+                            {{{input2}}}                          
+                            {{{alert}}}                          
+                        </div>
+                        <div class="login-page__footer">
+                            {{{btn}}}    
+                            {{{link}}}           
+                        </div>
+                    </form>
+                </div>`;
     }
 }
+
+export default connect(LoginPage);

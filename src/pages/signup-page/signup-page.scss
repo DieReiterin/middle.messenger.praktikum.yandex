@@ -1,0 +1,42 @@
+.signup-page {
+    box-sizing: border-box;
+
+    width: 340px;
+    min-height: 450px;
+    margin: 0 auto 0;
+    margin-top: calc(100vh * 0.135);
+    margin-bottom: calc(100vh * 0.135);
+    padding: 50px 30px 30px;
+
+    border-radius: 15px;
+    background-color: $color-bg-secondary;
+    box-shadow: 0 0 6px 0 rgba($color-text, 0.14);
+
+    &__main {
+        min-height: 200px;
+        margin-bottom: 20px;
+
+        font-weight: 600;
+    }
+
+    &__alert {
+        margin-top: 20px;
+
+        font-size: 14px;
+        color: $color-error;
+
+        &_hidden {
+            color: transparent;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__submit-btn {
+        margin-bottom: 15px;
+    }
+}

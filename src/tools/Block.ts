@@ -28,6 +28,7 @@ export default class Block {
         FLOW_RENDER: 'flow:render',
     };
     private _element: HTMLElement | null = null;
+    private _parentElement: HTMLElement | null = null;
     private _id: number = Math.floor(100000 + Math.random() * 900000);
     private eventBus: () => EventBus;
 
@@ -107,7 +108,10 @@ export default class Block {
         return true;
     }
 
-    protected componentDidUpdate(oldProps: IProps, newProps: IProps): boolean {
+    protected componentDidUpdate(
+        oldProps: IProps = {},
+        newProps: IProps = {},
+    ): boolean {
         return Object.keys(oldProps).length + Object.keys(newProps).length > 0;
     }
 
@@ -164,14 +168,13 @@ export default class Block {
         if (!nextProps) {
             return;
         }
-        const { children, lists } = this._getChildrenPropsAndProps(nextProps);
-        this.children = children;
+        const { children, props, lists } =
+            this._getChildrenPropsAndProps(nextProps);
+        Object.assign(this.children, children);
+        Object.assign(this.lists, lists);
+        Object.assign(this.props, props);
 
-        Object.assign(this.props, nextProps);
-
-        Object.entries(lists).forEach(([key, list]) => {
-            this.lists[key] = list;
-        });
+        this.eventBus().emit(Block.EVENTS.FLOW_CDU, this.props, nextProps);
     };
 
     public get element(): HTMLElement | null {
@@ -232,6 +235,8 @@ export default class Block {
             this._element.replaceWith(newElement);
         }
         this._element = newElement as HTMLElement;
+        this._parentElement = this._element.parentElement;
+
         this._addEvents();
         this.addAttributes();
     }
@@ -241,7 +246,11 @@ export default class Block {
     }
 
     public getContent() {
-        return this.element;
+        return this._element;
+    }
+
+    public toString() {
+        return this.render();
     }
 
     private _makePropsProxy(props: IProps): IProps {
@@ -270,15 +279,23 @@ export default class Block {
 
     public show() {
         const content = this.getContent();
-        if (content) {
-            content.style.display = 'block';
+
+        if (content && this._parentElement) {
+            this._parentElement.appendChild(content);
+        } else if (content) {
+            const pageElement = document.getElementById('app');
+            if (pageElement) {
+                pageElement.appendChild(content);
+            }
         }
     }
 
     public hide() {
         const content = this.getContent();
-        if (content) {
-            content.style.display = 'none';
+
+        if (content && content.parentNode) {
+            this._parentElement = content.parentElement;
+            content.parentNode.removeChild(content);
         }
     }
 }
