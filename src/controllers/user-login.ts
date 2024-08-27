@@ -46,12 +46,25 @@ export default class UserLoginController {
 
     public async logout() {
         try {
-            const response = await logoutApi.request();
+            const rawResponse = await logoutApi.request();
 
-            if (response === 'OK') {
+            if (rawResponse === 'OK') {
+                localStorage.removeItem('isAuth');
+                return;
+            }
+
+            const parsedResponse = JSON.parse(rawResponse);
+
+            const invalidCookie =
+                'reason' in parsedResponse &&
+                (parsedResponse as Record<string, any>).reason ===
+                    'Cookie is not valid';
+
+            if (invalidCookie) {
                 localStorage.removeItem('isAuth');
             } else {
-                throw new Error(response);
+                console.log('Error');
+                throw new Error(rawResponse);
             }
         } catch (error) {
             throw error;
