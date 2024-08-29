@@ -6,7 +6,7 @@ export default defineConfig({
     root: resolve(__dirname, './'),
     build: {
         outDir: resolve(__dirname, 'dist'),
-        // emptyOutDir: true,
+        emptyOutDir: true,
     },
     publicDir: resolve(__dirname, 'static'),
     server: {
