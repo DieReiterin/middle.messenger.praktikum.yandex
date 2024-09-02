@@ -296,6 +296,7 @@ export default class Block {
         if (content && content.parentNode) {
             this._parentElement = content.parentElement;
             content.parentNode.removeChild(content);
+            this._componentDidUnmount();
         }
     }
 }
