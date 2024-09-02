@@ -18,7 +18,7 @@
         "type-check": "tsc --noEmit",
         "lint-type-check": "npm run type-check && npm run lint && npm run stylelint",
         "format": "prettier --write .",
-        "test": "mocha --config .mocharc.json"
+        "test": "mocha --config=./.mocharc.json -n import=./mochaloader.js ./src/**/*.test.ts"
     },
     "devDependencies": {
         "@types/chai": "^4.3.18",
