@@ -19,3 +19,5 @@
 #### `npm run start` — запуск продакшн-версии и экспресс-сервера (по адресу `http://localhost:3000/`)
 
 #### `npm run lint-type-check` — проверка типов, Eslint и Stylelint
+
+#### `npm run test` — проверка с помощью тестов проекта

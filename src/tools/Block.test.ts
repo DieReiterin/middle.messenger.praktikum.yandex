@@ -67,7 +67,7 @@ describe('Block', () => {
 
         block.hide();
         expect(removeChildSpy).toHaveBeenCalledWith(mockContent);
-        expect(block['getContent']()?.parentElement).toBe(null);
+        expect(block.getContent()?.parentElement).toBe(null);
 
         jest.restoreAllMocks();
     });
