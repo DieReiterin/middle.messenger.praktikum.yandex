@@ -16,20 +16,22 @@ const METHODS: Record<string, string> = {
     DELETE: 'DELETE',
 };
 
-function queryStringify(data: Record<string, any>) {
-    if (typeof data !== 'object') {
-        throw new Error('Data must be object');
-    }
-
-    const keys = Object.keys(data);
-    return keys.reduce((result, key, index) => {
-        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-    }, '?');
-}
-
 type HttpMethod = (url: string, options?: IOptions) => Promise<unknown>;
 
 export default class HttpTransport {
+    static queryStringify(data: Record<string, any>) {
+        if (typeof data !== 'object') {
+            throw new Error('Data must be object');
+        }
+
+        const keys = Object.keys(data);
+        return keys.reduce((result, key, index) => {
+            const encodedKey = encodeURIComponent(key);
+            const encodedValue = encodeURIComponent(data[key]);
+            return `${result}${encodedKey}=${encodedValue}${index < keys.length - 1 ? '&' : ''}`;
+        }, '?');
+    }
+
     get: HttpMethod = (url, options = {}) => {
         return this.request(
             url,
@@ -75,7 +77,10 @@ export default class HttpTransport {
             const fullUrl = `${config.BASE_URL}${url}`;
 
             if (method === METHODS.GET && !!data) {
-                xhr.open(method, `${fullUrl}${queryStringify(data)}`);
+                xhr.open(
+                    method,
+                    `${fullUrl}${HttpTransport.queryStringify(data)}`,
+                );
             } else {
                 xhr.open(method as string, fullUrl);
             }
